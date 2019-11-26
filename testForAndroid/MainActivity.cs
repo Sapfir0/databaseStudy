@@ -7,6 +7,9 @@ using Android.Support.Design.Widget;
 using Android.Support.V7.App;
 using Android.Views;
 using Android.Widget;
+using controlWork;
+using SQLite;
+
 
 namespace testForAndroid
 {
@@ -26,22 +29,26 @@ namespace testForAndroid
             string databaseName = "database.db";
             string databasePath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
             string completePath = Path.Combine(databasePath, databaseName);
-            /*var db = new SQLiteConnection(compltePath);
+            var db = new SQLiteConnection(completePath);
+           
             db.CreateTables<Citys, Trains,
                 Companys, Employees, Cruises>();
             db.CreateTables<TrainstationsSource, TrainstationsDestination>();
-            */
+            
 
 
             var autoCompleteOptions = new string[] {
-              "Afghanistan", "Albania", "Algeria", "American Samoa", "Andorra",
-              "Angola", "Anguilla", "Antarctica", "Antigua and Barbuda", "Argentina",
-              "Yemen", "Yugoslavia", "Zambia", "Zimbabwe"
+              "Москва", "Волгоград", "Екатеринбург", "Санкт-Петербург", "Воронеж"
             };
-            ArrayAdapter autoCompleteAdapter = new ArrayAdapter(this, 
+            ArrayAdapter autoCompleteAdapter = new ArrayAdapter(this,
                 Resource.Layout.list_item, autoCompleteOptions);
-            var autoCompleteTextView = FindViewById<AutoCompleteTextView>(Resource.Id.autocompleteSourceCity);
-            autoCompleteTextView.Adapter = autoCompleteAdapter;
+            var autoCompleteSourceCityView = FindViewById<AutoCompleteTextView>(Resource.Id.autocompleteSourceCity);
+            autoCompleteSourceCityView.Adapter = autoCompleteAdapter;
+
+
+            var autoCompleteDestinationCityView = FindViewById<AutoCompleteTextView>(Resource.Id.autocompleteDestinationCity);
+            autoCompleteDestinationCityView.Adapter = autoCompleteAdapter;
+
 
         }
 
@@ -49,6 +56,19 @@ namespace testForAndroid
         {
             MenuInflater.Inflate(Resource.Menu.menu_main, menu);
             return true;
+        }
+
+        private UserObject AutoCompleteDestinationCityView_OnClicked(object sender, EventArgs e)
+        {
+            var autoCompleteDestinationCityView = FindViewById<AutoCompleteTextView>(Resource.Id.autocompleteDestinationCity);
+            var autoCompleteSourceCityView = FindViewById<AutoCompleteTextView>(Resource.Id.autocompleteSourceCity);
+
+            UserObject info = new UserObject(); // должен быть синглтоном для юзера
+
+            info.destinationCity = autoCompleteSourceCityView.Text;
+            info.sourceCity = autoCompleteDestinationCityView.Text;
+
+            return info;
         }
 
 
