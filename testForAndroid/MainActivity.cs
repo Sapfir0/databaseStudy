@@ -9,6 +9,8 @@ using Android.Views;
 using Android.Widget;
 using controlWork;
 using SQLite;
+using System.Collections.Generic;
+using Android.Content;
 
 
 namespace testForAndroid
@@ -30,11 +32,11 @@ namespace testForAndroid
             string databasePath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
             string completePath = Path.Combine(databasePath, databaseName);
             var db = new SQLiteConnection(completePath);
-           
+
             db.CreateTables<Citys, Trains,
                 Companys, Employees, Cruises>();
             db.CreateTables<TrainstationsSource, TrainstationsDestination>();
-            
+
 
 
             var autoCompleteOptions = new string[] {
@@ -49,6 +51,9 @@ namespace testForAndroid
             var autoCompleteDestinationCityView = FindViewById<AutoCompleteTextView>(Resource.Id.autocompleteDestinationCity);
             autoCompleteDestinationCityView.Adapter = autoCompleteAdapter;
 
+            Button goToSetTimeToTicket = FindViewById<Button>(Resource.Id.goSetTimeBtn);
+            goToSetTimeToTicket.Click += ToSetTimeToTicket;
+
 
         }
 
@@ -58,18 +63,59 @@ namespace testForAndroid
             return true;
         }
 
-        private UserObject AutoCompleteDestinationCityView_OnClicked(object sender, EventArgs e)
+        public void DisplayAlert(string title, string message)
         {
-            var autoCompleteDestinationCityView = FindViewById<AutoCompleteTextView>(Resource.Id.autocompleteDestinationCity);
-            var autoCompleteSourceCityView = FindViewById<AutoCompleteTextView>(Resource.Id.autocompleteSourceCity);
+            Android.App.AlertDialog.Builder dialog = new Android.App.AlertDialog.Builder(this);
+            Android.App.AlertDialog alert = dialog.Create();
+            alert.SetTitle("Title");
+            alert.SetMessage("Simple Alert");
+            alert.SetButton("OK", (c, ev) =>
+            {
+
+            });
+            alert.Show();
+        }
+
+
+        public void ToSetTimeToTicket(object sender, EventArgs e)
+        {
+            var userObject = AutoCompleteDestinationCityView_OnClicked();
+            if (userObject.destinationCity is null)
+            {
+                Console.WriteLine("дест сити пустой");
+            }
+            else if (userObject.sourceCity is null)
+            {
+                Console.WriteLine("сорс сити пустой");
+                DisplayAlert("Error", "Убери точку", "Я понял");
+
+            }
+            else
+            {
+                var intent = new Intent(this, typeof(SetTimeTicketActivity));
+                intent.PutExtra("destinationCity", userObject.destinationCity);
+                intent.PutExtra("sourceCity", userObject.sourceCity);
+
+                StartActivity(intent);
+            }
+
+        }
+
+        // думаю скоро эта функция будет выброшена
+        private UserObject AutoCompleteDestinationCityView_OnClicked()
+        {
+            string autoCompleteDestinationCityView = FindViewById<AutoCompleteTextView>(Resource.Id.autocompleteDestinationCity).Text.ToString();
+            string autoCompleteSourceCityView = FindViewById<AutoCompleteTextView>(Resource.Id.autocompleteSourceCity).Text.ToString();
 
             UserObject info = new UserObject(); // должен быть синглтоном для юзера
 
-            info.destinationCity = autoCompleteSourceCityView.Text;
-            info.sourceCity = autoCompleteDestinationCityView.Text;
+            info.destinationCity = autoCompleteSourceCityView;
+            info.sourceCity = autoCompleteDestinationCityView;
+            Console.WriteLine(info.destinationCity);
 
             return info;
         }
+
 
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)

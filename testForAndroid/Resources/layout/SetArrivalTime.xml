@@ -1,4 +1,4 @@
-
+﻿
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -7,11 +7,6 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_main">
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/upperList"/>
 
     <LinearLayout
         android:orientation="vertical"
@@ -26,7 +21,7 @@
 
             <TextView
                 android:id="@+id/textGrid"
-                android:text="Забронировать билет"
+                android:text="Время прибытия"
                 android:textSize="34sp"
                 android:textColor="@android:color/black"
                 android:layout_centerInParent="true"
