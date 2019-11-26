@@ -63,15 +63,15 @@ namespace testForAndroid
             return true;
         }
 
-        public void DisplayAlert(string title, string message)
+        public void DisplayAlert(string title, string message, string buttonText="OK")
         {
             Android.App.AlertDialog.Builder dialog = new Android.App.AlertDialog.Builder(this);
             Android.App.AlertDialog alert = dialog.Create();
-            alert.SetTitle("Title");
-            alert.SetMessage("Simple Alert");
-            alert.SetButton("OK", (c, ev) =>
+            alert.SetTitle(title);
+            alert.SetMessage(message);
+            alert.SetButton(buttonText, (c, ev) =>
             {
-
+                alert.Cancel();
             });
             alert.Show();
         }
@@ -79,43 +79,24 @@ namespace testForAndroid
 
         public void ToSetTimeToTicket(object sender, EventArgs e)
         {
-            var userObject = AutoCompleteDestinationCityView_OnClicked();
-            if (userObject.destinationCity is null)
-            {
-                Console.WriteLine("дест сити пустой");
-            }
-            else if (userObject.sourceCity is null)
-            {
-                Console.WriteLine("сорс сити пустой");
-                DisplayAlert("Error", "Убери точку", "Я понял");
+            string destinationCity = FindViewById<AutoCompleteTextView>(Resource.Id.autocompleteDestinationCity).Text.ToString();
+            string sourceCity = FindViewById<AutoCompleteTextView>(Resource.Id.autocompleteSourceCity).Text.ToString();
 
+            if (string.IsNullOrEmpty(destinationCity)) {
+                DisplayAlert("Error", "Укажи откуда едешь", "Я понял");
             }
-            else
-            {
+            else if (string.IsNullOrEmpty(destinationCity)) {
+                DisplayAlert("Error", "Укажи куда едешь", "Я понял");
+            }
+            else {
                 var intent = new Intent(this, typeof(SetTimeTicketActivity));
-                intent.PutExtra("destinationCity", userObject.destinationCity);
-                intent.PutExtra("sourceCity", userObject.sourceCity);
+                intent.PutExtra("destinationCity", destinationCity);
+                intent.PutExtra("sourceCity", sourceCity);
 
                 StartActivity(intent);
             }
 
         }
-
-        // думаю скоро эта функция будет выброшена
-        private UserObject AutoCompleteDestinationCityView_OnClicked()
-        {
-            string autoCompleteDestinationCityView = FindViewById<AutoCompleteTextView>(Resource.Id.autocompleteDestinationCity).Text.ToString();
-            string autoCompleteSourceCityView = FindViewById<AutoCompleteTextView>(Resource.Id.autocompleteSourceCity).Text.ToString();
-
-            UserObject info = new UserObject(); // должен быть синглтоном для юзера
-
-            info.destinationCity = autoCompleteSourceCityView;
-            info.sourceCity = autoCompleteDestinationCityView;
-            Console.WriteLine(info.destinationCity);
-
-            return info;
-        }
-
 
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)

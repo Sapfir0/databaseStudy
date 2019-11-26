@@ -64,8 +64,9 @@
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SetArrivalTimeActivity.cs" />
+    <Compile Include="SetDepartureTimeActivity.cs" />
     <Compile Include="SetTimeTicketActivity.cs" />
-    <Compile Include="UserObject.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />

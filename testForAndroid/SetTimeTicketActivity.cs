@@ -28,6 +28,24 @@ namespace testForAndroid
 
             sourceCityLabel.Text = sourceCity;
             destinationCityLabel.Text = destinationCity;
+
+
+            Button setArrivalTime = FindViewById<Button>(Resource.Id.setArrivalTime);
+            setArrivalTime.Click += ToSetArrivalTimeToTicket;
+
+            Button setDepartureTime = FindViewById<Button>(Resource.Id.setDepartureTime);
+            setDepartureTime.Click += ToSetDepartureTimeToTicket;
+
+        }
+
+        public void ToSetArrivalTimeToTicket(object sender, EventArgs e) {
+            var intent = new Intent(this, typeof(SetArrivalTimeActivity));
+            StartActivity(intent);
+        }
+
+        public void ToSetDepartureTimeToTicket(object sender, EventArgs e) {
+            var intent = new Intent(this, typeof(SetDepartureTimeActivity));
+            StartActivity(intent);
         }
     }
 }
