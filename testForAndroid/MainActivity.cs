@@ -11,6 +11,8 @@ using controlWork;
 using SQLite;
 using System.Collections.Generic;
 using Android.Content;
+using Android.Content.Res;
+using Newtonsoft.Json;
 
 
 namespace testForAndroid
@@ -38,19 +40,31 @@ namespace testForAndroid
             db.CreateTables<TrainstationsSource, TrainstationsDestination>();
 
 
+            string allCitiesInfo;
+            AssetManager assets = Assets;
+            using (StreamReader sr = new StreamReader(assets.Open("russian-cities.json"))) {
+                allCitiesInfo = sr.ReadToEnd();
+            }
+
+            var cities = JsonConvert.DeserializeObject<List<CitiesList>>(allCitiesInfo); // можно наверно добавить лямбду, где десериализовать в лист строк, и братьтолько name
+
+
+            List<string> stringCityes = new List<string>();
+            for(int i=0; i<cities.Count; i++) {
+                stringCityes.Add(cities[i].Name);
+            }
 
             var autoCompleteOptions = new string[] {
               "Москва", "Волгоград", "Екатеринбург", "Санкт-Петербург", "Воронеж"
             };
             ArrayAdapter autoCompleteAdapter = new ArrayAdapter(this,
-                Resource.Layout.list_item, autoCompleteOptions);
+                Resource.Layout.autoCompleteCities, stringCityes);
             var autoCompleteSourceCityView = FindViewById<AutoCompleteTextView>(Resource.Id.autocompleteSourceCity);
             autoCompleteSourceCityView.Adapter = autoCompleteAdapter;
 
 
             var autoCompleteDestinationCityView = FindViewById<AutoCompleteTextView>(Resource.Id.autocompleteDestinationCity);
             autoCompleteDestinationCityView.Adapter = autoCompleteAdapter;
-
             Button goToSetTimeToTicket = FindViewById<Button>(Resource.Id.goSetTimeBtn);
             goToSetTimeToTicket.Click += ToSetTimeToTicket;
 
