@@ -28,18 +28,7 @@ namespace testForAndroid {
         public int crewId { get; set; }
     }
 
-    public class Cruises
-    {
-        [PrimaryKey, AutoIncrement]
-        public int id { get; set; }
-        public DateTime departureTime { get; set; }
-        public DateTime arrivingTime { get; set; }
-        public int trainId { get; set; }
-        public int crewId { get; set; }
-        public int trainstationSourceId { get; set; }
-        public int trainstationDestinationId { get; set; }
-    }
-
+ 
     public class TrainstationsSource
     {
         [PrimaryKey, AutoIncrement]

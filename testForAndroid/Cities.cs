@@ -19,6 +19,9 @@ namespace testForAndroid {
         public string name { get; set; }
         public string country { get; set; }
 
+        public Cities() {
+
+        }
 
         public Cities(string _name) {
             CreateTable();
@@ -36,8 +39,8 @@ namespace testForAndroid {
 
         }
 
-        //public Cities GetCity(int id) {
-        //    return db.Get<Cities>(id);
-        //}
+        public Cities GetCity(int id) {
+            return db.Table<Cities>().Where(item => item.id == id).FirstOrDefault();
+        }
     }
 }

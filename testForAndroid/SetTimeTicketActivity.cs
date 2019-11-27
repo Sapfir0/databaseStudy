@@ -36,8 +36,8 @@ namespace testForAndroid
             dest.InsertCity();
             source.InsertCity();
 
-            //Toast.MakeText(this, databaseController.GetCity(dest.id).name,  ToastLength.Short).Show();
-            //Toast.MakeText(this, databaseController.GetCity(source.id).name, ToastLength.Short).Show();
+            Toast.MakeText(this, source.GetCity(dest.id).name,  ToastLength.Short).Show();
+            Toast.MakeText(this, dest.GetCity(source.id).name, ToastLength.Short).Show();
 
             //Cruises cruise = new Cruises();
             //cruise.departureTime = DateTime.Now;

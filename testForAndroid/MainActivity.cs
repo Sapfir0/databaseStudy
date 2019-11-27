@@ -30,8 +30,6 @@ namespace testForAndroid
 
 
            
-
-
             string allCitiesInfo;
             AssetManager assets = Assets;
             using (StreamReader sr = new StreamReader(assets.Open("russian-cities.json"))) {
