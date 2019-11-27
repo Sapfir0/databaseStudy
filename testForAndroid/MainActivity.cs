@@ -54,9 +54,6 @@ namespace testForAndroid
                 stringCityes.Add(cities[i].Name);
             }
 
-            var autoCompleteOptions = new string[] {
-              "Москва", "Волгоград", "Екатеринбург", "Санкт-Петербург", "Воронеж"
-            };
             ArrayAdapter autoCompleteAdapter = new ArrayAdapter(this,
                 Resource.Layout.autoCompleteCities, stringCityes);
             var autoCompleteSourceCityView = FindViewById<AutoCompleteTextView>(Resource.Id.autocompleteSourceCity);

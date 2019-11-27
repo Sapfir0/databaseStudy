@@ -2,98 +2,138 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:showIn="@layout/activity_main">
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/upperList"/>
-    <LinearLayout
-        android:orientation="vertical"
-        android:weightSum="10"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <RelativeLayout
-            android:layout_weight="2"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"></RelativeLayout>
-        <GridLayout
-            android:id="@+id/mainGrid"
-            android:columnCount="2"
-            android:rowCount="3"
-            android:alignmentMode="alignMargins"
-            android:columnOrderPreserved="false"
-            android:layout_weight="8"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:padding="14dp"
-        >
-            <TextView
-            android:text="Из города"
-            android:textSize="24sp"
-            
-            android:textColor="@android:color/black"
-            android:layout_centerInParent="true"
-            android:layout_width="wrap_content"
-            />
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/destinationCity"
-                android:enabled="false"/>
-            <TextView
-           android:text="В город"
-           android:textSize="24sp"
-            
-           android:textColor="@android:color/black"
-           android:layout_centerInParent="true"
-           android:layout_width="wrap_content"
-            />
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/sourceCity"
-                android:enabled="false"/>
-            <TextView
-           android:text="Время отъезда"
-           android:textSize="24sp"
-            
-           android:textColor="@android:color/black"
-           android:layout_centerInParent="true"
-           android:layout_width="wrap_content"
-            />
-            
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:enabled="false"/>
-
-
-            <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Выбрать время"
-            android:id="@+id/setArrivalTime" />
-
-            <TextView
-                android:text="Время прибытия"
-                android:textSize="24sp"
-            
-                android:textColor="@android:color/black"
-                android:layout_centerInParent="true"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:showIn="@layout/activity_main">
+	<TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+        android:id="@+id/upperList"/>
+	<LinearLayout
+        android:orientation="vertical"
+        android:weightSum="10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+        android:minWidth="25px"
+        android:minHeight="25px">
+		<RelativeLayout
+            android:layout_weight="2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="25px"
+            android:minHeight="25px"
+            android:id="@+id/relativeLayout1">
+			<LinearLayout
+                android:orientation="horizontal"
+                android:minWidth="25px"
+                android:minHeight="25px"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/linearLayout1">
+				<TextView
+                    android:text="Из города"
+                    android:textSize="24sp"
+                    android:textColor="@android:color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+                    android:id="@+id/textView1" 
             />
-            <EditText
+				<EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+                    android:id="@+id/sourceCity"
+                    android:enabled="false"/>
+			</LinearLayout>
+		</RelativeLayout>
+		<RelativeLayout
+            android:layout_weight="2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="25px"
+            android:minHeight="25px"
+            android:id="@+id/relativeLayout1">
+			<LinearLayout
+                android:orientation="horizontal"
+                android:minWidth="25px"
+                android:minHeight="25px"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+                android:id="@+id/linearLayout1">
+				<TextView
+                    android:text="В город"
+                    android:textSize="24sp"
+                    android:textColor="@android:color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+                    android:id="@+id/textView1" 
+            />
+				<EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+                    android:id="@+id/destinationCity"
+                    android:enabled="false"/>
+			</LinearLayout>
+		</RelativeLayout>
+		<RelativeLayout
+            android:layout_weight="2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="25px"
+            android:minHeight="25px"
+            android:id="@+id/relativeLayout1">
+			<LinearLayout
+                android:orientation="horizontal"
+                android:minWidth="25px"
+                android:minHeight="25px"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:enabled="false"/>
-            <Button
+                android:id="@+id/linearLayout1">
+				<TextView
+                android:id="@+id/currentDateTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Выбрать время"
-                android:id="@+id/setDepartureTime" />
-        </GridLayout>
-    </LinearLayout>
+                android:textSize="18sp"
+                    android:text="Время не указано"/>
+            />
+				<Button
+                android:id="@+id/timeButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Изменить время"
+                android:onClick="setTime" />
+			</LinearLayout>
+		</RelativeLayout>
+		<RelativeLayout
+            android:layout_weight="2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="25px"
+            android:minHeight="25px"
+            android:id="@+id/relativeLayout1">
+			<LinearLayout
+                android:orientation="horizontal"
+                android:minWidth="25px"
+                android:minHeight="25px"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/linearLayout1">
+				<TextView
+                android:id="@+id/destinationDateTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                    android:text="Дата не указано"/>
+            />
+				<Button
+                android:id="@+id/setDestinationDateButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+                android:text="Изменить дату"
+                android:onClick="setDate"  />
+			</LinearLayout>
+		</RelativeLayout>
+		
+		
+	</LinearLayout>
 </RelativeLayout>
