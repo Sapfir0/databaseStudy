@@ -38,7 +38,6 @@ namespace testForAndroid
 
             var cities = JsonConvert.DeserializeObject<List<CitiesList>>(allCitiesInfo); // можно наверно добавить лямбду, где десериализовать в лист строк, и братьтолько name
 
-
             List<string> stringCityes = new List<string>();
             for(int i=0; i<cities.Count; i++) {
                 stringCityes.Add(cities[i].Name);
@@ -54,7 +53,6 @@ namespace testForAndroid
             autoCompleteDestinationCityView.Adapter = autoCompleteAdapter;
             Button goToSetTimeToTicket = FindViewById<Button>(Resource.Id.goSetTimeBtn);
             goToSetTimeToTicket.Click += ToSetTimeToTicket;
-
 
         }
 

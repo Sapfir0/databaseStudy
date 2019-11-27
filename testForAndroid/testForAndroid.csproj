@@ -61,14 +61,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AbstractTable.cs" />
-    <Compile Include="Cities.cs" />
     <Compile Include="CitiesList.cs" />
-    <Compile Include="Cruise.cs" />
     <Compile Include="DatabaseModels.cs" />
-    <Compile Include="MainActivity.cs" />
+    <Compile Include="Activitys\MainActivity.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SetTimeTicketActivity.cs" />
+    <Compile Include="Activitys\SetTimeTicketActivity.cs" />
   </ItemGroup>
   <ItemGroup>
     <AndroidAsset Include="Assets\russian-cities.json" />

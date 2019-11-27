@@ -90,17 +90,17 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/linearLayout1">
 				<TextView
-                android:id="@+id/destinationtTime"
+                android:id="@+id/arrivalDateTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
-                    android:text="Время не указано"/>
+                    android:text="Дата/время отправления"/>
             />
 				<Button
-                android:id="@+id/setDestinationTimeButton"
+                android:id="@+id/setArrivalDateTimeButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Изменить время"
+                android:text="Изменить"
                 android:onClick="setTime" />
 			</LinearLayout>
 		</RelativeLayout>
@@ -119,17 +119,17 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/linearLayout1">
 				<TextView
-                android:id="@+id/destinationDate"
+                android:id="@+id/destinationDateTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
-                    android:text="Дата не указано"/>
+                    android:text="Дата/время прибытия"/>
             />
 				<Button
-                android:id="@+id/setDestinationDateButton"
+                android:id="@+id/setDestinationDateTimeButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-                android:text="Изменить дату"
+                android:text="Изменить"
                 android:onClick="setDate"  />
 			</LinearLayout>
 		</RelativeLayout>
