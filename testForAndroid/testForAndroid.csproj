@@ -62,6 +62,7 @@
   <ItemGroup>
     <Compile Include="AbstractTable.cs" />
     <Compile Include="CitiesList.cs" />
+    <Compile Include="Class1.cs" />
     <Compile Include="DatabaseModels.cs" />
     <Compile Include="Activitys\MainActivity.cs" />
     <Compile Include="Resources\Resource.designer.cs" />

@@ -6,13 +6,15 @@ namespace testForAndroid {
         [PrimaryKey, AutoIncrement]
         public int id { get; set; }
         public string name { get; set; }
-        public string country { get; set; }
+        public string country { get; set; } = "Russia";
     }
 
     class Cruises {
         [PrimaryKey, AutoIncrement]
         public int id { get; set; }
+        [NotNull]
         public DateTime departureTime { get; set; }
+        [NotNull]
         public DateTime arrivingTime { get; set; }
         public int trainId { get; set; }
         public int crewId { get; set; }

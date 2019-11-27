@@ -30,6 +30,7 @@ namespace testForAndroid {
         }
 
         public AbstractTable() {
+            _tableConcrete = new T();
             db = SetConnection();
             CreateTable();
         }
