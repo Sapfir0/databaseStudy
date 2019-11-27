@@ -3374,40 +3374,40 @@ namespace testForAndroid
 			public const int CTRL = 2131230721;
 			
 			// aapt resource value: 0x7F080037
-			public const int currentDateTime = 2131230775;
+			public const int custom = 2131230775;
 			
 			// aapt resource value: 0x7F080038
-			public const int custom = 2131230776;
+			public const int customPanel = 2131230776;
 			
 			// aapt resource value: 0x7F080039
-			public const int customPanel = 2131230777;
+			public const int decor_content_parent = 2131230777;
 			
 			// aapt resource value: 0x7F08003A
-			public const int decor_content_parent = 2131230778;
+			public const int default_activity_button = 2131230778;
 			
 			// aapt resource value: 0x7F08003B
-			public const int default_activity_button = 2131230779;
+			public const int design_bottom_sheet = 2131230779;
 			
 			// aapt resource value: 0x7F08003C
-			public const int design_bottom_sheet = 2131230780;
+			public const int design_menu_item_action_area = 2131230780;
 			
 			// aapt resource value: 0x7F08003D
-			public const int design_menu_item_action_area = 2131230781;
+			public const int design_menu_item_action_area_stub = 2131230781;
 			
 			// aapt resource value: 0x7F08003E
-			public const int design_menu_item_action_area_stub = 2131230782;
+			public const int design_menu_item_text = 2131230782;
 			
 			// aapt resource value: 0x7F08003F
-			public const int design_menu_item_text = 2131230783;
+			public const int design_navigation_view = 2131230783;
 			
 			// aapt resource value: 0x7F080040
-			public const int design_navigation_view = 2131230784;
+			public const int destinationCity = 2131230784;
 			
 			// aapt resource value: 0x7F080041
-			public const int destinationCity = 2131230785;
+			public const int destinationDate = 2131230785;
 			
 			// aapt resource value: 0x7F080042
-			public const int destinationDateTime = 2131230786;
+			public const int destinationtTime = 2131230786;
 			
 			// aapt resource value: 0x7F080043
 			public const int disableHome = 2131230787;
@@ -3661,119 +3661,119 @@ namespace testForAndroid
 			// aapt resource value: 0x7F080094
 			public const int setDestinationDateButton = 2131230868;
 			
+			// aapt resource value: 0x7F080095
+			public const int setDestinationTimeButton = 2131230869;
+			
 			// aapt resource value: 0x7F080004
 			public const int SHIFT = 2131230724;
 			
-			// aapt resource value: 0x7F080095
-			public const int shortcut = 2131230869;
-			
 			// aapt resource value: 0x7F080096
-			public const int showCustom = 2131230870;
+			public const int shortcut = 2131230870;
 			
 			// aapt resource value: 0x7F080097
-			public const int showHome = 2131230871;
+			public const int showCustom = 2131230871;
 			
 			// aapt resource value: 0x7F080098
-			public const int showTitle = 2131230872;
+			public const int showHome = 2131230872;
 			
 			// aapt resource value: 0x7F080099
-			public const int smallLabel = 2131230873;
+			public const int showTitle = 2131230873;
 			
 			// aapt resource value: 0x7F08009A
-			public const int snackbar_action = 2131230874;
+			public const int smallLabel = 2131230874;
 			
 			// aapt resource value: 0x7F08009B
-			public const int snackbar_text = 2131230875;
+			public const int snackbar_action = 2131230875;
 			
 			// aapt resource value: 0x7F08009C
-			public const int snap = 2131230876;
+			public const int snackbar_text = 2131230876;
 			
 			// aapt resource value: 0x7F08009D
-			public const int snapMargins = 2131230877;
+			public const int snap = 2131230877;
 			
 			// aapt resource value: 0x7F08009E
-			public const int sourceCity = 2131230878;
+			public const int snapMargins = 2131230878;
 			
 			// aapt resource value: 0x7F08009F
-			public const int spacer = 2131230879;
+			public const int sourceCity = 2131230879;
 			
 			// aapt resource value: 0x7F0800A0
-			public const int split_action_bar = 2131230880;
+			public const int spacer = 2131230880;
 			
 			// aapt resource value: 0x7F0800A1
-			public const int src_atop = 2131230881;
+			public const int split_action_bar = 2131230881;
 			
 			// aapt resource value: 0x7F0800A2
-			public const int src_in = 2131230882;
+			public const int src_atop = 2131230882;
 			
 			// aapt resource value: 0x7F0800A3
-			public const int src_over = 2131230883;
+			public const int src_in = 2131230883;
 			
 			// aapt resource value: 0x7F0800A4
-			public const int start = 2131230884;
+			public const int src_over = 2131230884;
 			
 			// aapt resource value: 0x7F0800A5
-			public const int stretch = 2131230885;
+			public const int start = 2131230885;
 			
 			// aapt resource value: 0x7F0800A6
-			public const int submenuarrow = 2131230886;
+			public const int stretch = 2131230886;
 			
 			// aapt resource value: 0x7F0800A7
-			public const int submit_area = 2131230887;
+			public const int submenuarrow = 2131230887;
+			
+			// aapt resource value: 0x7F0800A8
+			public const int submit_area = 2131230888;
 			
 			// aapt resource value: 0x7F080005
 			public const int SYM = 2131230725;
 			
-			// aapt resource value: 0x7F0800A8
-			public const int tabMode = 2131230888;
-			
 			// aapt resource value: 0x7F0800A9
-			public const int tag_transition_group = 2131230889;
+			public const int tabMode = 2131230889;
 			
 			// aapt resource value: 0x7F0800AA
-			public const int tag_unhandled_key_event_manager = 2131230890;
+			public const int tag_transition_group = 2131230890;
 			
 			// aapt resource value: 0x7F0800AB
-			public const int tag_unhandled_key_listeners = 2131230891;
+			public const int tag_unhandled_key_event_manager = 2131230891;
 			
 			// aapt resource value: 0x7F0800AC
-			public const int text = 2131230892;
+			public const int tag_unhandled_key_listeners = 2131230892;
 			
 			// aapt resource value: 0x7F0800AD
-			public const int text2 = 2131230893;
+			public const int text = 2131230893;
 			
 			// aapt resource value: 0x7F0800AE
-			public const int textGrid = 2131230894;
-			
-			// aapt resource value: 0x7F0800B4
-			public const int textinput_counter = 2131230900;
-			
-			// aapt resource value: 0x7F0800B5
-			public const int textinput_error = 2131230901;
-			
-			// aapt resource value: 0x7F0800B6
-			public const int textinput_helper_text = 2131230902;
+			public const int text2 = 2131230894;
 			
 			// aapt resource value: 0x7F0800AF
-			public const int textSpacerNoButtons = 2131230895;
+			public const int textGrid = 2131230895;
 			
-			// aapt resource value: 0x7F0800B0
-			public const int textSpacerNoTitle = 2131230896;
+			// aapt resource value: 0x7F0800B5
+			public const int textinput_counter = 2131230901;
 			
-			// aapt resource value: 0x7F0800B1
-			public const int textStart = 2131230897;
-			
-			// aapt resource value: 0x7F0800B2
-			public const int textView1 = 2131230898;
-			
-			// aapt resource value: 0x7F0800B3
-			public const int text_input_password_toggle = 2131230899;
+			// aapt resource value: 0x7F0800B6
+			public const int textinput_error = 2131230902;
 			
 			// aapt resource value: 0x7F0800B7
-			public const int time = 2131230903;
+			public const int textinput_helper_text = 2131230903;
+			
+			// aapt resource value: 0x7F0800B0
+			public const int textSpacerNoButtons = 2131230896;
+			
+			// aapt resource value: 0x7F0800B1
+			public const int textSpacerNoTitle = 2131230897;
+			
+			// aapt resource value: 0x7F0800B2
+			public const int textStart = 2131230898;
+			
+			// aapt resource value: 0x7F0800B3
+			public const int textView1 = 2131230899;
+			
+			// aapt resource value: 0x7F0800B4
+			public const int text_input_password_toggle = 2131230900;
 			
 			// aapt resource value: 0x7F0800B8
-			public const int timeButton = 2131230904;
+			public const int time = 2131230904;
 			
 			// aapt resource value: 0x7F0800B9
 			public const int title = 2131230905;

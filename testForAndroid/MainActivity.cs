@@ -7,7 +7,6 @@ using Android.Support.Design.Widget;
 using Android.Support.V7.App;
 using Android.Views;
 using Android.Widget;
-using controlWork;
 using SQLite;
 using System.Collections.Generic;
 using Android.Content;
@@ -30,14 +29,7 @@ namespace testForAndroid
             SetSupportActionBar(toolbar);
 
 
-            string databaseName = "database.db";
-            string databasePath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
-            string completePath = Path.Combine(databasePath, databaseName);
-            var db = new SQLiteConnection(completePath);
-
-            db.CreateTables<Citys, Trains,
-                Companys, Employees, Cruises>();
-            db.CreateTables<TrainstationsSource, TrainstationsDestination>();
+           
 
 
             string allCitiesInfo;

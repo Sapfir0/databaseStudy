@@ -11,6 +11,6 @@ using Android.Views;
 using Android.Widget;
 
 namespace testForAndroid {
-    class DatabaseController {
+    class Cruise {
     }
 }

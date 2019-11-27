@@ -90,14 +90,14 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/linearLayout1">
 				<TextView
-                android:id="@+id/currentDateTime"
+                android:id="@+id/destinationtTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
                     android:text="Время не указано"/>
             />
 				<Button
-                android:id="@+id/timeButton"
+                android:id="@+id/setDestinationTimeButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Изменить время"
@@ -119,7 +119,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/linearLayout1">
 				<TextView
-                android:id="@+id/destinationDateTime"
+                android:id="@+id/destinationDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="18sp"

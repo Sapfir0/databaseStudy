@@ -1,15 +1,7 @@
 ﻿using System;
 using SQLite;
 
-namespace controlWork
-{
-    public class Citys
-    {
-        [PrimaryKey, AutoIncrement]
-        public int id { get; set; }
-        public string name { get; set; }
-        public string country { get; set; }
-    }
+namespace testForAndroid {
 
     public class Trains
     {

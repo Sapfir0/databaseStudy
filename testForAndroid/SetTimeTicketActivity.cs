@@ -20,15 +20,29 @@ namespace testForAndroid
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.SetTimeTicketLayout);
 
-            String sourceCity = Intent.GetStringExtra("sourceCity");
-            String destinationCity = Intent.GetStringExtra("destinationCity");
+            string sourceCity = Intent.GetStringExtra("sourceCity");
+            string destinationCity = Intent.GetStringExtra("destinationCity");
 
-            //var sourceCityLabel = FindViewById<EditText>(Resource.Id.sourceCity);
-            //var destinationCityLabel = FindViewById<EditText>(Resource.Id.destinationCity);
+            var sourceCityLabel = FindViewById<EditText>(Resource.Id.sourceCity);
+            var destinationCityLabel = FindViewById<EditText>(Resource.Id.destinationCity);
 
-            //sourceCityLabel.Text = sourceCity;
-            //destinationCityLabel.Text = destinationCity;
+            sourceCityLabel.Text = sourceCity;
+            destinationCityLabel.Text = destinationCity;
 
+
+            // пока не будем брать из ui инфу о времени
+            Cities source = new Cities(sourceCity);
+            Cities dest = new Cities(destinationCity);
+            dest.InsertCity();
+            source.InsertCity();
+
+            //Toast.MakeText(this, databaseController.GetCity(dest.id).name,  ToastLength.Short).Show();
+            //Toast.MakeText(this, databaseController.GetCity(source.id).name, ToastLength.Short).Show();
+
+            //Cruises cruise = new Cruises();
+            //cruise.departureTime = DateTime.Now;
+            //cruise.arrivingTime = DateTime.Now.AddDays(-1);
+            //databaseController.InsertCrus
 
             //Button setArrivalTime = FindViewById<Button>(Resource.Id.setArrivalTime);
             //setArrivalTime.Click += ToSetArrivalTimeToTicket;
@@ -38,14 +52,6 @@ namespace testForAndroid
 
         }
 
-        //public void ToSetArrivalTimeToTicket(object sender, EventArgs e) {
-        //    var intent = new Intent(this, typeof(SetArrivalTimeActivity));
-        //    StartActivity(intent);
-        //}
 
-        //public void ToSetDepartureTimeToTicket(object sender, EventArgs e) {
-        //    var intent = new Intent(this, typeof(SetDepartureTimeActivity));
-        //    StartActivity(intent);
-        //}
     }
 }
