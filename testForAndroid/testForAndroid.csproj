@@ -61,10 +61,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AbstractTable.cs" />
-    <Compile Include="CitiesList.cs" />
-    <Compile Include="Class1.cs" />
+    <Compile Include="Activitys\Activity1.cs" />
+    <Compile Include="Activitys\SuccessLayoutActivity.cs" />
+    <Compile Include="Alert.cs" />
+    <Compile Include="CitiesListAdapter.cs" />
     <Compile Include="DatabaseModels.cs" />
     <Compile Include="Activitys\MainActivity.cs" />
+    <Compile Include="DatePickerFragment.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Activitys\SetTimeTicketActivity.cs" />
@@ -130,6 +133,12 @@
     <AndroidResource Include="Resources\layout\SetTimeTicketLayout.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\SuccessLayout.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\SetTimeTicketLayoutAbstract.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

@@ -1,139 +1,170 @@
 <RelativeLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:app="http://schemas.android.com/apk/res-auto"
-	xmlns:tools="http://schemas.android.com/tools"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_main">
-	<TextView
+
+          <LinearLayout
+        android:orientation="vertical"
+        android:layout_margin="6dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"> 
+
+    </LinearLayout>  
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
         android:id="@+id/upperList"/>
-	<LinearLayout
+    <LinearLayout
         android:orientation="vertical"
         android:weightSum="10"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:minWidth="25px"
         android:minHeight="25px">
-		<RelativeLayout
+        <RelativeLayout
             android:layout_weight="2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:minWidth="25px"
             android:minHeight="25px"
-            android:id="@+id/relativeLayout1">
-			<LinearLayout
+            >
+            <LinearLayout
                 android:orientation="horizontal"
                 android:minWidth="25px"
                 android:minHeight="25px"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/linearLayout1">
-				<TextView
+                >
+                <TextView
                     android:text="Из города"
                     android:textSize="24sp"
                     android:textColor="@android:color/black"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:id="@+id/textView1" 
             />
-				<EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:id="@+id/sourceCity"
-                    android:enabled="false"/>
-			</LinearLayout>
-		</RelativeLayout>
-		<RelativeLayout
+                    android:enabled="false"
+                    android:textSize="18sp"
+                    android:textColor="@android:color/black"
+/>
+            </LinearLayout>
+        </RelativeLayout>
+        <RelativeLayout
             android:layout_weight="2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:minWidth="25px"
             android:minHeight="25px"
-            android:id="@+id/relativeLayout1">
-			<LinearLayout
+            >
+            <LinearLayout
                 android:orientation="horizontal"
                 android:minWidth="25px"
                 android:minHeight="25px"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-                android:id="@+id/linearLayout1">
-				<TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                >
+                <TextView
                     android:text="В город"
                     android:textSize="24sp"
                     android:textColor="@android:color/black"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:id="@+id/textView1" 
+                    
             />
-				<EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:id="@+id/destinationCity"
+                    android:enabled="false"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp"/>
+            </LinearLayout>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_weight="2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="25px"
+            android:minHeight="25px"
+            android:id="@+id/relativeLayout1">
+            <LinearLayout
+                android:orientation="horizontal"
+                android:minWidth="25px"
+                android:minHeight="25px"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                >
+                <EditText
+                    android:id="@+id/departureDateTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Дата/время отправления"
+                    android:textSize="18sp"
+                    android:textColor="@android:color/black"
                     android:enabled="false"/>
-			</LinearLayout>
-		</RelativeLayout>
-		<RelativeLayout
+                <Button
+                    android:id="@+id/setDepartureDateTimeButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Изменить" />
+            </LinearLayout>
+        </RelativeLayout>
+        <RelativeLayout
             android:layout_weight="2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:minWidth="25px"
             android:minHeight="25px"
-            android:id="@+id/relativeLayout1">
-			<LinearLayout
+            >
+            <LinearLayout
                 android:orientation="horizontal"
                 android:minWidth="25px"
                 android:minHeight="25px"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/linearLayout1">
-				<TextView
-                android:id="@+id/departureDateTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="18sp"
-                    android:text="Дата/время отправления"/>
-            />
-				<Button
-                android:id="@+id/setDepartureDateTimeButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Изменить"
-                android:onClick="setTime" />
-			</LinearLayout>
-		</RelativeLayout>
-		<RelativeLayout
-            android:layout_weight="2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:minWidth="25px"
-            android:minHeight="25px"
-            android:id="@+id/relativeLayout1">
-			<LinearLayout
-                android:orientation="horizontal"
-                android:minWidth="25px"
-                android:minHeight="25px"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/linearLayout1">
-				<TextView
-                android:id="@+id/arrivalDateTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="18sp"
-                    android:text="Дата/время прибытия"/>
-            />
-				<Button
-                android:id="@+id/setArrivalDateTimeButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-                android:text="Изменить"
-                android:onClick="setDate"  />
-			</LinearLayout>
-		</RelativeLayout>
-		
-		
-	</LinearLayout>
+                >
+                <EditText
+                    android:id="@+id/arrivalDateTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp"
+                    android:text="Дата/время прибытия"
+                    android:enabled="false"/>
+                <Button
+                    android:id="@+id/setArrivalDateTimeButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Изменить"  />
+            </LinearLayout>
+        </RelativeLayout>
+
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <Button
+                android:id="@+id/applyOrderBtn"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:text="Ок, меня устраивает"  />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
 </RelativeLayout>

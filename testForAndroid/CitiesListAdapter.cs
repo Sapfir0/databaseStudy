@@ -11,7 +11,7 @@ using Android.Views;
 using Android.Widget;
 
 namespace testForAndroid {
-    class CitiesList {
+    class CitiesListAdapter {
         public string Name;
 
     }

@@ -7,7 +7,6 @@ using Android.Support.Design.Widget;
 using Android.Support.V7.App;
 using Android.Views;
 using Android.Widget;
-using SQLite;
 using System.Collections.Generic;
 using Android.Content;
 using Android.Content.Res;
@@ -19,8 +18,7 @@ namespace testForAndroid
     [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.NoActionBar", MainLauncher = true)]
     public class MainActivity : AppCompatActivity
     {
-        protected override void OnCreate(Bundle savedInstanceState)
-        {
+        protected override void OnCreate(Bundle savedInstanceState)  {
             base.OnCreate(savedInstanceState);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             SetContentView(Resource.Layout.activity_main);
@@ -28,15 +26,13 @@ namespace testForAndroid
             Android.Support.V7.Widget.Toolbar toolbar = FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.toolbar);
             SetSupportActionBar(toolbar);
 
-
-           
             string allCitiesInfo;
             AssetManager assets = Assets;
             using (StreamReader sr = new StreamReader(assets.Open("russian-cities.json"))) {
                 allCitiesInfo = sr.ReadToEnd();
             }
 
-            var cities = JsonConvert.DeserializeObject<List<CitiesList>>(allCitiesInfo); // можно наверно добавить лямбду, где десериализовать в лист строк, и братьтолько name
+            var cities = JsonConvert.DeserializeObject<List<CitiesListAdapter>>(allCitiesInfo); // можно наверно добавить лямбду, где десериализовать в лист строк, и братьтолько name
 
             List<string> stringCityes = new List<string>();
             for(int i=0; i<cities.Count; i++) {
@@ -56,36 +52,22 @@ namespace testForAndroid
 
         }
 
-        public override bool OnCreateOptionsMenu(IMenu menu)
-        {
+        public override bool OnCreateOptionsMenu(IMenu menu)  {
             MenuInflater.Inflate(Resource.Menu.menu_main, menu);
             return true;
         }
 
-        public void DisplayAlert(string title, string message, string buttonText="OK")
-        {
-            Android.App.AlertDialog.Builder dialog = new Android.App.AlertDialog.Builder(this);
-            Android.App.AlertDialog alert = dialog.Create();
-            alert.SetTitle(title);
-            alert.SetMessage(message);
-            alert.SetButton(buttonText, (c, ev) =>
-            {
-                alert.Cancel();
-            });
-            alert.Show();
-        }
 
 
-        public void ToSetTimeToTicket(object sender, EventArgs e)
-        {
+        public void ToSetTimeToTicket(object sender, EventArgs e)  {
             string destinationCity = FindViewById<AutoCompleteTextView>(Resource.Id.autocompleteDestinationCity).Text.ToString();
             string sourceCity = FindViewById<AutoCompleteTextView>(Resource.Id.autocompleteSourceCity).Text.ToString();
 
-            if (string.IsNullOrEmpty(destinationCity)) {
-                DisplayAlert("Error", "Укажи откуда едешь", "Я понял");
+            if (string.IsNullOrEmpty(sourceCity)) {
+                Alert.DisplayAlert(this, "Error", "Укажи откуда едешь", "Я понял");
             }
             else if (string.IsNullOrEmpty(destinationCity)) {
-                DisplayAlert("Error", "Укажи куда едешь", "Я понял");
+                Alert.DisplayAlert(this, "Error", "Укажи куда едешь", "Я понял");
             }
             else {
                 var intent = new Intent(this, typeof(SetTimeTicketActivity));

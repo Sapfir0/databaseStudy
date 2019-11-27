@@ -52,9 +52,9 @@ namespace testForAndroid {
             db.CreateTable<T>();
         }
 
-        //public T GetElement(int id) {
-        //    return db.Table<T>().Where(item => item.id == id).FirstOrDefault();
-        //}
+        public T GetElement(int id) { // TODO
+            return db.Get<T>(id);
+        }
 
         public int InsertElement() {
             int insertedId = db.Insert(_tableConcrete);
