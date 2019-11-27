@@ -2,7 +2,24 @@
 using SQLite;
 
 namespace testForAndroid {
+    class Cities {
+        [PrimaryKey, AutoIncrement]
+        public int id { get; set; }
+        public string name { get; set; }
+        public string country { get; set; }
+    }
 
+    class Cruises {
+        [PrimaryKey, AutoIncrement]
+        public int id { get; set; }
+        public DateTime departureTime { get; set; }
+        public DateTime arrivingTime { get; set; }
+        public int trainId { get; set; }
+        public int crewId { get; set; }
+        public int trainstationSourceId { get; set; }
+        public int trainstationDestinationId { get; set; }
+
+    }
     public class Trains
     {
         [PrimaryKey, AutoIncrement]

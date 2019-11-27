@@ -31,13 +31,19 @@ namespace testForAndroid
 
 
             // пока не будем брать из ui инфу о времени
-            Cities source = new Cities(sourceCity);
-            Cities dest = new Cities(destinationCity);
-            dest.InsertCity();
-            source.InsertCity();
+            var sourceCityTable = new AbstractTable<Cities>();
+            sourceCityTable.tableConcrete = new Cities();
+            sourceCityTable.tableConcrete.name = sourceCity;
+            
+            var destCityTable = new AbstractTable<Cities>();
+            destCityTable.tableConcrete = new Cities();
+            destCityTable.tableConcrete.name = destinationCity;
 
-            Toast.MakeText(this, source.GetCity(dest.id).name,  ToastLength.Short).Show();
-            Toast.MakeText(this, dest.GetCity(source.id).name, ToastLength.Short).Show();
+            destCityTable.InsertElement();
+            sourceCityTable.InsertElement();
+
+            //Toast.MakeText(this, source.GetCity(dest.id).name,  ToastLength.Short).Show();
+            //Toast.MakeText(this, dest.GetCity(source.id).name, ToastLength.Short).Show();
 
             //Cruises cruise = new Cruises();
             //cruise.departureTime = DateTime.Now;

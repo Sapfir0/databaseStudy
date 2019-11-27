@@ -14,13 +14,25 @@ using SQLite;
 using Environment = System.Environment;
 
 namespace testForAndroid {
-    class AbstractTable {
+
+    class AbstractTable<T> where T : new() {
+        private T _tableConcrete;
         protected static SQLiteConnection db;
+
+
+        public T tableConcrete {
+            get {
+                return _tableConcrete;
+            }
+            set {
+                _tableConcrete = new T();
+            }
+        }
 
         public AbstractTable() {
             db = SetConnection();
+            CreateTable();
         }
-
 
         public string GetDatabasePath(string databaseName = "database.db") {
 
@@ -35,10 +47,18 @@ namespace testForAndroid {
             return db;
         }
 
+        public void CreateTable() {
+            db.CreateTable<T>();
+        }
 
+        //public T GetElement(int id) {
+        //    return db.Table<T>().Where(item => item.id == id).FirstOrDefault();
+        //}
 
+        public int InsertElement() {
+            int insertedId = db.Insert(_tableConcrete);
+            return insertedId;
 
-
-
+        }
     }
 }
