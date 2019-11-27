@@ -3389,25 +3389,25 @@ namespace testForAndroid
 			public const int default_activity_button = 2131230779;
 			
 			// aapt resource value: 0x7F08003C
-			public const int design_bottom_sheet = 2131230780;
+			public const int departureDateTime = 2131230780;
 			
 			// aapt resource value: 0x7F08003D
-			public const int design_menu_item_action_area = 2131230781;
+			public const int design_bottom_sheet = 2131230781;
 			
 			// aapt resource value: 0x7F08003E
-			public const int design_menu_item_action_area_stub = 2131230782;
+			public const int design_menu_item_action_area = 2131230782;
 			
 			// aapt resource value: 0x7F08003F
-			public const int design_menu_item_text = 2131230783;
+			public const int design_menu_item_action_area_stub = 2131230783;
 			
 			// aapt resource value: 0x7F080040
-			public const int design_navigation_view = 2131230784;
+			public const int design_menu_item_text = 2131230784;
 			
 			// aapt resource value: 0x7F080041
-			public const int destinationCity = 2131230785;
+			public const int design_navigation_view = 2131230785;
 			
 			// aapt resource value: 0x7F080042
-			public const int destinationDateTime = 2131230786;
+			public const int destinationCity = 2131230786;
 			
 			// aapt resource value: 0x7F080043
 			public const int disableHome = 2131230787;
@@ -3662,7 +3662,7 @@ namespace testForAndroid
 			public const int setArrivalDateTimeButton = 2131230868;
 			
 			// aapt resource value: 0x7F080095
-			public const int setDestinationDateTimeButton = 2131230869;
+			public const int setDepartureDateTimeButton = 2131230869;
 			
 			// aapt resource value: 0x7F080004
 			public const int SHIFT = 2131230724;

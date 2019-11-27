@@ -48,12 +48,13 @@ namespace testForAndroid
             Button setArrivalTime = FindViewById<Button>(Resource.Id.setArrivalDateTimeButton);
             setArrivalTime.Click += SetArrivalDateTimeButton;
 
-            Button setDepartureTime = FindViewById<Button>(Resource.Id.setDestinationDateTimeButton);
+            Button setDepartureTime = FindViewById<Button>(Resource.Id.setDepartureDateTimeButton);
             setDepartureTime.Click += SetDestinationDateTimeButton;
 
         }
 
         public void SetArrivalDateTimeButton(object sender, EventArgs e) {
+            var _dateDisplay = FindViewById<TextView>(Resource.Id.arrivalDateTime);
             DatePickerFragment frag = DatePickerFragment.NewInstance(delegate (DateTime time) {
                 _dateDisplay.Text = time.ToLongDateString();
             });
@@ -61,6 +62,8 @@ namespace testForAndroid
         }
 
         public void SetDestinationDateTimeButton(object sender, EventArgs e) {
+            var _dateDisplay = FindViewById<TextView>(Resource.Id.departureDateTime);
+
             DatePickerFragment frag = DatePickerFragment.NewInstance(delegate (DateTime time) {
                 _dateDisplay.Text = time.ToLongDateString();
             });
