@@ -89,10 +89,37 @@ namespace testForAndroid {
 
 
             var intent = new Intent(this, typeof(SuccessLayoutActivity));
+            intent.PutExtra("destinationCity", destinationCity);
+            intent.PutExtra("sourceCity", sourceCity);
+            intent.PutExtra("arrivalDateTime", arrivalDateTime.ToString());
+            intent.PutExtra("departureDateTime", departureDateTime.ToString());
             StartActivity(intent);
 
         }
 
+        public void InitDB() {
+            var companyRow = new AbstractTable<Companys>();
+            
+            companyRow.NewRow.Number = 12345;
+            int companyId = companyRow.InsertElement(); // мы не должны создавать каждый раз одинаковую компанию
+
+            var crewRow = new AbstractTable<Crews>();
+            int crewId = crewRow.InsertElement();
+
+            var employeeRow = new AbstractTable<Employees>();
+            employeeRow.NewRow.FirstName = "Васян";
+            employeeRow.NewRow.LastName = "Васянович";
+            employeeRow.NewRow.CrewId = crewId;
+            employeeRow.NewRow.CompanyId = companyId;
+
+            var trainRow = new AbstractTable<Trains>();
+            trainRow.NewRow.CompanyId = companyId;
+            trainRow.NewRow.Number = 75743;
+            int trainId = trainRow.InsertElement();
+
+        }
+
+        // ахах
         public void WriteInDB(string sourceCity, string destinationCity, DateTime departureDateTime, DateTime arrivalDateTime) { //TODO поработать над функцией
             // записываем город в таблицу городов, если такого еще нет
             // создать TrainstationsSource/Destination, название вокзала можно просто генерить из названия города + "1" или "Пассажирский"
@@ -116,40 +143,23 @@ namespace testForAndroid {
                 destCityId = destCityRow.InsertElement();
             }
 
-
+            // я же аутест, я не понимаю как контролировать бд снаружи, а метод я однажды уже вызвал. Так что вызова больше не будет
             var destTrainstationRow = new AbstractTable<TrainstationsDestination>();  // мы не должны создавать каждый раз одинаковый вокзал
             destTrainstationRow.NewRow.Name = destinationCity + "1";
             destTrainstationRow.NewRow.CityId = destCityId;
+            destTrainstationRow.InsertElement();
 
             var sourceTrainstationRow = new AbstractTable<TrainstationsSource>();
             sourceTrainstationRow.NewRow.Name = sourceCity + "2";
             sourceTrainstationRow.NewRow.CityId = sourceCityId;
-
+            sourceTrainstationRow.InsertElement();
             // написать функцию инсерт if no exists
-            var companyRow = new AbstractTable<Companys>();
-            companyRow.NewRow.Number = 12345;
-            int companyId = companyRow.InsertElement(); // мы не должны создавать каждый раз одинаковую компанию
-
-            var crewRow = new AbstractTable<Crews>();
-            int crewId = crewRow.InsertElement(); 
-
-            var employeeRow = new AbstractTable<Employees>();
-            employeeRow.NewRow.FirstName = "Васян";
-            employeeRow.NewRow.LastName = "Васянович";
-            employeeRow.NewRow.CrewId = crewId;
-            employeeRow.NewRow.CompanyId = companyId;
-
-            var trainRow = new AbstractTable<Trains>();
-            trainRow.NewRow.CompanyId = companyId;
-            trainRow.NewRow.Number = 75743;
-            int trainId = trainRow.InsertElement();
-
-
+            
             var cruiseRow = new AbstractTable<Cruises>();
             cruiseRow.NewRow.ArrivingTime = arrivalDateTime;
             cruiseRow.NewRow.DepartureTime = departureDateTime;
-            cruiseRow.NewRow.CrewId = crewId;
-            cruiseRow.NewRow.TrainId = trainId;
+            cruiseRow.NewRow.CrewId = 0;
+            cruiseRow.NewRow.TrainId = 0; // ахах вот это лулз
             cruiseRow.NewRow.TrainstationDestinationId = destCityId;
             cruiseRow.NewRow.TrainstationSourceId = sourceCityId;
             cruiseRow.InsertElement();
@@ -181,6 +191,19 @@ namespace testForAndroid {
         public override bool OnCreateOptionsMenu(IMenu menu) {
             MenuInflater.Inflate(Resource.Menu.menu_main, menu);
             return true;
+        }
+
+
+        public override bool OnOptionsItemSelected(IMenuItem item) {
+            switch (item.ItemId) {
+                case Resource.Id.action_settings: {
+                        var intent = new Intent(this, typeof(AllOrdersActivity));
+                        StartActivity(intent);
+                        return true;
+                    }
+            }
+            return base.OnOptionsItemSelected(item);
+
         }
 
 

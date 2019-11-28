@@ -32,8 +32,8 @@ namespace testForAndroid {
         public AbstractTable() {
             _tableConcrete = new T();
             db = SetConnection();
-            CreateTable();
         }
+
 
         public string GetDatabasePath(string databaseName = "database.db") {
 
@@ -56,8 +56,16 @@ namespace testForAndroid {
             return db.Get<T>(id);
         }
 
+        public bool isEmpty() {
+            return db.Table<T>().Count() == 0;
+        }
+
         public List<T> GetAllElements() {
             return db.Table<T>().ToList();
+        }
+
+        public int CountOfElements() {
+            return db.Table<T>().Count();
         }
 
         public bool isCurrentCityExists(string existedParam) { // TODO переписать метод на более абстрактный
@@ -68,12 +76,15 @@ namespace testForAndroid {
             else {
                 return false;
             }
- 
         }
 
         public int InsertElement() {
             int insertedId = db.Insert(_tableConcrete);
             return insertedId;
+        }
+
+        public int InsertElementIfNotExists(T field, string value) { // то, что это стринг - не верно
+            return 0;
         }
     }
 }

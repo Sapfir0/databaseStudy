@@ -17,6 +17,31 @@ namespace testForAndroid {
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.SuccessLayout);
 
+
+            string sourceCity = Intent.GetStringExtra("sourceCity");
+            string destinationCity = Intent.GetStringExtra("destinationCity");
+            string departureDateTime = Intent.GetStringExtra("departureDateTime");
+            string arrivalDateTime = Intent.GetStringExtra("arrivalDateTime");
+            FindViewById<TextView>(Resource.Id.sourceCity).Text = sourceCity;
+            FindViewById<TextView>(Resource.Id.destinationCity).Text = destinationCity;
+            FindViewById<TextView>(Resource.Id.departureTime).Text = departureDateTime;
+            FindViewById<TextView>(Resource.Id.arrivalTime).Text = arrivalDateTime;
+
+            //var abs = new AbstractTable<Trains>();
+            //var train = abs.GetElement(abs.CountOfElements() - 1).Number;
+
+            var abs2 = new AbstractTable<TrainstationsDestination>();
+            bool empty = abs2.isEmpty();
+            var destTrain = abs2.GetElement(abs2.CountOfElements()).Name;
+
+
+            var abs3 = new AbstractTable<TrainstationsSource>();
+            var sourceTrain = abs3.GetElement(abs3.CountOfElements()).Name;
+
+            FindViewById<TextView>(Resource.Id.TrainstationSource).Text = sourceTrain;
+            FindViewById<TextView>(Resource.Id.TrainstationDestination).Text = destTrain;
+
+
         }
     }
 }

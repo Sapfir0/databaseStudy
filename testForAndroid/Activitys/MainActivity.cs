@@ -67,7 +67,6 @@ namespace testForAndroid {
         }
 
 
-
         public void ToSetTimeToTicket(object sender, EventArgs e) {
             string destinationCity = FindViewById<AutoCompleteTextView>(Resource.Id.autocompleteDestinationCity).Text.ToString();
             string sourceCity = FindViewById<AutoCompleteTextView>(Resource.Id.autocompleteSourceCity).Text.ToString();
