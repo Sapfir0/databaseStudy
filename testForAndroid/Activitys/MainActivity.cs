@@ -37,8 +37,7 @@ namespace testForAndroid {
                 stringCityes.Add(cities[i].Name);
             }
 
-            ArrayAdapter autoCompleteAdapter = new ArrayAdapter(this,
-                Resource.Layout.autoCompleteCities, stringCityes);
+            ArrayAdapter autoCompleteAdapter = new ArrayAdapter(this, Resource.Layout.autoCompleteCities, stringCityes);
             var autoCompleteSourceCityView = FindViewById<AutoCompleteTextView>(Resource.Id.autocompleteSourceCity);
             autoCompleteSourceCityView.Adapter = autoCompleteAdapter;
 

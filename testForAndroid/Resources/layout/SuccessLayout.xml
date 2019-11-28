@@ -11,23 +11,8 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/sourceCity"
+        android:text="Запись была успешно добавлена в БД"
     />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/destinationCity"
-    />
-        <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/departureDateTime"
-    />   
-        <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/arrivalDateTime"
-    />
 
 </RelativeLayout>

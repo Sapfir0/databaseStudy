@@ -89,17 +89,17 @@ namespace testForAndroid {
             }
 
             var sourceCityRow = new AbstractTable<Cities>();
-            sourceCityRow.tableConcrete.name = sourceCity;
+            sourceCityRow.TableConcrete.Name = sourceCity;
 
             var destCityRow = new AbstractTable<Cities>();
-            destCityRow.tableConcrete.name = destinationCity;
+            destCityRow.TableConcrete.Name = destinationCity;
 
             int destId = destCityRow.InsertElement();
             sourceCityRow.InsertElement();
 
             var cruiseTable = new AbstractTable<Cruises>();
-            cruiseTable.tableConcrete.arrivingTime = arrivalDate;
-            cruiseTable.tableConcrete.departureTime = departureDate;
+            cruiseTable.TableConcrete.ArrivingTime = arrivalDate;
+            cruiseTable.TableConcrete.DepartureTime = departureDate;
 
             cruiseTable.InsertElement();
                 

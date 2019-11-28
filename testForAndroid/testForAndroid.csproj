@@ -64,6 +64,7 @@
     <Compile Include="Activitys\AllOrdersActivity.cs" />
     <Compile Include="Activitys\SuccessLayoutActivity.cs" />
     <Compile Include="Alert.cs" />
+    <Compile Include="AllOrdersAdapter.cs" />
     <Compile Include="CitiesListAdapter.cs" />
     <Compile Include="DatabaseModels.cs" />
     <Compile Include="Activitys\MainActivity.cs" />
@@ -141,7 +142,10 @@
     <AndroidResource Include="Resources\layout\SetTimeTicketLayoutAbstract.xml" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\layout\AllOrders.xml" />
+    <AndroidResource Include="Resources\layout\AllOrdersLayout.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\AllOrdersLayoutForAdapterList.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

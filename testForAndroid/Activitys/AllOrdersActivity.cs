@@ -15,7 +15,7 @@ namespace testForAndroid {
     public class AllOrdersActivity : Activity {
         protected override void OnCreate(Bundle savedInstanceState) {
             base.OnCreate(savedInstanceState);
-            SetContentView(Resource.Layout.AllOrders);
+            SetContentView(Resource.Layout.AllOrdersLayout);
 
             var database = new AbstractTable<Cities>();
             var newList = database.GetAllElements();
@@ -23,10 +23,39 @@ namespace testForAndroid {
             for (int i = 0; i < newList.Count; i++) {
                 stringCityes.Add(newList[i].name);
             }
-            var ListAdapter = new ArrayAdapter<String>(this, Android.Resource.Layout.SimpleListItem1, stringCityes);
 
-            var autoCompleteSourceCityView = FindViewById<TextView>(Resource.Id.sourceCity);
-            autoCompleteSourceCityView.Adapter = ListAdapter;
+            var cruiseTable = new AbstractTable<Cruises>();
+            List<Cruises> cruises = cruiseTable.GetAllElements();
+            List<string> departureDate = new List<string>();
+            List<string> arrivalDate = new List<string>();
+            foreach (var item in cruises) {
+                departureDate.Add(item.departureTime.Date.ToString());
+                arrivalDate.Add(item.arrivingTime.Date.ToString());
+            }
+
+
+            var listView = FindViewById<ListView>(Resource.Id.listView);
+            var BaseExpandableListAdapter = new AllOrdersAdapter(this, stringCityes.ToArray());
+            listView.Adapter = BaseExpandableListAdapter;
+
+            var arrivalDateAdapter = new AllOrdersAdapter(this, arrivalDate.ToArray());
+            var departureDateAdapter = new AllOrdersAdapter(this, departureDate.ToArray());
+
+            listView.Adapter = arrivalDateAdapter;
+            listView.Adapter = departureDateAdapter;
+
+            //foreach (var item in cities) {
+            //    Console.Write("Название города:", item.name);
+            //    Console.Write(item.name);
+            //    Console.Write("\n");
+            //}
+
+            //foreach (var item in cruises) {
+            //    Console.Write("Время отбытия/прибытия");
+            //    Console.Write(item.departureTime);
+            //    Console.Write(item.arrivingTime);
+            //    Console.Write("\n");
+            //}
         }
     }
 }

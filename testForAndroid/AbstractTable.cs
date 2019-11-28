@@ -20,7 +20,7 @@ namespace testForAndroid {
         protected static SQLiteConnection db;
 
 
-        public T tableConcrete {
+        public T TableConcrete {
             get {
                 return _tableConcrete;
             }
