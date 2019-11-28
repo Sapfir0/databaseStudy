@@ -56,10 +56,13 @@ namespace testForAndroid {
             return db.Get<T>(id);
         }
 
+        public List<T> GetAllElements() {
+            return db.Table<T>().ToList();
+        }
+
         public int InsertElement() {
             int insertedId = db.Insert(_tableConcrete);
             return insertedId;
-
         }
     }
 }

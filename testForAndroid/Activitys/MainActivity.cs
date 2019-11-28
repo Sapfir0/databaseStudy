@@ -13,12 +13,10 @@ using Android.Content.Res;
 using Newtonsoft.Json;
 
 
-namespace testForAndroid
-{
+namespace testForAndroid {
     [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.NoActionBar", MainLauncher = true)]
-    public class MainActivity : AppCompatActivity
-    {
-        protected override void OnCreate(Bundle savedInstanceState)  {
+    public class MainActivity : AppCompatActivity {
+        protected override void OnCreate(Bundle savedInstanceState) {
             base.OnCreate(savedInstanceState);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             SetContentView(Resource.Layout.activity_main);
@@ -35,7 +33,7 @@ namespace testForAndroid
             var cities = JsonConvert.DeserializeObject<List<CitiesListAdapter>>(allCitiesInfo); // можно наверно добавить лямбду, где десериализовать в лист строк, и братьтолько name
 
             List<string> stringCityes = new List<string>();
-            for(int i=0; i<cities.Count; i++) {
+            for (int i = 0; i < cities.Count; i++) {
                 stringCityes.Add(cities[i].Name);
             }
 
@@ -52,24 +50,34 @@ namespace testForAndroid
 
         }
 
-        public override bool OnCreateOptionsMenu(IMenu menu)  {
+        public override bool OnCreateOptionsMenu(IMenu menu) {
             MenuInflater.Inflate(Resource.Menu.menu_main, menu);
             return true;
         }
 
+        public override bool OnOptionsItemSelected(IMenuItem item) {
+            switch (item.ItemId) {
+                case Resource.Id.action_settings: {
+                        var intent = new Intent(this, typeof(AllOrdersActivity));
+                        StartActivity(intent);
+                        return true;
+                    }
+            }
+            return base.OnOptionsItemSelected(item);
+
+        }
 
 
-        public void ToSetTimeToTicket(object sender, EventArgs e)  {
+
+        public void ToSetTimeToTicket(object sender, EventArgs e) {
             string destinationCity = FindViewById<AutoCompleteTextView>(Resource.Id.autocompleteDestinationCity).Text.ToString();
             string sourceCity = FindViewById<AutoCompleteTextView>(Resource.Id.autocompleteSourceCity).Text.ToString();
 
             if (string.IsNullOrEmpty(sourceCity)) {
                 Alert.DisplayAlert(this, "Error", "Укажи откуда едешь", "Я понял");
-            }
-            else if (string.IsNullOrEmpty(destinationCity)) {
+            } else if (string.IsNullOrEmpty(destinationCity)) {
                 Alert.DisplayAlert(this, "Error", "Укажи куда едешь", "Я понял");
-            }
-            else {
+            } else {
                 var intent = new Intent(this, typeof(SetTimeTicketActivity));
                 intent.PutExtra("destinationCity", destinationCity);
                 intent.PutExtra("sourceCity", sourceCity);
@@ -80,8 +88,7 @@ namespace testForAndroid
         }
 
 
-        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
-        {
+        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults) {
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);

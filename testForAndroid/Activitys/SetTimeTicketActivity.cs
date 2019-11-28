@@ -102,7 +102,7 @@ namespace testForAndroid {
             cruiseTable.tableConcrete.departureTime = departureDate;
 
             cruiseTable.InsertElement();
-
+                
 
             var intent = new Intent(this, typeof(SuccessLayoutActivity));
             StartActivity(intent);
