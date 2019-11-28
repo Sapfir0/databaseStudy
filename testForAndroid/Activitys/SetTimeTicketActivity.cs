@@ -68,44 +68,91 @@ namespace testForAndroid {
         }
 
         public void ApplyOrderListener(object sender, EventArgs e) {
-            var sourceCity = GetSourceCity();
-            var destinationCity = GetDestinationCity();
-            var departureDateTime = GetDepartureDateTime();
-            var arrivalDateTime = GetArrivalDateTime();
-
-            DateTime arrivalDate;
-            DateTime departureDate;
+            DateTime arrivalDateTime;
+            DateTime departureDateTime;
             try {
-                arrivalDate = Convert.ToDateTime(arrivalDateTime);
-                departureDate = Convert.ToDateTime(departureDateTime);
+                departureDateTime = Convert.ToDateTime(GetDepartureDateTime());
+                arrivalDateTime = Convert.ToDateTime(GetArrivalDateTime());
             } catch(FormatException) {
                 Alert.DisplayAlert(this, "Error", "Дата не выбрана");
                 return;
             }
 
-            if (departureDate > arrivalDate) {
+            if (departureDateTime > arrivalDateTime) {
                 Alert.DisplayAlert(this, "Error", "Дата прибытия должна быть позже даты отравления");
                 return;
             }
 
-            var sourceCityRow = new AbstractTable<Cities>();
-            sourceCityRow.TableConcrete.Name = sourceCity;
+            var sourceCity = GetSourceCity();
+            var destinationCity = GetDestinationCity();
+            WriteInDB(sourceCity, destinationCity, departureDateTime, arrivalDateTime);
 
-            var destCityRow = new AbstractTable<Cities>();
-            destCityRow.TableConcrete.Name = destinationCity;
-
-            int destId = destCityRow.InsertElement();
-            sourceCityRow.InsertElement();
-
-            var cruiseTable = new AbstractTable<Cruises>();
-            cruiseTable.TableConcrete.ArrivingTime = arrivalDate;
-            cruiseTable.TableConcrete.DepartureTime = departureDate;
-
-            cruiseTable.InsertElement();
-                
 
             var intent = new Intent(this, typeof(SuccessLayoutActivity));
             StartActivity(intent);
+
+        }
+
+        public void WriteInDB(string sourceCity, string destinationCity, DateTime departureDateTime, DateTime arrivalDateTime) { //TODO поработать над функцией
+            // записываем город в таблицу городов, если такого еще нет
+            // создать TrainstationsSource/Destination, название вокзала можно просто генерить из названия города + "1" или "Пассажирский"
+            // CityId будет ссылаться на город с тем же названием
+            // создать компанию с рандомным номером(можно например РЖД и использовать его id везде)
+            // сгенерить несколько сотдников(запонмить сколько сгенерилось), и создать команду
+            // создать поезд с рандомным номером и юзнуть айди компании, запомнить айди поезда
+            // !!! создать рейс с айди поезда, айди команды, айди двух вокзалов и выставить время от юзера
+            var sourceCityRow = new AbstractTable<Cities>();
+            int sourceCityId = 0;
+            int destCityId = 0;
+
+            if (!sourceCityRow.isCurrentCityExists(sourceCity)) {
+                sourceCityRow.NewRow.Name = sourceCity;
+                sourceCityId = sourceCityRow.InsertElement();
+            }
+
+            var destCityRow = new AbstractTable<Cities>();
+            if (!destCityRow.isCurrentCityExists(destinationCity)) {
+                destCityRow.NewRow.Name = destinationCity;
+                destCityId = destCityRow.InsertElement();
+            }
+
+
+            var destTrainstationRow = new AbstractTable<TrainstationsDestination>();  // мы не должны создавать каждый раз одинаковый вокзал
+            destTrainstationRow.NewRow.Name = destinationCity + "1";
+            destTrainstationRow.NewRow.CityId = destCityId;
+
+            var sourceTrainstationRow = new AbstractTable<TrainstationsSource>();
+            sourceTrainstationRow.NewRow.Name = sourceCity + "2";
+            sourceTrainstationRow.NewRow.CityId = sourceCityId;
+
+            // написать функцию инсерт if no exists
+            var companyRow = new AbstractTable<Companys>();
+            companyRow.NewRow.Number = 12345;
+            int companyId = companyRow.InsertElement(); // мы не должны создавать каждый раз одинаковую компанию
+
+            var crewRow = new AbstractTable<Crews>();
+            int crewId = crewRow.InsertElement(); 
+
+            var employeeRow = new AbstractTable<Employees>();
+            employeeRow.NewRow.FirstName = "Васян";
+            employeeRow.NewRow.LastName = "Васянович";
+            employeeRow.NewRow.CrewId = crewId;
+            employeeRow.NewRow.CompanyId = companyId;
+
+            var trainRow = new AbstractTable<Trains>();
+            trainRow.NewRow.CompanyId = companyId;
+            trainRow.NewRow.Number = 75743;
+            int trainId = trainRow.InsertElement();
+
+
+            var cruiseRow = new AbstractTable<Cruises>();
+            cruiseRow.NewRow.ArrivingTime = arrivalDateTime;
+            cruiseRow.NewRow.DepartureTime = departureDateTime;
+            cruiseRow.NewRow.CrewId = crewId;
+            cruiseRow.NewRow.TrainId = trainId;
+            cruiseRow.NewRow.TrainstationDestinationId = destCityId;
+            cruiseRow.NewRow.TrainstationSourceId = sourceCityId;
+            cruiseRow.InsertElement();
 
         }
 

@@ -21,7 +21,7 @@ namespace testForAndroid {
             var newList = database.GetAllElements();
             List<string> stringCityes = new List<string>();
             for (int i = 0; i < newList.Count; i++) {
-                stringCityes.Add(newList[i].name);
+                stringCityes.Add(newList[i].Name);
             }
 
             var cruiseTable = new AbstractTable<Cruises>();
@@ -29,8 +29,8 @@ namespace testForAndroid {
             List<string> departureDate = new List<string>();
             List<string> arrivalDate = new List<string>();
             foreach (var item in cruises) {
-                departureDate.Add(item.departureTime.Date.ToString());
-                arrivalDate.Add(item.arrivingTime.Date.ToString());
+                departureDate.Add(item.DepartureTime.Date.ToString());
+                arrivalDate.Add(item.ArrivingTime.Date.ToString());
             }
 
 

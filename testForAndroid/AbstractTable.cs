@@ -20,7 +20,7 @@ namespace testForAndroid {
         protected static SQLiteConnection db;
 
 
-        public T TableConcrete {
+        public T NewRow {
             get {
                 return _tableConcrete;
             }
@@ -58,6 +58,17 @@ namespace testForAndroid {
 
         public List<T> GetAllElements() {
             return db.Table<T>().ToList();
+        }
+
+        public bool isCurrentCityExists(string existedParam) { // TODO переписать метод на более абстрактный
+            int foundVlues = db.Table<Cities>().Where(item => item.Name == existedParam).Count();
+            if (foundVlues > 0) {
+                return true;
+            }
+            else {
+                return false;
+            }
+ 
         }
 
         public int InsertElement() {
