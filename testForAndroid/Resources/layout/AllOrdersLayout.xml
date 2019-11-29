@@ -1,31 +1,39 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?> 
    
-    <LinearLayout     
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<TableLayout 
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+             android:id="@+id/tableLayout"
+             android:layout_width="fill_parent"
+             android:layout_height="fill_parent">
+        <TableRow>       
+            <TextView android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:text="Город отправления"
+                  android:gravity="center_horizontal"
+                  android:textAppearance="?android:attr/textAppearanceMedium"
+                />
 
+            <TextView android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:text="Город прибытия"
+                  android:gravity="center_horizontal"
+                  android:textAppearance="?android:attr/textAppearanceMedium"
+                />
+            <TextView android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:text="Время отправления"
+                  android:gravity="center_horizontal"
+                  android:textAppearance="?android:attr/textAppearanceMedium"
+                />
 
+                <TextView android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:text="Время прибытия"
+                  android:gravity="center_horizontal"
+                  android:textAppearance="?android:attr/textAppearanceMedium"
+                />
+    </TableRow>
+</TableLayout>
 
-    <ListView 
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/sourceCityListView"
-            />
-
-        <ListView 
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/destCityListView"
-            />
-
-        <ListView 
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/listView"
-            />
-    
-
-</LinearLayout>

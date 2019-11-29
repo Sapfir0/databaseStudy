@@ -38,22 +38,35 @@ namespace testForAndroid {
                 sourceCities.Add(sourceCity.Name);
             }
 
+            TableLayout tableLayout = FindViewById<TableLayout>(Resource.Id.tableLayout);
 
-            var layout = Resource.Layout.AllOrdersLayoutForAdapterList;
-            var sourceCityView = Resource.Id.sourceCity;
-            var sourceCityListAdapter = new AbstractAdapter(this, layout, sourceCityView, sourceCities.ToArray());
+            // это мне не нравится
+            for(int i=0; i<cruises.Count; i++) {
+                TextView textView1 = new TextView(this);
+                textView1.Text = sourceCities[i];
+                TextView textView2 = new TextView(this);
+                textView2.Text = destCities[i];
+                TextView textView3 = new TextView(this);
+                textView3.Text = departureDate[i];
+                TextView textView4 = new TextView(this);
+                textView4.Text = arrivalDate[i];
 
-            var destCityView = Resource.Id.destinationCity;
-            var destCityListAdapter = new AbstractAdapter(this, layout, destCityView, destCities.ToArray());
+                TableRow tableRow1 = new TableRow(this);
+
+                tableRow1.AddView(textView1);
+                tableRow1.AddView(textView2);
+                tableRow1.AddView(textView3);
+                tableRow1.AddView(textView4);
+
+                tableLayout.AddView(tableRow1);
+
+            }
 
 
 
-            var sourceCityListView = FindViewById<ListView>(Resource.Id.sourceCityListView);
-            sourceCityListView.Adapter = sourceCityListAdapter;
 
-            var destCityListView = FindViewById<ListView>(Resource.Id.destCityListView);
-            destCityListView.Adapter = destCityListAdapter;
 
+            SetContentView(tableLayout);
 
 
         }
