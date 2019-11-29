@@ -61,11 +61,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AbstractTable.cs" />
+    <Compile Include="Activitys\AbstractActivity.cs" />
     <Compile Include="Activitys\AllOrdersActivity.cs" />
     <Compile Include="Activitys\SuccessLayoutActivity.cs" />
     <Compile Include="Alert.cs" />
-    <Compile Include="AllOrdersAdapter.cs" />
-    <Compile Include="CitiesListAdapter.cs" />
+    <Compile Include="Adapters\CitiesListAdapter.cs" />
     <Compile Include="DatabaseModels.cs" />
     <Compile Include="Activitys\MainActivity.cs" />
     <Compile Include="DatePickerFragment.cs" />

@@ -15,7 +15,7 @@ using Newtonsoft.Json;
 
 namespace testForAndroid {
     [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.NoActionBar", MainLauncher = true)]
-    public class MainActivity : AppCompatActivity {
+    public class MainActivity : AbstractActivity {
         protected override void OnCreate(Bundle savedInstanceState) {
             base.OnCreate(savedInstanceState);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
@@ -48,23 +48,6 @@ namespace testForAndroid {
             autoCompleteDestinationCityView.Adapter = autoCompleteAdapter;
             Button goToSetTimeToTicket = FindViewById<Button>(Resource.Id.goSetTimeBtn);
             goToSetTimeToTicket.Click += ToSetTimeToTicket;
-
-        }
-
-        public override bool OnCreateOptionsMenu(IMenu menu) {
-            MenuInflater.Inflate(Resource.Menu.menu_main, menu);
-            return true;
-        }
-
-        public override bool OnOptionsItemSelected(IMenuItem item) {
-            switch (item.ItemId) {
-                case Resource.Id.action_settings: {
-                        var intent = new Intent(this, typeof(AllOrdersActivity));
-                        StartActivity(intent);
-                        return true;
-                    }
-            }
-            return base.OnOptionsItemSelected(item);
 
         }
 

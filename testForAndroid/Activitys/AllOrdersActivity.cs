@@ -12,7 +12,7 @@ using Android.Widget;
 
 namespace testForAndroid {
     [Activity(Label = "AllOrdersActivity")]
-    public class AllOrdersActivity : Activity {
+    public class AllOrdersActivity : AbstractActivity {
         protected override void OnCreate(Bundle savedInstanceState) {
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.AllOrdersLayout);
@@ -31,7 +31,7 @@ namespace testForAndroid {
                 arrivalDate.Add(item.ArrivingTime.Date.ToString());
 
                 var cityTable = new AbstractTable<Cities>();
-                var destCity = cityTable.GetElement(item.TrainstationDestinationId); // допускаем, что в городе один вокзал
+                var destCity = cityTable.GetElement(item.TrainstationDestinationId);
                 var sourceCity = cityTable.GetElement(item.TrainstationSourceId);
 
                 destCities.Add(destCity.Name);
@@ -40,34 +40,31 @@ namespace testForAndroid {
 
             TableLayout tableLayout = FindViewById<TableLayout>(Resource.Id.tableLayout);
 
-            // это мне не нравится
-            for(int i=0; i<cruises.Count; i++) {
-                TextView textView1 = new TextView(this);
-                textView1.Text = sourceCities[i];
-                TextView textView2 = new TextView(this);
-                textView2.Text = destCities[i];
-                TextView textView3 = new TextView(this);
-                textView3.Text = departureDate[i];
-                TextView textView4 = new TextView(this);
-                textView4.Text = arrivalDate[i];
-
-                TableRow tableRow1 = new TableRow(this);
-
-                tableRow1.AddView(textView1);
-                tableRow1.AddView(textView2);
-                tableRow1.AddView(textView3);
-                tableRow1.AddView(textView4);
-
-                tableLayout.AddView(tableRow1);
-
+            for (int i=0; i<cruises.Count; i++) {
+                CreateRow(tableLayout, sourceCities[i], destCities[i], departureDate[i], arrivalDate[i]);
             }
-
-
-
-
-
             SetContentView(tableLayout);
 
+        }
+
+        public void CreateRow(TableLayout tableLayout, string sourceCity, string destCity, string departureDate, string arrivalDate) {
+            TextView textView1 = new TextView(this);
+            textView1.Text = sourceCity;
+            TextView textView2 = new TextView(this);
+            textView2.Text = destCity;
+            TextView textView3 = new TextView(this);
+            textView3.Text = departureDate;
+            TextView textView4 = new TextView(this);
+            textView4.Text = arrivalDate;
+
+            TableRow tableRow1 = new TableRow(this);
+
+            tableRow1.AddView(textView1);
+            tableRow1.AddView(textView2);
+            tableRow1.AddView(textView3);
+            tableRow1.AddView(textView4);
+
+            tableLayout.AddView(tableRow1);
 
         }
     }

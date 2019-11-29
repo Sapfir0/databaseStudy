@@ -12,7 +12,7 @@ using Android.Widget;
 
 namespace testForAndroid {
     [Activity(Label = "SuccessLayoutActivity")]
-    public class SuccessLayoutActivity : Activity {
+    public class SuccessLayoutActivity : AbstractActivity {
         protected override void OnCreate(Bundle savedInstanceState) {
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.SuccessLayout);

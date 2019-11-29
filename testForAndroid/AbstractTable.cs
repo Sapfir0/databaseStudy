@@ -57,6 +57,7 @@ namespace testForAndroid {
             return db.Get<T>(id);
         }
 
+
         public static void DeleteAll() {
             string completePath =  GetDatabasePath();
             File.Delete(completePath);
