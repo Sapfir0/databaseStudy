@@ -32,10 +32,11 @@ namespace testForAndroid {
         public AbstractTable() {
             _tableConcrete = new T();
             db = SetConnection();
+            db.CreateTable<T>();
         }
 
 
-        public string GetDatabasePath(string databaseName = "database.db") {
+        public static string GetDatabasePath(string databaseName = "database.db") {
 
             string databasePath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
             string completePath = Path.Combine(databasePath, databaseName);
@@ -54,6 +55,11 @@ namespace testForAndroid {
 
         public T GetElement(int id) { // TODO
             return db.Get<T>(id);
+        }
+
+        public static void DeleteAll() {
+            string completePath =  GetDatabasePath();
+            File.Delete(completePath);
         }
 
         public bool isEmpty() {

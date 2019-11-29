@@ -5,7 +5,6 @@ namespace testForAndroid {
     class Cities {
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
-        [Unique] // для упрощения предположим, что одинаковых названий городов не может быть
         public string Name { get; set; }
         public string Country { get; set; } = "Russia";
     }
@@ -27,7 +26,6 @@ namespace testForAndroid {
     {
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
-        [Unique]
         public int Number { get; set; }
         public int CompanyId { get; set; }
     }
@@ -36,7 +34,6 @@ namespace testForAndroid {
     {
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
-        [Unique]
         public int Number { get; set; }
         public string Name { get; set; } = "РЖД";
     }
@@ -62,7 +59,6 @@ namespace testForAndroid {
     {
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
-        [Unique]
         public string Name { get; set; }
         public int Code { get; set; }
         public int CityId { get; set; }
@@ -72,7 +68,6 @@ namespace testForAndroid {
     {
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
-        [Unique]
         public string Name { get; set; }
         public int Code { get; set; }
         public int CityId { get; set; }

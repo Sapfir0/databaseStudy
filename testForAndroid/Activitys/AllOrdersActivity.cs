@@ -17,45 +17,67 @@ namespace testForAndroid {
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.AllOrdersLayout);
 
-            var database = new AbstractTable<Cities>();
-            var newList = database.GetAllElements();
-            List<string> stringCityes = new List<string>();
-            for (int i = 0; i < newList.Count; i++) {
-                stringCityes.Add(newList[i].Name);
-            }
+            //var bar = new AbstractTable<Cities>();
+            //var foo= bar.GetAllElements();
+            //foreach (var item in foo) {
+            //    Console.WriteLine(item.Name);
+            //}
+
+            List<string> departureDate = new List<string>();
+            List<string> arrivalDate = new List<string>();
+            List<string> sourceCities = new List<string>();
+            List<string> destCities = new List<string>();
+
 
             var cruiseTable = new AbstractTable<Cruises>();
             List<Cruises> cruises = cruiseTable.GetAllElements();
-            List<string> departureDate = new List<string>();
-            List<string> arrivalDate = new List<string>();
+            
             foreach (var item in cruises) {
                 departureDate.Add(item.DepartureTime.Date.ToString());
                 arrivalDate.Add(item.ArrivingTime.Date.ToString());
+                //var trainstationSTable = new AbstractTable<TrainstationsSource>();
+                //var trainstationDTable = new AbstractTable<TrainstationsDestination>();
+                //var destTrainstation = trainstationDTable.GetElement(item.TrainstationDestinationId);
+                //var sourceTrainstation = trainstationSTable.GetElement(item.TrainstationSourceId);
+
+                var cityTable = new AbstractTable<Cities>();
+                var destCity = cityTable.GetElement(item.TrainstationDestinationId);
+                var sourceCity = cityTable.GetElement(item.TrainstationSourceId);
+
+                destCities.Add(destCity.Name);
+                sourceCities.Add(sourceCity.Name);
             }
 
 
-            var listView = FindViewById<ListView>(Resource.Id.listView);
-            var BaseExpandableListAdapter = new AllOrdersAdapter(this, stringCityes.ToArray());
-            listView.Adapter = BaseExpandableListAdapter;
 
-            var arrivalDateAdapter = new AllOrdersAdapter(this, arrivalDate.ToArray());
-            var departureDateAdapter = new AllOrdersAdapter(this, departureDate.ToArray());
+            var layout = Resource.Layout.AllOrdersLayoutForAdapterList;
+            var sourceCityView = Resource.Id.sourceCity;
+            var sourceCityListAdapter = new AbstractAdapter(this, layout, sourceCityView, sourceCities.ToArray());
 
-            listView.Adapter = arrivalDateAdapter;
-            listView.Adapter = departureDateAdapter;
+            var destCityView = Resource.Id.destinationCity;
+            var destCityListAdapter = new AbstractAdapter(this, layout, destCityView, destCities.ToArray());
 
-            //foreach (var item in cities) {
-            //    Console.Write("Название города:", item.name);
-            //    Console.Write(item.name);
-            //    Console.Write("\n");
-            //}
+            for (int i=0; i<cruises.Count; i++) {
+                Console.Write(sourceCities[i]);
+            }
+            Console.WriteLine();
+            for (int i = 0; i < cruises.Count; i++) {
+                Console.Write(destCities[i]);
+            }
 
-            //foreach (var item in cruises) {
-            //    Console.Write("Время отбытия/прибытия");
-            //    Console.Write(item.departureTime);
-            //    Console.Write(item.arrivingTime);
-            //    Console.Write("\n");
-            //}
+
+            var sourceCityListView = FindViewById<ListView>(Resource.Id.sourceCityListView);
+            sourceCityListView.Adapter = sourceCityListAdapter;
+
+            //var destCityListView = FindViewById<ListView>(Resource.Id.destCityListView);
+            //destCityListView.Adapter = destCityListAdapter;
+
+            //var arrivalDateAdapter = new AllOrdersAdapter(this, arrivalDate.ToArray());
+            //var departureDateAdapter = new AllOrdersAdapter(this, departureDate.ToArray());
+
+            //listView.Adapter = arrivalDateAdapter;
+            //listView.Adapter = departureDateAdapter;
+
         }
     }
 }

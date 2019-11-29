@@ -110,10 +110,10 @@ namespace testForAndroid {
             employeeRow.NewRow.FirstName = "Васян";
             employeeRow.NewRow.LastName = "Васянович";
             employeeRow.NewRow.CrewId = crewId;
-            employeeRow.NewRow.CompanyId = companyId;
+            employeeRow.NewRow.CompanyId = 0;
 
             var trainRow = new AbstractTable<Trains>();
-            trainRow.NewRow.CompanyId = companyId;
+            trainRow.NewRow.CompanyId = 0;
             trainRow.NewRow.Number = 75743;
             int trainId = trainRow.InsertElement();
 
@@ -128,20 +128,26 @@ namespace testForAndroid {
             // сгенерить несколько сотдников(запонмить сколько сгенерилось), и создать команду
             // создать поезд с рандомным номером и юзнуть айди компании, запомнить айди поезда
             // !!! создать рейс с айди поезда, айди команды, айди двух вокзалов и выставить время от юзера
-            var sourceCityRow = new AbstractTable<Cities>();
-            int sourceCityId = 0;
-            int destCityId = 0;
 
-            if (!sourceCityRow.isCurrentCityExists(sourceCity)) {
+            InitDB();
+        
+
+            var sourceCityRow = new AbstractTable<Cities>();
+            int sourceCityId;
+            int destCityId;
+
+            //if (!sourceCityRow.isCurrentCityExists(sourceCity)) {
                 sourceCityRow.NewRow.Name = sourceCity;
-                sourceCityId = sourceCityRow.InsertElement();
-            }
+                sourceCityId = sourceCityRow.CountOfElements() + 1;
+                sourceCityRow.InsertElement();
+            //}
 
             var destCityRow = new AbstractTable<Cities>();
-            if (!destCityRow.isCurrentCityExists(destinationCity)) {
+            //if (!destCityRow.isCurrentCityExists(destinationCity)) {
                 destCityRow.NewRow.Name = destinationCity;
-                destCityId = destCityRow.InsertElement();
-            }
+                destCityId = destCityRow.CountOfElements() + 1;
+                destCityRow.InsertElement();
+            //}
 
             // я же аутест, я не понимаю как контролировать бд снаружи, а метод я однажды уже вызвал. Так что вызова больше не будет
             var destTrainstationRow = new AbstractTable<TrainstationsDestination>();  // мы не должны создавать каждый раз одинаковый вокзал
