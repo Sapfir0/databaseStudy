@@ -133,21 +133,15 @@ namespace testForAndroid {
         
 
             var sourceCityRow = new AbstractTable<Cities>();
-            int sourceCityId;
-            int destCityId;
 
-            //if (!sourceCityRow.isCurrentCityExists(sourceCity)) {
-                sourceCityRow.NewRow.Name = sourceCity;
-                sourceCityId = sourceCityRow.CountOfElements() + 1;
-                sourceCityRow.InsertElement();
-            //}
+            sourceCityRow.NewRow.Name = sourceCity;
+            int sourceCityId = sourceCityRow.CountOfElements() + 1;
+            sourceCityRow.InsertElement();
 
             var destCityRow = new AbstractTable<Cities>();
-            //if (!destCityRow.isCurrentCityExists(destinationCity)) {
-                destCityRow.NewRow.Name = destinationCity;
-                destCityId = destCityRow.CountOfElements() + 1;
-                destCityRow.InsertElement();
-            //}
+            destCityRow.NewRow.Name = destinationCity;
+            int destCityId = destCityRow.CountOfElements() + 1;
+            destCityRow.InsertElement();
 
             // я же аутест, я не понимаю как контролировать бд снаружи, а метод я однажды уже вызвал. Так что вызова больше не будет
             var destTrainstationRow = new AbstractTable<TrainstationsDestination>();  // мы не должны создавать каждый раз одинаковый вокзал
