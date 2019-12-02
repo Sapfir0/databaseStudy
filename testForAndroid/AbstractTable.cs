@@ -67,11 +67,6 @@ namespace testForAndroid {
             db.Delete<T>(id);
         }
 
-        public void DeleteCruiseWhere(int sourceCityId, int destCityId, DateTime departureDate, DateTime arrivalDate) {
-            db.Table<Cruises>().Delete(item => item.DepartureTime == departureDate && item.ArrivingTime == arrivalDate
-                                        && item.TrainstationDestinationId == destCityId && item.TrainstationSourceId == sourceCityId);
-        }
-
         public bool isEmpty() {
             return db.Table<T>().Count() == 0;
         }
