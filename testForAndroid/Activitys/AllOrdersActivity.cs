@@ -21,6 +21,7 @@ namespace testForAndroid {
             List<string> arrivalDate = new List<string>();
             List<string> sourceCities = new List<string>();
             List<string> destCities = new List<string>();
+            List<string> ids = new List<string>();
 
 
             var cruiseTable = new AbstractTable<Cruises>();
@@ -33,6 +34,7 @@ namespace testForAndroid {
                 var cityTable = new AbstractTable<Cities>();
                 var destCity = cityTable.GetElement(item.TrainstationDestinationId);
                 var sourceCity = cityTable.GetElement(item.TrainstationSourceId);
+                ids.Add(item.Id.ToString());
 
                 destCities.Add(destCity.Name);
                 sourceCities.Add(sourceCity.Name);
@@ -41,13 +43,15 @@ namespace testForAndroid {
             TableLayout tableLayout = FindViewById<TableLayout>(Resource.Id.tableLayout);
 
             for (int i=0; i<cruises.Count; i++) {
-                CreateRow(tableLayout, sourceCities[i], destCities[i], departureDate[i], arrivalDate[i]);
+                CreateRow(tableLayout, ids[i], sourceCities[i], destCities[i], departureDate[i], arrivalDate[i]);
             }
             SetContentView(tableLayout);
 
         }
 
-        public void CreateRow(TableLayout tableLayout, string sourceCity, string destCity, string departureDate, string arrivalDate) {
+        public void CreateRow(TableLayout tableLayout, string id, string sourceCity, string destCity, string departureDate, string arrivalDate) {
+            TextView textView0 = new TextView(this);
+            textView0.Text = id;
             TextView textView1 = new TextView(this);
             textView1.Text = sourceCity;
             TextView textView2 = new TextView(this);
@@ -59,12 +63,26 @@ namespace testForAndroid {
 
             TableRow tableRow1 = new TableRow(this);
 
+            tableRow1.AddView(textView0);
             tableRow1.AddView(textView1);
             tableRow1.AddView(textView2);
             tableRow1.AddView(textView3);
             tableRow1.AddView(textView4);
 
+            tableRow1.LongClick += DeleteRow;
             tableLayout.AddView(tableRow1);
+
+        }
+
+        private void DeleteRow(object sender, EventArgs e) {
+            TableLayout tableLayout = FindViewById<TableLayout>(Resource.Id.tableLayout);
+            TableRow row = (TableRow)sender;
+            string id = ((TextView)row.GetChildAt(0)).Text;
+
+            tableLayout.RemoveView(row);
+            var cruise = new AbstractTable<Cruises>();
+                
+            cruise.Delete(Convert.ToInt32(id));
 
         }
     }

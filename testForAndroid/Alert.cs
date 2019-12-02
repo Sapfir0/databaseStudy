@@ -23,5 +23,24 @@ namespace testForAndroid {
             alert.Show();
         }
 
+        public static bool DisplayConfirm(Context putThis, string title, string message) {
+            AlertDialog.Builder alert = new AlertDialog.Builder(putThis);
+            alert.SetTitle(title);
+            alert.SetMessage(message);
+            bool confirm = false;
+            alert.SetPositiveButton("Delete", (senderAlert, args) => {
+                Toast.MakeText(putThis, "Deleted!", ToastLength.Short).Show();
+                
+            });
+            alert.SetNegativeButton("Cancel", (senderAlert, args) => {
+                Toast.MakeText(putThis, "Cancelled!", ToastLength.Short).Show();
+                return;
+                confirm = false;
+            });
+            Dialog dialog = alert.Create();
+            dialog.Show();
+            return confirm;
+        }
+
     }
 }
