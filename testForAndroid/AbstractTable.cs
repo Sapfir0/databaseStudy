@@ -81,12 +81,8 @@ namespace testForAndroid {
 
         public bool isCurrentCityExists(string existedParam) { // TODO переписать метод на более абстрактный
             int foundVlues = db.Table<Cities>().Where(item => item.Name == existedParam).Count();
-            if (foundVlues > 0) {
-                return true;
-            }
-            else {
-                return false;
-            }
+            return foundVlues > 0;
+
         }
 
         public int InsertElement() {
@@ -94,8 +90,5 @@ namespace testForAndroid {
             return insertedId;
         }
 
-        public int InsertElementIfNotExists(T field, string value) { // то, что это стринг - не верно
-            return 0;
-        }
     }
 }

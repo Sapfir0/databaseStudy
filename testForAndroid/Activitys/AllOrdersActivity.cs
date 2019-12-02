@@ -74,16 +74,27 @@ namespace testForAndroid {
 
         }
 
+        TableRow currentRow;
         private void DeleteRow(object sender, EventArgs e) {
+            Alert alert = new Alert();
+            currentRow = (TableRow)sender;
+            alert.OnConfirm += Alert_OnConfirm;
+
+            string sourceCity = ((TextView)currentRow.GetChildAt(1)).Text;
+            string destCity = ((TextView)currentRow.GetChildAt(2)).Text;
+
+            alert.DisplayConfirm(this, "Удалить запись?", $"Будет удален заказанный билет \nиз {sourceCity} в {destCity}");
+
+        }
+
+        private void Alert_OnConfirm() {
             TableLayout tableLayout = FindViewById<TableLayout>(Resource.Id.tableLayout);
-            TableRow row = (TableRow)sender;
-            string id = ((TextView)row.GetChildAt(0)).Text;
+            
+            string id = ((TextView)currentRow.GetChildAt(0)).Text;
+            tableLayout.RemoveView(currentRow);
 
-            tableLayout.RemoveView(row);
             var cruise = new AbstractTable<Cruises>();
-                
             cruise.Delete(Convert.ToInt32(id));
-
         }
     }
 }
