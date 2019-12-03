@@ -9,6 +9,12 @@ namespace testForAndroid {
         public string Country { get; set; } = "Russia";
     }
 
+    class User { //аххах это будет работать только в моем контексте, т.к. у меня один юзер
+        [PrimaryKey, AutoIncrement]
+        public int Id { get; set; }
+        public int CruiseId { get; set; }
+    }
+
     class Cruises {
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
@@ -26,6 +32,7 @@ namespace testForAndroid {
     {
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
+        [Unique]
         public int Number { get; set; }
         public int CompanyId { get; set; }
     }
@@ -34,6 +41,7 @@ namespace testForAndroid {
     {
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
+        [Unique]
         public int Number { get; set; }
         public string Name { get; set; } = "РЖД";
     }

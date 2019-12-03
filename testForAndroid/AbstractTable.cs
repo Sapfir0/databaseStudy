@@ -82,12 +82,27 @@ namespace testForAndroid {
         public bool isCurrentCityExists(string existedParam) { // TODO переписать метод на более абстрактный
             int foundVlues = db.Table<Cities>().Where(item => item.Name == existedParam).Count();
             return foundVlues > 0;
+        }
 
+        public Cities ReturnCityByHisName(string name) {
+            var city = db.Table<Cities>().Where(item => item.Name == name).First();
+            return city;
+        }
+
+        public List<Cruises> GetAllCruisesWithId() {
+            var userList = db.Table<User>().ToList();
+            var ids = new List<int>();
+            for (int i = 0; i < userList.Count; i++) {
+                ids.Add(userList[i].CruiseId);
+            }
+            var values = db.Table<Cruises>().Where(item => ids.Contains(item.Id)).ToList();
+            return values;
         }
 
         public int InsertElement() {
-            int insertedId = db.Insert(_tableConcrete);
-            return insertedId;
+            var all = GetAllElements();
+            db.Insert(_tableConcrete);
+            return CountOfElements();
         }
 
     }

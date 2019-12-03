@@ -11,40 +11,30 @@ using Android.Views;
 using Android.Widget;
 
 namespace testForAndroid {
-    [Activity(Label = "AllOrdersActivity")]
-    public class AllOrdersActivity : AbstractActivity {
+    [Activity(Label = "Все заказы")]
+    public class AllOrdersActivity : Activity {
         protected override void OnCreate(Bundle savedInstanceState) {
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.AllOrdersLayout);
 
-            List<string> departureDate = new List<string>();
-            List<string> arrivalDate = new List<string>();
-            List<string> sourceCities = new List<string>();
-            List<string> destCities = new List<string>();
-            List<string> ids = new List<string>();
-
 
             var cruiseTable = new AbstractTable<Cruises>();
-            List<Cruises> cruises = cruiseTable.GetAllElements();
-            
-            foreach (var item in cruises) {
-                departureDate.Add(item.DepartureTime.Date.ToString());
-                arrivalDate.Add(item.ArrivingTime.Date.ToString());
-
-                var cityTable = new AbstractTable<Cities>();
-                var destCity = cityTable.GetElement(item.TrainstationDestinationId);
-                var sourceCity = cityTable.GetElement(item.TrainstationSourceId);
-                ids.Add(item.Id.ToString());
-
-                destCities.Add(destCity.Name);
-                sourceCities.Add(sourceCity.Name);
-            }
+            var cruises = cruiseTable.GetAllCruisesWithId();
+            //var cruisesTest = cruiseTable.GetAllElements();
 
             TableLayout tableLayout = FindViewById<TableLayout>(Resource.Id.tableLayout);
 
-            for (int i=0; i<cruises.Count; i++) {
-                CreateRow(tableLayout, ids[i], sourceCities[i], destCities[i], departureDate[i], arrivalDate[i]);
+            
+            foreach (var item in cruises) {
+                var cityTable = new AbstractTable<Cities>();
+                var test = cityTable.GetAllElements();
+                var destCity = cityTable.GetElement(item.TrainstationDestinationId+1);
+                var sourceCity = cityTable.GetElement(item.TrainstationSourceId+1);
+
+                CreateRow(tableLayout, item.Id.ToString(), sourceCity.Name, destCity.Name, 
+                          item.DepartureTime.Date.ToString(), item.ArrivingTime.Date.ToString());
             }
+
             SetContentView(tableLayout);
 
         }
