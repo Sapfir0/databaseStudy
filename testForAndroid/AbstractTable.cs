@@ -84,10 +84,19 @@ namespace testForAndroid {
             return foundVlues > 0;
         }
 
-        public Cities returnCityByHisName(string name) {
+        public Cities ReturnCityByHisName(string name) {
             var city = db.Table<Cities>().Where(item => item.Name == name).First();
             return city;
+        }
 
+        public List<Cruises> GetAllCruisesWithId() {
+            var userList = db.Table<User>().ToList();
+            var ids = new List<int>();
+            for (int i = 0; i < userList.Count; i++) {
+                ids.Add(userList[i].CruiseId);
+            }
+            var values = db.Table<Cruises>().Where(item => ids.Contains(item.Id)).ToList();
+            return values;
         }
 
         public int InsertElement() {

@@ -52,16 +52,23 @@ namespace testForAndroid {
 
 
             var rand = new Random();
-         
+            var cruises = new AbstractTable<Cruises>();
+
             for(int i=0; i< rand.Next(3, 6); i++) {
                 var arrivalDate = GenerateRandomCruises(sourceCityId, destCityId, _dateDisplay.Text);
                 var tableLayout = FindViewById<TableLayout>(Resource.Id.tableLayout);
                 var tableRow = new TableRow(this);
                 var availableCruise = new TextView(this);
                 availableCruise.Text = $" прибытие в {arrivalDate}";
+
+                var cruiseId = new TextView(this);
+                cruiseId.Text = cruises.CountOfElements().ToString();
+
                 var applyOrder = new Button(this);
                 applyOrder.Text = "Удобно";
                 applyOrder.Click += ApplyOrderListener;
+
+                tableRow.AddView(cruiseId);
                 tableRow.AddView(availableCruise);
                 tableRow.AddView(applyOrder);
                 tableLayout.AddView(tableRow);
@@ -127,11 +134,14 @@ namespace testForAndroid {
 
             var button = (Button)sender;
             var tableRow = (TableRow)button.Parent;
-            var textView = (TextView)tableRow.GetChildAt(0);
-            var date = textView.Text;
-            var start = 10; // с 10 символа начинается дата
+            var dateView = (TextView)tableRow.GetChildAt(1);
+            var date = dateView.Text;
             string[] words = date.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
+            var cruiseId = ((TextView)tableRow.GetChildAt(0)).Text;
+            var user = new AbstractTable<User>();
+            user.NewRow.CruiseId = Convert.ToInt32(cruiseId);
+            user.InsertElement();
 
             var intent = new Intent(this, typeof(SuccessLayoutActivity));
             intent.PutExtra("destinationCity", destinationCity);

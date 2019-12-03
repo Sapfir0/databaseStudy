@@ -10,8 +10,9 @@ namespace testForAndroid {
     }
 
     class User { //аххах это будет работать только в моем контексте, т.к. у меня один юзер
+        [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
-        public int OrderNumber { get; set; }
+        public int CruiseId { get; set; }
     }
 
     class Cruises {
