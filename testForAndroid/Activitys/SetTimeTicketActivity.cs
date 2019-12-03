@@ -125,10 +125,18 @@ namespace testForAndroid {
             var destinationCity = GetDestinationCity();
 
 
+            var button = (Button)sender;
+            var tableRow = (TableRow)button.Parent;
+            var textView = (TextView)tableRow.GetChildAt(0);
+            var date = textView.Text;
+            var start = 10; // с 10 символа начинается дата
+            string[] words = date.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+
             var intent = new Intent(this, typeof(SuccessLayoutActivity));
             intent.PutExtra("destinationCity", destinationCity);
             intent.PutExtra("sourceCity", sourceCity);
-            //intent.PutExtra("arrivalDateTime", arrivalDateTime.ToString());
+            intent.PutExtra("arrivalDateTime", words[2] + " " + words[3]);
             intent.PutExtra("departureDateTime", departureDateTime.ToString());
             StartActivity(intent);
 
