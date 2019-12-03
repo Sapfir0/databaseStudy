@@ -32,8 +32,8 @@ namespace testForAndroid {
                 arrivalDate.Add(item.ArrivingTime.Date.ToString());
 
                 var cityTable = new AbstractTable<Cities>();
-                var destCity = cityTable.GetElement(item.TrainstationDestinationId);
-                var sourceCity = cityTable.GetElement(item.TrainstationSourceId);
+                var destCity = cityTable.GetElement(item.TrainstationDestinationId-1);
+                var sourceCity = cityTable.GetElement(item.TrainstationSourceId-1);
                 ids.Add(item.Id.ToString());
 
                 destCities.Add(destCity.Name);

@@ -5,7 +5,6 @@ namespace testForAndroid {
     class Cities {
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
-        [Unique]
         public string Name { get; set; }
         public string Country { get; set; } = "Russia";
     }

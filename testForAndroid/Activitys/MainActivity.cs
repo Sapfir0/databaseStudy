@@ -33,7 +33,6 @@ namespace testForAndroid {
             }
 
             //AbstractTable<Cities>.DeleteAll();
-            
             var cities = JsonConvert.DeserializeObject<List<CitiesListAdapter>>(allCitiesInfo); // можно наверно добавить лямбду, где десериализовать в лист строк, и братьтолько name
 
             List<string> stringCityes = new List<string>();

@@ -22,7 +22,7 @@ namespace testForAndroid {
 
             Android.Support.V7.Widget.Toolbar toolbar = FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.toolbar);
             SetSupportActionBar(toolbar);
-
+            //InitDB();
             string sourceCity = Intent.GetStringExtra("sourceCity");
             string destinationCity = Intent.GetStringExtra("destinationCity");
 
@@ -41,10 +41,21 @@ namespace testForAndroid {
             var sourceCity = FindViewById<TextView>(Resource.Id.sourceCity);
             var destCity = FindViewById<TextView>(Resource.Id.destinationCity);
             var _dateDisplay = FindViewById<EditText>(Resource.Id.departureDateTime);
+
+            var cityTable = new AbstractTable<Cities>();
+            cityTable.NewRow.Name = sourceCity.Text;
+            int sourceCityId = cityTable.InsertElement();
+
+            var cityTable2 = new AbstractTable<Cities>();
+            cityTable2.NewRow.Name = destCity.Text;
+            int destCityId = cityTable2.InsertElement();
+            var foo = cityTable2.GetAllElements();
+
+
             var rand = new Random();
-            ;
+         
             for(int i=0; i< rand.Next(3, 6); i++) {
-                var arrivalDate = GenerateRandomCruises(sourceCity.Text, destCity.Text, _dateDisplay.Text);
+                var arrivalDate = GenerateRandomCruises(sourceCityId, destCityId, _dateDisplay.Text);
                 var tableLayout = FindViewById<TableLayout>(Resource.Id.tableLayout);
                 var tableRow = new TableRow(this);
                 var availableCruise = new TextView(this);
@@ -66,13 +77,11 @@ namespace testForAndroid {
             GetDatePicker(_dateDisplay);
         }
 
-        public DateTime GenerateRandomCruises(string sourceCity, string destinationCity, string departureDate) {
-            var cityTable = new AbstractTable<Cities>();
-            int sourceCityId = cityTable.InsertCityIfNotExists(sourceCity);
-            int destCityId = cityTable.InsertCityIfNotExists(destinationCity);
-            var foo = cityTable.GetAllElements();
+        public DateTime GenerateRandomCruises(int sourceCityId, int destCityId, string departureDate) {
+
 
             var cruiseTable = new AbstractTable<Cruises>();
+            var foo = cruiseTable.GetAllElements();
             cruiseTable.NewRow.DepartureTime = Convert.ToDateTime(departureDate);
             cruiseTable.NewRow.ArrivingTime = GenerateDateInRandomNumberOfDays(cruiseTable.NewRow.DepartureTime);
             cruiseTable.NewRow.TrainstationDestinationId = destCityId;
@@ -84,7 +93,7 @@ namespace testForAndroid {
             return cruiseTable.NewRow.ArrivingTime;
         }
 
-        public DateTime GenerateDateInRandomNumberOfDays(DateTime date) {
+        public static DateTime GenerateDateInRandomNumberOfDays(DateTime date) {
             Random rand = new Random();
             DateTime newDate = date;
             newDate.AddDays(rand.Next(1, 3));
@@ -127,7 +136,7 @@ namespace testForAndroid {
 
         }
 
-        public void InitDB() {
+        public static void InitDB() {
             var companyRow = new AbstractTable<Companys>();
             
             companyRow.NewRow.Number = 12345;
@@ -159,7 +168,7 @@ namespace testForAndroid {
             // создать поезд с рандомным номером и юзнуть айди компании, запомнить айди поезда
             // !!! создать рейс с айди поезда, айди команды, айди двух вокзалов и выставить время от юзера
 
-            InitDB();
+            //InitDB();
         
 
             var sourceCityRow = new AbstractTable<Cities>();

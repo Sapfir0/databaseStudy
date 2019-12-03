@@ -84,9 +84,16 @@ namespace testForAndroid {
             return foundVlues > 0;
         }
 
+        public Cities returnCityByHisName(string name) {
+            var city = db.Table<Cities>().Where(item => item.Name == name).First();
+            return city;
+
+        }
+
         public int InsertElement() {
-            int insertedId = db.InsertOrReplace(_tableConcrete);
-            return insertedId;
+            var all = GetAllElements();
+            db.Insert(_tableConcrete);
+            return CountOfElements();
         }
 
     }
