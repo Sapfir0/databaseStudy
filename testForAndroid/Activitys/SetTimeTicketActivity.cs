@@ -49,7 +49,6 @@ namespace testForAndroid {
             var cityTable2 = new AbstractTable<Cities>();
             cityTable2.NewRow.Name = destCity.Text;
             int destCityId = cityTable2.InsertElement();
-            var foo = cityTable2.GetAllElements();
 
 
             var rand = new Random();
@@ -81,7 +80,6 @@ namespace testForAndroid {
 
 
             var cruiseTable = new AbstractTable<Cruises>();
-            var foo = cruiseTable.GetAllElements();
             cruiseTable.NewRow.DepartureTime = Convert.ToDateTime(departureDate);
             cruiseTable.NewRow.ArrivingTime = GenerateDateInRandomNumberOfDays(cruiseTable.NewRow.DepartureTime);
             cruiseTable.NewRow.TrainstationDestinationId = destCityId;
@@ -93,12 +91,12 @@ namespace testForAndroid {
             return cruiseTable.NewRow.ArrivingTime;
         }
 
-        public static DateTime GenerateDateInRandomNumberOfDays(DateTime date) {
+        public DateTime GenerateDateInRandomNumberOfDays(DateTime date) {
             Random rand = new Random();
             DateTime newDate = date;
-            newDate.AddDays(rand.Next(1, 3));
-            newDate.AddHours(rand.Next(0, 24));
-            newDate.AddMinutes(rand.Next(0, 60));
+            //newDate = newDate.AddDays(rand.Next(1, 3));
+            newDate = newDate.AddHours(rand.Next(0, 100));
+            newDate = newDate.AddMinutes(rand.Next(0, 60));
             return newDate;
         }
 

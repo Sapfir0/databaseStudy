@@ -9,6 +9,11 @@ namespace testForAndroid {
         public string Country { get; set; } = "Russia";
     }
 
+    class User { //аххах это будет работать только в моем контексте, т.к. у меня один юзер
+        public int Id { get; set; }
+        public int OrderNumber { get; set; }
+    }
+
     class Cruises {
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
