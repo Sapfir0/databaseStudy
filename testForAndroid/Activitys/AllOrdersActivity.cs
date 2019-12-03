@@ -11,7 +11,7 @@ using Android.Views;
 using Android.Widget;
 
 namespace testForAndroid {
-    [Activity(Label = "AllOrdersActivity")]
+    [Activity(Label = "Все заказы")]
     public class AllOrdersActivity : AbstractActivity {
         protected override void OnCreate(Bundle savedInstanceState) {
             base.OnCreate(savedInstanceState);

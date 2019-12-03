@@ -16,6 +16,8 @@ using Newtonsoft.Json;
 namespace testForAndroid {
     [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.NoActionBar", MainLauncher = true)]
     public class MainActivity : AbstractActivity {
+        string allCitiesInfo;
+
         protected override void OnCreate(Bundle savedInstanceState) {
             base.OnCreate(savedInstanceState);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
@@ -24,7 +26,7 @@ namespace testForAndroid {
             Android.Support.V7.Widget.Toolbar toolbar = FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.toolbar);
             SetSupportActionBar(toolbar);
 
-            string allCitiesInfo;
+
             AssetManager assets = Assets;
             using (StreamReader sr = new StreamReader(assets.Open("russian-cities.json"))) {
                 allCitiesInfo = sr.ReadToEnd();
@@ -60,6 +62,12 @@ namespace testForAndroid {
                 Alert.DisplayAlert(this, "Error", "Укажи откуда едешь", "Я понял");
             } else if (string.IsNullOrEmpty(destinationCity)) {
                 Alert.DisplayAlert(this, "Error", "Укажи куда едешь", "Я понял");
+            }
+            else if (!allCitiesInfo.Contains(sourceCity)) {
+                Alert.DisplayAlert(this, "Error", "Некорректное название города отправления" + $"\"{sourceCity}\"", "Я понял");
+            }
+            else if(!allCitiesInfo.Contains(destinationCity)) {
+                Alert.DisplayAlert(this, "Error", "Некорректное название города прибытия" + $"\"{destinationCity}\"", "Я понял");
             } else {
                 var intent = new Intent(this, typeof(SetTimeTicketActivity));
                 intent.PutExtra("destinationCity", destinationCity);

@@ -11,7 +11,7 @@ using Android.Views;
 using Android.Widget;
 
 namespace testForAndroid {
-    [Activity(Label = "SuccessLayoutActivity")]
+    [Activity(Label = "Заказ оставлен")]
     public class SuccessLayoutActivity : AbstractActivity {
         protected override void OnCreate(Bundle savedInstanceState) {
             base.OnCreate(savedInstanceState);
@@ -41,7 +41,14 @@ namespace testForAndroid {
             FindViewById<TextView>(Resource.Id.TrainstationSource).Text = sourceTrain;
             FindViewById<TextView>(Resource.Id.TrainstationDestination).Text = destTrain;
 
+            var toMainBtn = FindViewById<Button>(Resource.Id.toMainBtn);
+            toMainBtn.Click += ToMainBtn_Click;
+            
+        }
 
+        private void ToMainBtn_Click(object sender, EventArgs e) {
+            var intent = new Intent(this, typeof(MainActivity));
+            StartActivity(intent);
         }
     }
 }

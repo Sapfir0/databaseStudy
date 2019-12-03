@@ -13,7 +13,7 @@ using Android.Support.V7.App;
 
 
 namespace testForAndroid {
-    [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.NoActionBar")]
+    [Activity(Label = "Выбрать время", Theme = "@style/AppTheme.NoActionBar")]
     public class SetTimeTicketActivity : AbstractActivity {
         protected override void OnCreate(Bundle savedInstanceState) {
             base.OnCreate(savedInstanceState);
@@ -26,24 +26,39 @@ namespace testForAndroid {
             string sourceCity = Intent.GetStringExtra("sourceCity");
             string destinationCity = Intent.GetStringExtra("destinationCity");
 
-            FindViewById<EditText>(Resource.Id.sourceCity).Text = sourceCity;
-            FindViewById<EditText>(Resource.Id.destinationCity).Text = destinationCity;
+            FindViewById<TextView>(Resource.Id.sourceCity).Text = sourceCity;
+            FindViewById<TextView>(Resource.Id.destinationCity).Text = destinationCity;
 
-
-            Button setArrivalTimeBtn = FindViewById<Button>(Resource.Id.setArrivalDateTimeButton);
-            setArrivalTimeBtn.Click += SetArrivalDateTimeButton;
 
             Button setDepartureTimeBtn = FindViewById<Button>(Resource.Id.setDepartureDateTimeButton);
             setDepartureTimeBtn.Click += SetDepartureDateTimeButtonListener;
 
-            Button applyOrderBtn = FindViewById<Button>(Resource.Id.applyOrderBtn);
-            applyOrderBtn.Click += ApplyOrderListener;
+            var departureDateTime = FindViewById<EditText>(Resource.Id.departureDateTime);
+            departureDateTime.AfterTextChanged += DepartureDateTime_AfterTextChanged; ;
         }
 
-        public void SetArrivalDateTimeButton(object sender, EventArgs e) {
-            var _dateDisplay = FindViewById<EditText>(Resource.Id.arrivalDateTime);
-            GetDatePicker(_dateDisplay);
+        private void DepartureDateTime_AfterTextChanged(object sender, Android.Text.AfterTextChangedEventArgs e) {
+            var sourceCity = FindViewById<TextView>(Resource.Id.sourceCity);
+            var destCity = FindViewById<TextView>(Resource.Id.destinationCity);
+            var _dateDisplay = FindViewById<EditText>(Resource.Id.departureDateTime);
+            var rand = new Random();
+            ;
+            for(int i=0; i< rand.Next(3, 6); i++) {
+                var arrivalDate = GenerateRandomCruises(sourceCity.Text, destCity.Text, _dateDisplay.Text);
+                var tableLayout = FindViewById<TableLayout>(Resource.Id.tableLayout);
+                var tableRow = new TableRow(this);
+                var availableCruise = new TextView(this);
+                availableCruise.Text = $" прибытие в {arrivalDate}";
+                var applyOrder = new Button(this);
+                applyOrder.Text = "Удобно";
+                applyOrder.Click += ApplyOrderListener;
+                tableRow.AddView(availableCruise);
+                tableRow.AddView(applyOrder);
+                tableLayout.AddView(tableRow);
+            }
+
         }
+
 
 
         public void SetDepartureDateTimeButtonListener(object sender, EventArgs e) {
@@ -51,47 +66,62 @@ namespace testForAndroid {
             GetDatePicker(_dateDisplay);
         }
 
-        private string GetDepartureDateTime() {
-            return FindViewById<EditText>(Resource.Id.departureDateTime).Text;
+        public DateTime GenerateRandomCruises(string sourceCity, string destinationCity, string departureDate) {
+            var cityTable = new AbstractTable<Cities>();
+            int sourceCityId = cityTable.InsertCityIfNotExists(sourceCity);
+            int destCityId = cityTable.InsertCityIfNotExists(destinationCity);
+            var foo = cityTable.GetAllElements();
+
+            var cruiseTable = new AbstractTable<Cruises>();
+            cruiseTable.NewRow.DepartureTime = Convert.ToDateTime(departureDate);
+            cruiseTable.NewRow.ArrivingTime = GenerateDateInRandomNumberOfDays(cruiseTable.NewRow.DepartureTime);
+            cruiseTable.NewRow.TrainstationDestinationId = destCityId;
+            cruiseTable.NewRow.TrainstationSourceId = sourceCityId;
+            cruiseTable.NewRow.TrainId = 0;
+            cruiseTable.NewRow.CrewId = 0;
+
+            cruiseTable.InsertElement();
+            return cruiseTable.NewRow.ArrivingTime;
         }
 
-        private string GetArrivalDateTime() {
-            return FindViewById<EditText>(Resource.Id.arrivalDateTime).Text; 
+        public DateTime GenerateDateInRandomNumberOfDays(DateTime date) {
+            Random rand = new Random();
+            DateTime newDate = date;
+            newDate.AddDays(rand.Next(1, 3));
+            newDate.AddHours(rand.Next(0, 24));
+            newDate.AddMinutes(rand.Next(0, 60));
+            return newDate;
+        }
+
+        private string GetDepartureDateTime() {
+            return FindViewById<TextView>(Resource.Id.departureDateTime).Text;
         }
 
         private string GetSourceCity() {
-            return FindViewById<EditText>(Resource.Id.sourceCity).Text;
+            return FindViewById<TextView>(Resource.Id.sourceCity).Text;
         }
 
         private string GetDestinationCity() {
-            return FindViewById<EditText>(Resource.Id.destinationCity).Text;
+            return FindViewById<TextView>(Resource.Id.destinationCity).Text;
         }
 
         public void ApplyOrderListener(object sender, EventArgs e) {
-            DateTime arrivalDateTime;
             DateTime departureDateTime;
             try {
                 departureDateTime = Convert.ToDateTime(GetDepartureDateTime());
-                arrivalDateTime = Convert.ToDateTime(GetArrivalDateTime());
             } catch(FormatException) {
                 Alert.DisplayAlert(this, "Error", "Дата не выбрана");
                 return;
             }
 
-            if (departureDateTime > arrivalDateTime) {
-                Alert.DisplayAlert(this, "Error", "Дата прибытия должна быть позже даты отравления");
-                return;
-            }
-
             var sourceCity = GetSourceCity();
             var destinationCity = GetDestinationCity();
-            WriteInDB(sourceCity, destinationCity, departureDateTime, arrivalDateTime);
 
 
             var intent = new Intent(this, typeof(SuccessLayoutActivity));
             intent.PutExtra("destinationCity", destinationCity);
             intent.PutExtra("sourceCity", sourceCity);
-            intent.PutExtra("arrivalDateTime", arrivalDateTime.ToString());
+            //intent.PutExtra("arrivalDateTime", arrivalDateTime.ToString());
             intent.PutExtra("departureDateTime", departureDateTime.ToString());
             StartActivity(intent);
 
@@ -171,21 +201,6 @@ namespace testForAndroid {
                 textView.Text = time.ToLongDateString();
             });
             frag.Show(FragmentManager, DatePickerFragment.TAG);
-        }
-
-        protected override void OnSaveInstanceState(Bundle outState) {
-            outState.PutString("departureDate", GetDepartureDateTime());
-            outState.PutString("arrivalDate", GetArrivalDateTime());
-
-            base.OnSaveInstanceState(outState);
-        }
-
-        protected override void OnRestoreInstanceState(Bundle savedInstanceState) { // не юзается вообще
-            string departureDate = Intent.GetStringExtra("departureDate");
-            string arrivalDate = Intent.GetStringExtra("arrivalDate");
-            FindViewById<EditText>(Resource.Id.departureDateTime).Text = departureDate;
-            FindViewById<EditText>(Resource.Id.arrivalDateTime).Text = arrivalDate;
-            base.OnRestoreInstanceState(savedInstanceState);
         }
 
     }

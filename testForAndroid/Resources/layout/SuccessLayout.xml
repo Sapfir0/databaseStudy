@@ -152,6 +152,11 @@
 
     </LinearLayout>
 
-
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="На главную"
+        android:id="@+id/toMainBtn"
+    android:gravity="center_horizontal"/>
 
 </LinearLayout>
