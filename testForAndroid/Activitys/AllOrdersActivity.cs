@@ -55,7 +55,6 @@ namespace testForAndroid {
             
 
             var tableRow1 = new TableRow(this);
-            var spaceRow = new TableRow(this);
             var tableRow2 = new TableRow(this);
 
 
@@ -65,26 +64,36 @@ namespace testForAndroid {
             tableRow1.AddView(textViewList[3]);
             tableRow2.AddView(textViewList[4]);
 
-            spaceRow.AddView(textViewList[5]);
 
             var orderLayout = new LinearLayout(this);
+            //orderLayout.Orientation = LinearLayout.Vertical;
             orderLayout.LongClick += DeleteRow;
 
             orderLayout.AddView(idRow);
             orderLayout.AddView(tableRow1);
             orderLayout.AddView(tableRow2);
-            orderLayout.AddView(spaceRow);
 
             tableLayout.AddView(orderLayout);
 
 
         }
 
-        LinearLayout orderLayout;
         private void DeleteRow(object sender, EventArgs e) {
             Alert alert = new Alert();
-            orderLayout = (LinearLayout)sender;
-            alert.OnConfirm += Alert_OnConfirm;
+            var orderLayout = (LinearLayout)sender;
+            alert.OnConfirm += () => {
+                TableLayout tableLayout = FindViewById<TableLayout>(Resource.Id.tableLayout);
+
+                var textView = (TableRow)orderLayout.GetChildAt(0);
+                if (textView is null) return;
+
+                var id = ((TextView)textView.GetChildAt(0)).Text;
+
+                tableLayout.RemoveView(orderLayout);
+
+                var cruise = new AbstractTable<Cruises>();
+                cruise.Delete(Convert.ToInt32(id));
+            };
 
             var sourceRow = ((TableRow)orderLayout.GetChildAt(1));
             var source = ((TextView)sourceRow.GetChildAt(0)).Text;
@@ -97,18 +106,6 @@ namespace testForAndroid {
 
         }
 
-        private void Alert_OnConfirm() {
-            TableLayout tableLayout = FindViewById<TableLayout>(Resource.Id.tableLayout);
-
-            var textView = (TableRow)orderLayout.GetChildAt(0);
-            if (textView is null) return;
-
-            var id = ((TextView)textView.GetChildAt(0)).Text;
-
-            tableLayout.RemoveView(orderLayout);
-
-            var cruise = new AbstractTable<Cruises>();
-            cruise.Delete(Convert.ToInt32(id));
-        }
+   
     }
 }
