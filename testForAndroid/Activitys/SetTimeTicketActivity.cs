@@ -138,9 +138,12 @@ namespace testForAndroid {
             var date = dateView.Text;
             string[] words = date.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
+
+            var cruiseTable = new AbstractTable<Cruises>();
+            var foo = cruiseTable.GetAllElements();
             var cruiseId = ((TextView)tableRow.GetChildAt(0)).Text;
             var user = new AbstractTable<User>();
-            user.NewRow.CruiseId = Convert.ToInt32(cruiseId);
+            user.NewRow.CruiseId = Convert.ToInt32(cruiseId) ;
             user.InsertElement();
 
             var intent = new Intent(this, typeof(SuccessLayoutActivity));
