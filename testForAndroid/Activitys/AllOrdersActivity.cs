@@ -28,8 +28,8 @@ namespace testForAndroid {
             foreach (var item in cruises) {
                 var cityTable = new AbstractTable<Cities>();
                 var test = cityTable.GetAllElements();
-                var destCity = cityTable.GetElement(item.TrainstationDestinationId+1);
-                var sourceCity = cityTable.GetElement(item.TrainstationSourceId+1);
+                var destCity = cityTable.GetElement(item.TrainstationDestinationId);
+                var sourceCity = cityTable.GetElement(item.TrainstationSourceId);
 
                 CreateRow(tableLayout, item.Id.ToString(), sourceCity.Name, destCity.Name, 
                           item.DepartureTime.Date.ToString(), item.ArrivingTime.Date.ToString());
@@ -39,49 +39,73 @@ namespace testForAndroid {
 
         }
 
-        public void CreateRow(TableLayout tableLayout, string id, string sourceCity, string destCity, string departureDate, string arrivalDate) {
-            TextView textView0 = new TextView(this);
-            textView0.Text = id;
-            TextView textView1 = new TextView(this);
-            textView1.Text = sourceCity;
-            TextView textView2 = new TextView(this);
-            textView2.Text = destCity;
-            TextView textView3 = new TextView(this);
-            textView3.Text = departureDate;
-            TextView textView4 = new TextView(this);
-            textView4.Text = arrivalDate;
+        public void CreateRow(TableLayout tableLayout, string id, string sourceCity, string destCity, string departureDate, string arrivalDate)
+        {
+            var textList = new string[]{id, sourceCity, destCity, departureDate, arrivalDate, "\n"};
+            var textViewList = new List<TextView>(textList.Length);
+            foreach (var text in textList)
+            {
+                var tempView = new TextView(this);
+                tempView.Text = text;
+                textViewList.Add(tempView);
+            }
 
-            TableRow tableRow1 = new TableRow(this);
+            var idRow = new TableRow(this);
+            idRow.AddView(textViewList[0]);
+            
 
-            tableRow1.AddView(textView0);
-            tableRow1.AddView(textView1);
-            tableRow1.AddView(textView2);
-            tableRow1.AddView(textView3);
-            tableRow1.AddView(textView4);
+            var tableRow1 = new TableRow(this);
+            var spaceRow = new TableRow(this);
+            var tableRow2 = new TableRow(this);
 
-            tableRow1.LongClick += DeleteRow;
-            tableLayout.AddView(tableRow1);
+
+            //tableRow1.AddView(orderNumberView);
+            tableRow1.AddView(textViewList[1]);
+            tableRow2.AddView(textViewList[2]);
+            tableRow1.AddView(textViewList[3]);
+            tableRow2.AddView(textViewList[4]);
+
+            spaceRow.AddView(textViewList[5]);
+
+            var orderLayout = new LinearLayout(this);
+            orderLayout.LongClick += DeleteRow;
+
+            orderLayout.AddView(idRow);
+            orderLayout.AddView(tableRow1);
+            orderLayout.AddView(tableRow2);
+            orderLayout.AddView(spaceRow);
+
+            tableLayout.AddView(orderLayout);
+
 
         }
 
-        TableRow currentRow;
+        LinearLayout orderLayout;
         private void DeleteRow(object sender, EventArgs e) {
             Alert alert = new Alert();
-            currentRow = (TableRow)sender;
+            orderLayout = (LinearLayout)sender;
             alert.OnConfirm += Alert_OnConfirm;
 
-            string sourceCity = ((TextView)currentRow.GetChildAt(1)).Text;
-            string destCity = ((TextView)currentRow.GetChildAt(2)).Text;
+            var sourceRow = ((TableRow)orderLayout.GetChildAt(1));
+            var source = ((TextView)sourceRow.GetChildAt(0)).Text;
+            
+            var destRow = ((TableRow)orderLayout.GetChildAt(2));
+            var dest = ((TextView)destRow.GetChildAt(0)).Text;
 
-            alert.DisplayConfirm(this, "Удалить запись?", $"Будет удален заказанный билет \nиз {sourceCity} в {destCity}");
+
+            alert.DisplayConfirm(this, "Удалить запись?", $"Будет удален заказанный билет \nиз {source} в {dest}");
 
         }
 
         private void Alert_OnConfirm() {
             TableLayout tableLayout = FindViewById<TableLayout>(Resource.Id.tableLayout);
-            
-            string id = ((TextView)currentRow.GetChildAt(0)).Text;
-            tableLayout.RemoveView(currentRow);
+
+            var textView = (TableRow)orderLayout.GetChildAt(0);
+            if (textView is null) return;
+
+            var id = ((TextView)textView.GetChildAt(0)).Text;
+
+            tableLayout.RemoveView(orderLayout);
 
             var cruise = new AbstractTable<Cruises>();
             cruise.Delete(Convert.ToInt32(id));
