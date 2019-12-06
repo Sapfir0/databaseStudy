@@ -37,8 +37,7 @@ namespace testForAndroid {
 
         }
 
-        public void CreateRow(TableLayout tableLayout, string id, string sourceCity, string destCity, string departureDate, string arrivalDate)
-        {
+        public void CreateRow(TableLayout tableLayout, string id, string sourceCity, string destCity, string departureDate, string arrivalDate)  {
             var textList = new string[] { id, $"{sourceCity} {departureDate}", $"{destCity} {arrivalDate}" };
             var textViewList = new List<TextView>(textList.Length);
             foreach (var text in textList)  {
@@ -51,7 +50,6 @@ namespace testForAndroid {
             var idRow = new TableRow(this);
             idRow.AddView(textViewList[0]);
             
-
             var sourceRow = new TableRow(this);
             var destRow = new TableRow(this);
 
@@ -70,8 +68,6 @@ namespace testForAndroid {
             orderLayout.AddView(destRow);
 
             tableLayout.AddView(orderLayout);
-
-
         }
 
         private void DeleteRow(object sender, EventArgs e) {
