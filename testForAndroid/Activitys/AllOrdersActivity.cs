@@ -20,14 +20,12 @@ namespace testForAndroid {
 
             var cruiseTable = new AbstractTable<Cruises>();
             var cruises = cruiseTable.GetAllCruisesWithId();
-            //var cruisesTest = cruiseTable.GetAllElements();
 
             TableLayout tableLayout = FindViewById<TableLayout>(Resource.Id.tableLayout);
 
             
             foreach (var item in cruises) {
                 var cityTable = new AbstractTable<Cities>();
-                var test = cityTable.GetAllElements();
                 var destCity = cityTable.GetElement(item.TrainstationDestinationId);
                 var sourceCity = cityTable.GetElement(item.TrainstationSourceId);
 
@@ -39,13 +37,12 @@ namespace testForAndroid {
 
         }
 
-        public void CreateRow(TableLayout tableLayout, string id, string sourceCity, string destCity, string departureDate, string arrivalDate)
-        {
-            var textList = new string[]{id, sourceCity, destCity, departureDate, arrivalDate, "\n"};
+        public void CreateRow(TableLayout tableLayout, string id, string sourceCity, string destCity, string departureDate, string arrivalDate)  {
+            var textList = new string[] { id, $"{sourceCity} {departureDate}", $"{destCity} {arrivalDate}" };
             var textViewList = new List<TextView>(textList.Length);
-            foreach (var text in textList)
-            {
+            foreach (var text in textList)  {
                 var tempView = new TextView(this);
+                tempView.SetHeight(100);
                 tempView.Text = text;
                 textViewList.Add(tempView);
             }
@@ -53,29 +50,24 @@ namespace testForAndroid {
             var idRow = new TableRow(this);
             idRow.AddView(textViewList[0]);
             
+            var sourceRow = new TableRow(this);
+            var destRow = new TableRow(this);
 
-            var tableRow1 = new TableRow(this);
-            var tableRow2 = new TableRow(this);
-
-
-            //tableRow1.AddView(orderNumberView);
-            tableRow1.AddView(textViewList[1]);
-            tableRow2.AddView(textViewList[2]);
-            tableRow1.AddView(textViewList[3]);
-            tableRow2.AddView(textViewList[4]);
+            sourceRow.AddView(textViewList[1]);
+            destRow.AddView(textViewList[2]);
 
 
             var orderLayout = new LinearLayout(this);
-            //orderLayout.Orientation = LinearLayout.Vertical;
+            orderLayout.Orientation = Orientation.Vertical;
+            
+            
             orderLayout.LongClick += DeleteRow;
 
             orderLayout.AddView(idRow);
-            orderLayout.AddView(tableRow1);
-            orderLayout.AddView(tableRow2);
+            orderLayout.AddView(sourceRow);
+            orderLayout.AddView(destRow);
 
             tableLayout.AddView(orderLayout);
-
-
         }
 
         private void DeleteRow(object sender, EventArgs e) {

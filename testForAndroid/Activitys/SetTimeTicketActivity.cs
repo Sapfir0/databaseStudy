@@ -54,7 +54,7 @@ namespace testForAndroid {
             var rand = new Random();
             var cruises = new AbstractTable<Cruises>();
 
-            for(int i=0; i< rand.Next(3, 6); i++) {
+            for(int i = 0; i < rand.Next(3, 6); i++) {
                 var arrivalDate = GenerateRandomCruises(sourceCityId, destCityId, _dateDisplay.Text);
                 var tableLayout = FindViewById<TableLayout>(Resource.Id.tableLayout);
                 var tableRow = new TableRow(this);
@@ -140,7 +140,6 @@ namespace testForAndroid {
 
 
             var cruiseTable = new AbstractTable<Cruises>();
-            var foo = cruiseTable.GetAllElements();
             var cruiseId = ((TextView)tableRow.GetChildAt(0)).Text;
             var user = new AbstractTable<User>();
             user.NewRow.CruiseId = Convert.ToInt32(cruiseId) ;

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">РЖД вперед</string>
+    <string name="app_name">RailroadTickets</string>
     <string name="action_settings">Посмотреть все заявки</string>
   <string name="ticketBooking">Забронировать билет</string>
 </resources>
