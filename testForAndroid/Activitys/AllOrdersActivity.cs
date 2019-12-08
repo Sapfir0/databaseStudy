@@ -26,11 +26,12 @@ namespace testForAndroid {
             
             foreach (var item in cruises) {
                 var cityTable = new AbstractTable<Cities>();
-                var destCity = cityTable.GetElement(item.TrainstationDestinationId);
-                var sourceCity = cityTable.GetElement(item.TrainstationSourceId);
-
+                var destCity = cityTable.GetElement(item.TrainstationDestinationId+2);
+                var sourceCity = cityTable.GetElement(item.TrainstationSourceId+2);
+                var foo1 = item.DepartureTime.ToString();
+                var foo2 = item.ArrivingTime.ToString();
                 CreateRow(tableLayout, item.Id.ToString(), sourceCity.Name, destCity.Name, 
-                          item.DepartureTime.Date.ToString(), item.ArrivingTime.Date.ToString());
+                          item.DepartureTime.ToString(), item.ArrivingTime.ToString());
             }
 
             SetContentView(tableLayout);
@@ -92,7 +93,6 @@ namespace testForAndroid {
             
             var destRow = ((TableRow)orderLayout.GetChildAt(2));
             var dest = ((TextView)destRow.GetChildAt(0)).Text;
-
 
             alert.DisplayConfirm(this, "Удалить запись?", $"Будет удален заказанный билет \nиз {source} в {dest}");
 
