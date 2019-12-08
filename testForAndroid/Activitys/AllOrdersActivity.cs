@@ -28,8 +28,7 @@ namespace testForAndroid {
                 var cityTable = new AbstractTable<Cities>();
                 var destCity = cityTable.GetElement(item.TrainstationDestinationId+2);
                 var sourceCity = cityTable.GetElement(item.TrainstationSourceId+2);
-                var foo1 = item.DepartureTime.ToString();
-                var foo2 = item.ArrivingTime.ToString();
+
                 CreateRow(tableLayout, item.Id.ToString(), sourceCity.Name, destCity.Name, 
                           item.DepartureTime.ToString(), item.ArrivingTime.ToString());
             }
@@ -58,12 +57,10 @@ namespace testForAndroid {
             destRow.AddView(textViewList[2]);
 
 
-            var orderLayout = new LinearLayout(this);
-            orderLayout.Orientation = Orientation.Vertical;
-            
-            
+            var orderLayout = new LinearLayout(this) {
+                Orientation = Orientation.Vertical,
+            };
             orderLayout.LongClick += DeleteRow;
-
             orderLayout.AddView(idRow);
             orderLayout.AddView(sourceRow);
             orderLayout.AddView(destRow);

@@ -100,7 +100,6 @@ namespace testForAndroid {
         }
 
         public int InsertElement() {
-            var all = GetAllElements();
             db.Insert(_tableConcrete);
             return CountOfElements();
         }

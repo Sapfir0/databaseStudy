@@ -20,11 +20,13 @@ namespace testForAndroid {
 
             string sourceCity = Intent.GetStringExtra("sourceCity");
             string destinationCity = Intent.GetStringExtra("destinationCity");
-            string departureDateTime = Intent.GetStringExtra("departureDateTime");
+            string departureDate = Intent.GetStringExtra("departureDate");
+            string departureTime = Intent.GetStringExtra("departureTime");
+
             string arrivalDateTime = Intent.GetStringExtra("arrivalDateTime");
             FindViewById<TextView>(Resource.Id.sourceCity).Text = sourceCity;
             FindViewById<TextView>(Resource.Id.destinationCity).Text = destinationCity;
-            FindViewById<TextView>(Resource.Id.departureTime).Text = departureDateTime;
+            FindViewById<TextView>(Resource.Id.departureTime).Text = $"{departureDate} {departureTime}";
             FindViewById<TextView>(Resource.Id.arrivalTime).Text = arrivalDateTime;
 
 

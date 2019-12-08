@@ -76,7 +76,6 @@
                     android:textColor="@android:color/black"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/textView1" 
                     
             />
                 <TextView
@@ -94,16 +93,8 @@
                                 android:textColor="@android:color/black"
                     android:textSize="18sp"
             android:text="Чтобы посмотреть доступные рейсы, нужно выбрать желаемое время отправления"/>
-        <RelativeLayout
-            android:layout_weight="2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:minWidth="25px"
-            android:minHeight="25px"
-            android:id="@+id/relativeLayout1">
 
-
-            <LinearLayout
+          <LinearLayout
                 android:orientation="horizontal"
                 android:minWidth="25px"
                 android:minHeight="25px"
@@ -111,20 +102,42 @@
                 android:layout_height="wrap_content"
                 >
                 <EditText
-                    android:id="@+id/departureDateTime"
+                    android:id="@+id/departureDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Дата/время отправления"
+                    android:text="Дата отправления"
                     android:textSize="18sp"
                     android:textColor="@android:color/black"
                     android:enabled="false"/>
                 <Button
-                    android:id="@+id/setDepartureDateTimeButton"
+                    android:id="@+id/setDepartureDateButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Изменить" />
             </LinearLayout>
-        </RelativeLayout>
+
+
+                    <LinearLayout
+                android:orientation="horizontal"
+                android:minWidth="25px"
+                android:minHeight="25px"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                >
+                <EditText
+                    android:id="@+id/departureTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Время отправления"
+                    android:textSize="18sp"
+                    android:textColor="@android:color/black"
+                    android:enabled="false"/>
+                <Button
+                    android:id="@+id/setDepartureTimeButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Изменить" />
+            </LinearLayout>
 
 
         <TableLayout

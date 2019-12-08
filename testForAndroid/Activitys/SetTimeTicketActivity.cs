@@ -23,6 +23,9 @@ namespace testForAndroid {
             Android.Support.V7.Widget.Toolbar toolbar = FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.toolbar);
             SetSupportActionBar(toolbar);
             //InitDB();
+            TimePicker TimePicker = new TimePicker(this);
+
+
             string sourceCity = Intent.GetStringExtra("sourceCity");
             string destinationCity = Intent.GetStringExtra("destinationCity");
 
@@ -30,17 +33,34 @@ namespace testForAndroid {
             FindViewById<TextView>(Resource.Id.destinationCity).Text = destinationCity;
 
 
-            Button setDepartureTimeBtn = FindViewById<Button>(Resource.Id.setDepartureDateTimeButton);
-            setDepartureTimeBtn.Click += SetDepartureDateTimeButtonListener;
+            Button setDepartureDateBtn = FindViewById<Button>(Resource.Id.setDepartureDateButton);
+            setDepartureDateBtn.Click += SetDepartureDateButtonListener;
 
-            var departureDateTime = FindViewById<EditText>(Resource.Id.departureDateTime);
-            departureDateTime.AfterTextChanged += DepartureDateTime_AfterTextChanged; ;
+            Button setDepartureTimeBtn = FindViewById<Button>(Resource.Id.setDepartureTimeButton);
+            setDepartureTimeBtn.Click += SetDepartureTimeButtonListener;
+
+            var departureDate = FindViewById<EditText>(Resource.Id.departureDate);
+            departureDate.AfterTextChanged += DepartureDateTime_AfterTextChanged;
+            var departureTime = FindViewById<EditText>(Resource.Id.departureTime);
+            departureTime.AfterTextChanged += DepartureDateTime_AfterTextChanged;
+
         }
 
         private void DepartureDateTime_AfterTextChanged(object sender, Android.Text.AfterTextChangedEventArgs e) {
+            DateTime departureDate;
+            DateTime departureTime;
+            try {
+                departureDate = Convert.ToDateTime(GetDepartureDate());
+                departureTime = Convert.ToDateTime(GetDepartureTime());
+
+            } catch (FormatException) {
+                return;
+            }
+
             var sourceCity = FindViewById<TextView>(Resource.Id.sourceCity);
             var destCity = FindViewById<TextView>(Resource.Id.destinationCity);
-            var _dateDisplay = FindViewById<EditText>(Resource.Id.departureDateTime);
+            var _dateDisplay = FindViewById<EditText>(Resource.Id.departureDate);
+            var _timeDisplay = FindViewById<EditText>(Resource.Id.departureTime);
 
             var cityTable = new AbstractTable<Cities>();
             cityTable.NewRow.Name = sourceCity.Text;
@@ -55,10 +75,10 @@ namespace testForAndroid {
             var cruises = new AbstractTable<Cruises>();
 
             for(int i = 0; i < rand.Next(3, 6); i++) {
-                var arrivalDate = GenerateRandomCruises(sourceCityId, destCityId, _dateDisplay.Text);
+                var arrivalDate = GenerateRandomCruises(sourceCityId, destCityId, _dateDisplay.Text, _timeDisplay.Text);
                 var tableLayout = FindViewById<TableLayout>(Resource.Id.tableLayout);
                 var tableRow = new TableRow(this);
-                var availableCruise = new TextView(this);
+                var availableCruise =new TextView(this);
                 availableCruise.Text = $" прибытие в {arrivalDate}";
 
                 var cruiseId = new TextView(this);
@@ -76,18 +96,24 @@ namespace testForAndroid {
 
         }
 
+        private void SetDepartureTimeButtonListener(object sender, EventArgs e) {
+            var timeDisplay = FindViewById<EditText>(Resource.Id.departureTime);
+            GetTimePicker(timeDisplay);
+        }
 
-
-        public void SetDepartureDateTimeButtonListener(object sender, EventArgs e) {
-            var _dateDisplay = FindViewById<EditText>(Resource.Id.departureDateTime);
+        public void SetDepartureDateButtonListener(object sender, EventArgs e) {
+            var _dateDisplay = FindViewById<EditText>(Resource.Id.departureDate);
             GetDatePicker(_dateDisplay);
         }
 
-        public DateTime GenerateRandomCruises(int sourceCityId, int destCityId, string departureDate) {
-
+        public DateTime GenerateRandomCruises(int sourceCityId, int destCityId, string departureDate, string departureTime) {
+            var time = Convert.ToDateTime(departureTime);
+            var date = Convert.ToDateTime(departureDate);
 
             var cruiseTable = new AbstractTable<Cruises>();
-            cruiseTable.NewRow.DepartureTime = Convert.ToDateTime(departureDate);
+
+            var combineDate = date.AddHours(time.Hour).AddMinutes(time.Minute);
+            cruiseTable.NewRow.DepartureTime = combineDate;
             cruiseTable.NewRow.ArrivingTime = GenerateDateInRandomNumberOfDays(cruiseTable.NewRow.DepartureTime);
             cruiseTable.NewRow.TrainstationDestinationId = destCityId;
             cruiseTable.NewRow.TrainstationSourceId = sourceCityId;
@@ -107,8 +133,12 @@ namespace testForAndroid {
             return newDate;
         }
 
-        private string GetDepartureDateTime() {
-            return FindViewById<TextView>(Resource.Id.departureDateTime).Text;
+        private string GetDepartureDate() {
+            return FindViewById<TextView>(Resource.Id.departureDate).Text;
+        }
+
+        private string GetDepartureTime() {
+            return FindViewById<TextView>(Resource.Id.departureTime).Text;
         }
 
         private string GetSourceCity() {
@@ -120,11 +150,14 @@ namespace testForAndroid {
         }
 
         public void ApplyOrderListener(object sender, EventArgs e) {
-            DateTime departureDateTime;
+            DateTime departureDate;
+            DateTime departureTime;
             try {
-                departureDateTime = Convert.ToDateTime(GetDepartureDateTime());
-            } catch(FormatException) {
-                Alert.DisplayAlert(this, "Error", "Дата не выбрана");
+                departureDate = Convert.ToDateTime(GetDepartureDate());
+                departureTime = Convert.ToDateTime(GetDepartureDate());
+
+            } catch (FormatException) {
+                Alert.DisplayAlert(this, "Error", "Дата/время не выбрано");
                 return;
             }
 
@@ -149,7 +182,9 @@ namespace testForAndroid {
             intent.PutExtra("destinationCity", destinationCity);
             intent.PutExtra("sourceCity", sourceCity);
             intent.PutExtra("arrivalDateTime", words[2] + " " + words[3]);
-            intent.PutExtra("departureDateTime", departureDateTime.ToString());
+            intent.PutExtra("departureDate", departureDate.Date.ToString());
+            intent.PutExtra("departureTime", departureTime.TimeOfDay.ToString());
+
             StartActivity(intent);
 
         }
@@ -184,10 +219,7 @@ namespace testForAndroid {
             // создать компанию с рандомным номером(можно например РЖД и использовать его id везде)
             // сгенерить несколько сотдников(запонмить сколько сгенерилось), и создать команду
             // создать поезд с рандомным номером и юзнуть айди компании, запомнить айди поезда
-            // !!! создать рейс с айди поезда, айди команды, айди двух вокзалов и выставить время от юзера
-
-            //InitDB();
-        
+            // !!! создать рейс с айди поезда, айди команды, айди двух вокзалов и выставить время от юзера     
 
             var sourceCityRow = new AbstractTable<Cities>();
 
@@ -228,6 +260,20 @@ namespace testForAndroid {
                 textView.Text = time.ToLongDateString();
             });
             frag.Show(FragmentManager, DatePickerFragment.TAG);
+        }
+
+        public void GetTimePicker(TextView textView) {
+            // Instantiate a TimePickerFragment (defined below) 
+            TimePickerFragment frag = TimePickerFragment.NewInstance(
+
+                // Create and pass in a delegate that updates the Activity time display 
+                // with the passed-in time value:
+                delegate (DateTime time) {
+                    textView.Text = time.ToShortTimeString();
+                });
+
+            // Launch the TimePicker dialog fragment (defined below):
+            frag.Show(FragmentManager, TimePickerFragment.TAG);
         }
 
     }
