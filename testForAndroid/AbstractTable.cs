@@ -67,7 +67,7 @@ namespace testForAndroid {
             db.Delete<T>(id);
         }
 
-        public bool isEmpty() {
+        public bool IsEmpty() {
             return db.Table<T>().Count() == 0;
         }
 

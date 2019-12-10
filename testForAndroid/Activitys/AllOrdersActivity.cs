@@ -7,36 +7,57 @@ using Android.App;
 using Android.Content;
 using Android.OS;
 using Android.Runtime;
+using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
 
 namespace testForAndroid {
     [Activity(Label = "Все заказы")]
     public class AllOrdersActivity : Activity {
+        RecyclerView mRecyclerView;
+        RecyclerView.LayoutManager mLayoutManager;
+        //PhotoAlbumAdapter mAdapter;
+        PhotoAlbum mPhotoAlbum;
+
         protected override void OnCreate(Bundle savedInstanceState) {
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.AllOrdersLayout);
+
+            
+            mPhotoAlbum = new PhotoAlbum();
+            mRecyclerView = FindViewById<RecyclerView>(Resource.Id.recyclerView);
+
+            mLayoutManager = new LinearLayoutManager(this);
+
+            mRecyclerView.SetLayoutManager(mLayoutManager);
+
+            //mAdapter = new PhotoAlbumAdapter(mPhotoAlbum);
+            //mRecyclerView.SetAdapter(mAdapter);
 
 
             var cruiseTable = new AbstractTable<Cruises>();
             var cruises = cruiseTable.GetAllCruisesWithId();
 
-            TableLayout tableLayout = FindViewById<TableLayout>(Resource.Id.tableLayout);
+            //TableLayout tableLayout = FindViewById<TableLayout>(Resource.Id.tableLayout);
 
-            
-            foreach (var item in cruises) {
-                var cityTable = new AbstractTable<Cities>();
-                var testing = cityTable.GetAllElements();
-                var destCity = cityTable.GetElement(item.TrainstationDestinationId);
-                var sourceCity = cityTable.GetElement(item.TrainstationSourceId);
 
-                CreateRow(tableLayout, item.Id.ToString(), sourceCity.Name, destCity.Name, 
-                          item.DepartureTime.ToString(), item.ArrivingTime.ToString());
-            }
+            //foreach (var item in cruises) {
+            //    var cityTable = new AbstractTable<Cities>();
+            //    var testing = cityTable.GetAllElements();
+            //    var destCity = cityTable.GetElement(item.TrainstationDestinationId);
+            //    var sourceCity = cityTable.GetElement(item.TrainstationSourceId);
 
-            SetContentView(tableLayout);
+            //    CreateRow(tableLayout, item.Id.ToString(), sourceCity.Name, destCity.Name,
+            //              item.DepartureTime.ToString(), item.ArrivingTime.ToString());
+            //}
+
+            //SetContentView(tableLayout);
 
         }
+
+
+
+
 
         public void CreateRow(TableLayout tableLayout, string id, string sourceCity, string destCity, string departureDate, string arrivalDate)  {
             var textList = new string[] { id, $"{sourceCity} {departureDate}", $"{destCity} {arrivalDate}" };
