@@ -23,8 +23,6 @@ namespace testForAndroid {
             Android.Support.V7.Widget.Toolbar toolbar = FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.toolbar);
             SetSupportActionBar(toolbar);
             //InitDB();
-            TimePicker TimePicker = new TimePicker(this);
-
 
             string sourceCity = Intent.GetStringExtra("sourceCity");
             string destinationCity = Intent.GetStringExtra("destinationCity");
@@ -56,18 +54,16 @@ namespace testForAndroid {
             } catch (FormatException) {
                 return;
             }
-
-            var sourceCity = FindViewById<TextView>(Resource.Id.sourceCity);
-            var destCity = FindViewById<TextView>(Resource.Id.destinationCity);
+            
             var _dateDisplay = FindViewById<EditText>(Resource.Id.departureDate);
             var _timeDisplay = FindViewById<EditText>(Resource.Id.departureTime);
 
             var cityTable = new AbstractTable<Cities>();
-            cityTable.NewRow.Name = sourceCity.Text;
+            cityTable.NewRow.Name = GetSourceCity();
             int sourceCityId = cityTable.InsertElement();
 
             var cityTable2 = new AbstractTable<Cities>();
-            cityTable2.NewRow.Name = destCity.Text;
+            cityTable2.NewRow.Name = GetDestinationCity();
             int destCityId = cityTable2.InsertElement();
 
 
@@ -127,7 +123,6 @@ namespace testForAndroid {
         public DateTime GenerateDateInRandomNumberOfDays(DateTime date) {
             Random rand = new Random();
             DateTime newDate = date;
-            //newDate = newDate.AddDays(rand.Next(1, 3));
             newDate = newDate.AddHours(rand.Next(0, 100));
             newDate = newDate.AddMinutes(rand.Next(0, 60));
             return newDate;
@@ -189,27 +184,6 @@ namespace testForAndroid {
 
         }
 
-        public static void InitDB() {
-            var companyRow = new AbstractTable<Companys>();
-            
-            companyRow.NewRow.Number = 12345;
-            int companyId = companyRow.InsertElement(); // мы не должны создавать каждый раз одинаковую компанию
-
-            var crewRow = new AbstractTable<Crews>();
-            int crewId = crewRow.InsertElement();
-
-            var employeeRow = new AbstractTable<Employees>();
-            employeeRow.NewRow.FirstName = "Васян";
-            employeeRow.NewRow.LastName = "Васянович";
-            employeeRow.NewRow.CrewId = crewId;
-            employeeRow.NewRow.CompanyId = 0;
-
-            var trainRow = new AbstractTable<Trains>();
-            trainRow.NewRow.CompanyId = 0;
-            trainRow.NewRow.Number = 75743;
-            int trainId = trainRow.InsertElement();
-
-        }
 
         // ахах
         public void WriteInDB(string sourceCity, string destinationCity, DateTime departureDateTime, DateTime arrivalDateTime) { //TODO поработать над функцией
@@ -220,37 +194,15 @@ namespace testForAndroid {
             // сгенерить несколько сотдников(запонмить сколько сгенерилось), и создать команду
             // создать поезд с рандомным номером и юзнуть айди компании, запомнить айди поезда
             // !!! создать рейс с айди поезда, айди команды, айди двух вокзалов и выставить время от юзера     
-
-            var sourceCityRow = new AbstractTable<Cities>();
-
-            sourceCityRow.NewRow.Name = sourceCity;
-            int sourceCityId = sourceCityRow.CountOfElements() + 1;
-            sourceCityRow.InsertElement();
-
-            var destCityRow = new AbstractTable<Cities>();
-            destCityRow.NewRow.Name = destinationCity;
-            int destCityId = destCityRow.CountOfElements() + 1;
-            destCityRow.InsertElement();
-
-            // я же аутест, я не понимаю как контролировать бд снаружи, а метод я однажды уже вызвал. Так что вызова больше не будет
-            var destTrainstationRow = new AbstractTable<TrainstationsDestination>();  // мы не должны создавать каждый раз одинаковый вокзал
-            destTrainstationRow.NewRow.Name = destinationCity + "1";
-            destTrainstationRow.NewRow.CityId = destCityId;
-            destTrainstationRow.InsertElement();
-
-            var sourceTrainstationRow = new AbstractTable<TrainstationsSource>();
-            sourceTrainstationRow.NewRow.Name = sourceCity + "2";
-            sourceTrainstationRow.NewRow.CityId = sourceCityId;
-            sourceTrainstationRow.InsertElement();
-            // написать функцию инсерт if no exists
-            
+           
             var cruiseRow = new AbstractTable<Cruises>();
             cruiseRow.NewRow.ArrivingTime = arrivalDateTime;
             cruiseRow.NewRow.DepartureTime = departureDateTime;
             cruiseRow.NewRow.CrewId = 0;
             cruiseRow.NewRow.TrainId = 0; // ахах вот это лулз
-            cruiseRow.NewRow.TrainstationDestinationId = destCityId;
-            cruiseRow.NewRow.TrainstationSourceId = sourceCityId;
+
+            cruiseRow.NewRow.TrainstationDestinationId = cruiseRow.GetCityId(destinationCity);
+            cruiseRow.NewRow.TrainstationSourceId = cruiseRow.GetCityId(sourceCity);
             cruiseRow.InsertElement();
 
         }

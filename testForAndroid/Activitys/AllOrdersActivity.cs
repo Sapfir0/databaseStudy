@@ -26,8 +26,9 @@ namespace testForAndroid {
             
             foreach (var item in cruises) {
                 var cityTable = new AbstractTable<Cities>();
-                var destCity = cityTable.GetElement(item.TrainstationDestinationId+2);
-                var sourceCity = cityTable.GetElement(item.TrainstationSourceId+2);
+                var testing = cityTable.GetAllElements();
+                var destCity = cityTable.GetElement(item.TrainstationDestinationId);
+                var sourceCity = cityTable.GetElement(item.TrainstationSourceId);
 
                 CreateRow(tableLayout, item.Id.ToString(), sourceCity.Name, destCity.Name, 
                           item.DepartureTime.ToString(), item.ArrivingTime.ToString());

@@ -32,15 +32,17 @@ namespace testForAndroid {
                 allCitiesInfo = sr.ReadToEnd();
             }
 
-            //AbstractTable<Cities>.DeleteAll();
             var cities = JsonConvert.DeserializeObject<List<CitiesListAdapter>>(allCitiesInfo); // можно наверно добавить лямбду, где десериализовать в лист строк, и братьтолько name
 
-            List<string> stringCityes = new List<string>();
+            List<string> stringCities = new List<string>();
             for (int i = 0; i < cities.Count; i++) {
-                stringCityes.Add(cities[i].Name);
+                stringCities.Add(cities[i].Name);
             }
+            //AbstractTable<Cities>.DeleteAll();
+            //InitDB(stringCities);
 
-            ArrayAdapter autoCompleteAdapter = new ArrayAdapter(this, Resource.Layout.autoCompleteCities, stringCityes);
+
+            ArrayAdapter autoCompleteAdapter = new ArrayAdapter(this, Resource.Layout.autoCompleteCities, stringCities);
             var autoCompleteSourceCityView = FindViewById<AutoCompleteTextView>(Resource.Id.autocompleteSourceCity);
             autoCompleteSourceCityView.Adapter = autoCompleteAdapter;
 
@@ -77,10 +79,33 @@ namespace testForAndroid {
 
         }
 
-        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults) {
-            Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 
-            base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+        public static void InitDB(List<string> cities) {
+            var companyRow = new AbstractTable<Companys>();
+
+            companyRow.NewRow.Number = 12345;
+            int companyId = companyRow.InsertElement(); // мы не должны создавать каждый раз одинаковую компанию
+
+            var crewRow = new AbstractTable<Crews>();
+            int crewId = crewRow.InsertElement();
+
+            var employeeRow = new AbstractTable<Employees>();
+            employeeRow.NewRow.FirstName = "Васян";
+            employeeRow.NewRow.LastName = "Васянович";
+            employeeRow.NewRow.CrewId = crewId;
+            employeeRow.NewRow.CompanyId = 0;
+
+            var trainRow = new AbstractTable<Trains>();
+            trainRow.NewRow.CompanyId = 0;
+            trainRow.NewRow.Number = 75743;
+            int trainId = trainRow.InsertElement();
+
+            var cityRow = new AbstractTable<Cities>();
+            foreach (var city in cities) {
+                cityRow.NewRow.Name = city;
+                cityRow.InsertElement();
+            }
+
         }
     }
 }

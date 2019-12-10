@@ -104,5 +104,9 @@ namespace testForAndroid {
             return CountOfElements();
         }
 
+        public int GetCityId(string city) {
+            return db.Table<Cities>().Where(item => item.Name == city).FirstOrDefault().Id;
+        }
+
     }
 }
