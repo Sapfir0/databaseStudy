@@ -12,10 +12,13 @@ namespace testForAndroid {
     // Photo: contains image resource ID and caption:
     public class Order {
 
+        public int id;
         public string sourceCity;
         public string destinationCity;
         public DateTime departureDate;
         public DateTime arrivalDate;
+
+        public int Id => id;
 
         public string SourceCity {
             get { return sourceCity; }
@@ -80,6 +83,7 @@ namespace testForAndroid {
                 Order.departureDate = item.DepartureTime;
                 Order.destinationCity = destCity.Name;
                 Order.sourceCity = sourceCity.Name;
+                Order.id = item.Id;
                 tempOrdersArray.Add(Order);
             }
 
@@ -119,5 +123,6 @@ namespace testForAndroid {
                 mPhotos[rnd] = tmpOrder;
             }
         }
+        
     }
 }

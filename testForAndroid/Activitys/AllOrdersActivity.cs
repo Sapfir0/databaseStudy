@@ -32,9 +32,15 @@ namespace testForAndroid {
             mRecyclerView.SetLayoutManager(mLayoutManager);
 
             mAdapter = new AllOrdersAdapter(_mOrdersAlbum);
+            mAdapter.ItemClick += OnItemClick;
+
             mRecyclerView.SetAdapter(mAdapter);
-
-
+        }
+        void OnItemClick (object sender, int position)
+        {
+            // Display a toast that briefly shows the enumeration of the selected photo:
+            int photoNum = position + 1;
+            Toast.MakeText(this, "This is photo number " + photoNum, ToastLength.Short).Show();
         }
 
         public class OrderViewHolder : RecyclerView.ViewHolder {
