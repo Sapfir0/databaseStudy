@@ -17,7 +17,8 @@ namespace testForAndroid {
     [Activity(Label = "Бронирование билетов", 
         Theme = "@style/AppTheme.NoActionBar", MainLauncher = true)]
     public class MainActivity : AbstractActivity {
-        string allCitiesInfo;
+        string allCitiesInfoJson;
+        List<string> AllCitiesInRussia = new List<string>();
 
         protected override void OnCreate(Bundle savedInstanceState) {
             base.OnCreate(savedInstanceState);
@@ -30,20 +31,19 @@ namespace testForAndroid {
 
             AssetManager assets = Assets;
             using (StreamReader sr = new StreamReader(assets.Open("russian-cities.json"))) {
-                allCitiesInfo = sr.ReadToEnd();
+                allCitiesInfoJson = sr.ReadToEnd();
             }
 
-            var cities = JsonConvert.DeserializeObject<List<CitiesListAdapter>>(allCitiesInfo); // можно наверно добавить лямбду, где десериализовать в лист строк, и братьтолько name
+            var cities = JsonConvert.DeserializeObject<List<CitiesListAdapter>>(allCitiesInfoJson); // можно наверно добавить лямбду, где десериализовать в лист строк, и братьтолько name
 
-            List<string> stringCities = new List<string>();
             for (int i = 0; i < cities.Count; i++) {
-                stringCities.Add(cities[i].Name);
+                AllCitiesInRussia.Add(cities[i].Name);
             }
             //AbstractTable<Cities>.DeleteAll();
             //InitDB(stringCities);
 
 
-            ArrayAdapter autoCompleteAdapter = new ArrayAdapter(this, Resource.Layout.autoCompleteCities, stringCities);
+            ArrayAdapter autoCompleteAdapter = new ArrayAdapter(this, Resource.Layout.autoCompleteCities, AllCitiesInRussia);
             var autoCompleteSourceCityView = FindViewById<AutoCompleteTextView>(Resource.Id.autocompleteSourceCity);
             autoCompleteSourceCityView.Adapter = autoCompleteAdapter;
 
@@ -63,12 +63,13 @@ namespace testForAndroid {
             if (string.IsNullOrEmpty(sourceCity)) {
                 Alert.DisplayAlert(this, "Error", "Укажи откуда едешь", "Я понял");
             } else if (string.IsNullOrEmpty(destinationCity)) {
+
                 Alert.DisplayAlert(this, "Error", "Укажи куда едешь", "Я понял");
             }
-            else if (!allCitiesInfo.Contains(sourceCity)) {
+            else if (!AllCitiesInRussia.Contains(sourceCity)) {
                 Alert.DisplayAlert(this, "Error", "Некорректное название города отправления" + $"\"{sourceCity}\"", "Я понял");
             }
-            else if(!allCitiesInfo.Contains(destinationCity)) {
+            else if(!AllCitiesInRussia.Contains(destinationCity)) {
                 Alert.DisplayAlert(this, "Error", "Некорректное название города прибытия" + $"\"{destinationCity}\"", "Я понял");
             } else {
                 var intent = new Intent(this, typeof(SetTimeTicketActivity));
