@@ -12,7 +12,7 @@ using Android.Views;
 using Android.Widget;
 
 namespace testForAndroid {
-    [Activity(Label = "Все заказы", MainLauncher = true)]
+    [Activity(Label = "Все заказы")]
     public class AllOrdersActivity : Activity {
         RecyclerView mRecyclerView;
         RecyclerView.LayoutManager mLayoutManager;

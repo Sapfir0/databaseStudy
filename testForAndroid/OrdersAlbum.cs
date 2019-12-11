@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace testForAndroid {
     // Photo: contains image resource ID and caption:
-    public class Photo {
+    public class Order {
 
         public string sourceCity;
         public string destinationCity;
@@ -38,17 +38,10 @@ namespace testForAndroid {
     public class OrdersAlbum {
         // Built-in photo collection - this could be replaced with
         // a photo database:
-
-        static Photo[] mBuiltInPhotos = {
-            new Photo { destinationCity = "Buckingham Palace",
-                        sourceCity = "Buckingham Palace",
-                        departureDate = DateTime.Now,
-                        arrivalDate = DateTime.Now },
-
-            };
+        
 
         // Array of photos that make up the album:
-        private Photo[] mPhotos;
+        private Order[] mPhotos;
 
         // Random number generator for shuffling the photos:
         Random mRandom;
@@ -56,7 +49,7 @@ namespace testForAndroid {
         // Create an instance copy of the built-in photo list and
         // create the random number generator:
         public OrdersAlbum() {
-            mPhotos = mBuiltInPhotos;
+            mPhotos = GenerateOrders().ToArray();
             mRandom = new Random();
         }
 
@@ -66,14 +59,37 @@ namespace testForAndroid {
         }
 
         // Indexer (read only) for accessing a photo:
-        public Photo this[int i] {
+        public Order this[int i] {
             get { return mPhotos[i]; }
+        }
+
+        public List<Order> GenerateOrders() {
+            
+            var cruiseTable = new AbstractTable<Cruises>();
+            var cruises = cruiseTable.GetAllCruisesWithId();
+            var tempOrdersArray = new List<Order>();
+            
+            foreach (var item in cruises) {
+                var cityTable = new AbstractTable<Cities>();
+                var testing = cityTable.GetAllElements();
+                var destCity = cityTable.GetElement(item.TrainstationDestinationId);
+                var sourceCity = cityTable.GetElement(item.TrainstationSourceId);
+
+                var Order = new Order();
+                Order.arrivalDate = item.ArrivingTime;
+                Order.departureDate = item.DepartureTime;
+                Order.destinationCity = destCity.Name;
+                Order.sourceCity = sourceCity.Name;
+                tempOrdersArray.Add(Order);
+            }
+
+            return tempOrdersArray;
         }
 
         // Pick a random photo and swap it with the top:
         public int RandomSwap() {
             // Save the photo at the top:
-            Photo tmpPhoto = mPhotos[0];
+            Order tmpOrder = mPhotos[0];
 
             // Generate a next random index between 1 and 
             // Length (noninclusive):
@@ -81,7 +97,7 @@ namespace testForAndroid {
 
             // Exchange top photo with randomly-chosen photo:
             mPhotos[0] = mPhotos[rnd];
-            mPhotos[rnd] = tmpPhoto;
+            mPhotos[rnd] = tmpOrder;
 
             // Return the index of which photo was swapped with the top:
             return rnd;
@@ -92,7 +108,7 @@ namespace testForAndroid {
             // Use the Fisher-Yates shuffle algorithm:
             for (int idx = 0; idx < mPhotos.Length; ++idx) {
                 // Save the photo at idx:
-                Photo tmpPhoto = mPhotos[idx];
+                Order tmpOrder = mPhotos[idx];
 
                 // Generate a next random index between idx (inclusive) and 
                 // Length (noninclusive):
@@ -100,7 +116,7 @@ namespace testForAndroid {
 
                 // Exchange photo at idx with randomly-chosen (later) photo:
                 mPhotos[idx] = mPhotos[rnd];
-                mPhotos[rnd] = tmpPhoto;
+                mPhotos[rnd] = tmpOrder;
             }
         }
     }

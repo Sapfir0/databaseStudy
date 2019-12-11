@@ -15,7 +15,7 @@ using Newtonsoft.Json;
 
 namespace testForAndroid {
     [Activity(Label = "Бронирование билетов", 
-        Theme = "@style/AppTheme.NoActionBar")]
+        Theme = "@style/AppTheme.NoActionBar", MainLauncher = true)]
     public class MainActivity : AbstractActivity {
         string allCitiesInfo;
 
