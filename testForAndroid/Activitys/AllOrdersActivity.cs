@@ -17,21 +17,21 @@ namespace testForAndroid {
         RecyclerView mRecyclerView;
         RecyclerView.LayoutManager mLayoutManager;
         AllOrdersAdapter mAdapter;
-        PhotoAlbum mPhotoAlbum;
+        OrdersAlbum _mOrdersAlbum;
 
         protected override void OnCreate(Bundle savedInstanceState) {
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.AllOrdersLayout);
             
 
-            mPhotoAlbum = new PhotoAlbum();
+            _mOrdersAlbum = new OrdersAlbum();
             mRecyclerView = FindViewById<RecyclerView>(Resource.Id.recyclerView2);
 
             mLayoutManager = new LinearLayoutManager(this);
 
             mRecyclerView.SetLayoutManager(mLayoutManager);
 
-            mAdapter = new AllOrdersAdapter(mPhotoAlbum);
+            mAdapter = new AllOrdersAdapter(_mOrdersAlbum);
             mRecyclerView.SetAdapter(mAdapter);
 
 
@@ -68,7 +68,7 @@ namespace testForAndroid {
                 DestinationCity = itemView.FindViewById<TextView>(Resource.Id.destinationCity);
                 SourceCity = itemView.FindViewById<TextView>(Resource.Id.sourceCity);
                 DepartureDate = itemView.FindViewById<TextView>(Resource.Id.departureDate);
-                ArrivalDate = itemView.FindViewById<TextView>(Resource.Id.arrivalTime); //TODO СРОЧНО ТУТ ОШИБКА
+                //ArrivalDate = itemView.FindViewById<TextView>(Resource.Id.arrivalTime); //TODO СРОЧНО ТУТ ОШИБКА
 
 
                 itemView.Click += (sender, e) => listener(base.LayoutPosition);
@@ -78,10 +78,10 @@ namespace testForAndroid {
 
         public class AllOrdersAdapter : RecyclerView.Adapter {
             public event EventHandler<int> ItemClick;
-            public PhotoAlbum mPhotoAlbum;
+            public OrdersAlbum MOrdersAlbum;
 
-            public AllOrdersAdapter(PhotoAlbum photoAlbum) {
-                mPhotoAlbum = photoAlbum;
+            public AllOrdersAdapter(OrdersAlbum ordersAlbum) {
+                MOrdersAlbum = ordersAlbum;
             }
 
             public override RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
@@ -96,15 +96,15 @@ namespace testForAndroid {
             public override void OnBindViewHolder(RecyclerView.ViewHolder holder, int position) {
                     OrderViewHolder vh = holder as OrderViewHolder;
 
-                    vh.DestinationCity.Text = mPhotoAlbum[position].DestinationCity;
-                    vh.SourceCity.Text = mPhotoAlbum[position].SourceCity;
-                    vh.DepartureDate.Text = mPhotoAlbum[position].DepartureDate.ToString();
-                    vh.ArrivalDate.Text = mPhotoAlbum[position].ArrivalDate.ToString();
+                    vh.DestinationCity.Text = MOrdersAlbum[position].DestinationCity;
+                    vh.SourceCity.Text = MOrdersAlbum[position].SourceCity;
+                    vh.DepartureDate.Text = MOrdersAlbum[position].DepartureDate.ToString();
+                    //vh.ArrivalDate.Text = MOrdersAlbum[position].ArrivalDate.ToString();
 
             }
 
             public override int ItemCount {
-                get { return mPhotoAlbum.NumPhotos; }
+                get { return MOrdersAlbum.NumPhotos; }
             }
 
             void OnClick(int position) {

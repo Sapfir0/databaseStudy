@@ -35,7 +35,7 @@ namespace testForAndroid {
     }
 
     // Photo album: holds image resource IDs and caption:
-    public class PhotoAlbum {
+    public class OrdersAlbum {
         // Built-in photo collection - this could be replaced with
         // a photo database:
 
@@ -55,7 +55,7 @@ namespace testForAndroid {
 
         // Create an instance copy of the built-in photo list and
         // create the random number generator:
-        public PhotoAlbum() {
+        public OrdersAlbum() {
             mPhotos = mBuiltInPhotos;
             mRandom = new Random();
         }
