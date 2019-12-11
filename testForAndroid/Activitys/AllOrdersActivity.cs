@@ -12,7 +12,7 @@ using Android.Views;
 using Android.Widget;
 
 namespace testForAndroid {
-    [Activity(Label = "Все заказы")]
+    [Activity(Label = "Все заказы", MainLauncher = true)]
     public class AllOrdersActivity : Activity {
         RecyclerView mRecyclerView;
         RecyclerView.LayoutManager mLayoutManager;
@@ -35,24 +35,6 @@ namespace testForAndroid {
             mRecyclerView.SetAdapter(mAdapter);
 
 
-            var cruiseTable = new AbstractTable<Cruises>();
-            var cruises = cruiseTable.GetAllCruisesWithId();
-
-            //TableLayout tableLayout = FindViewById<TableLayout>(Resource.Id.tableLayout);
-
-
-            //foreach (var item in cruises) {
-            //    var cityTable = new AbstractTable<Cities>();
-            //    var testing = cityTable.GetAllElements();
-            //    var destCity = cityTable.GetElement(item.TrainstationDestinationId);
-            //    var sourceCity = cityTable.GetElement(item.TrainstationSourceId);
-
-            //    CreateRow(tableLayout, item.Id.ToString(), sourceCity.Name, destCity.Name,
-            //              item.DepartureTime.ToString(), item.ArrivingTime.ToString());
-            //}
-
-            //SetContentView(tableLayout);
-
         }
 
         public class OrderViewHolder : RecyclerView.ViewHolder {
@@ -68,7 +50,7 @@ namespace testForAndroid {
                 DestinationCity = itemView.FindViewById<TextView>(Resource.Id.destinationCity);
                 SourceCity = itemView.FindViewById<TextView>(Resource.Id.sourceCity);
                 DepartureDate = itemView.FindViewById<TextView>(Resource.Id.departureDate);
-                //ArrivalDate = itemView.FindViewById<TextView>(Resource.Id.arrivalTime); //TODO СРОЧНО ТУТ ОШИБКА
+                ArrivalDate = itemView.FindViewById<TextView>(Resource.Id.arrivalDate); //TODO СРОЧНО ТУТ ОШИБКА
 
 
                 itemView.Click += (sender, e) => listener(base.LayoutPosition);
@@ -85,8 +67,7 @@ namespace testForAndroid {
             }
 
             public override RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
-                View itemView = LayoutInflater.From(parent.Context).
-                            Inflate(Resource.Layout.PhotoCardView, parent, false);
+                View itemView = LayoutInflater.From(parent.Context).Inflate(Resource.Layout.OrderCardView, parent, false);
 
                 OrderViewHolder vh = new OrderViewHolder(itemView, OnClick);
                 return vh;
@@ -99,7 +80,7 @@ namespace testForAndroid {
                     vh.DestinationCity.Text = MOrdersAlbum[position].DestinationCity;
                     vh.SourceCity.Text = MOrdersAlbum[position].SourceCity;
                     vh.DepartureDate.Text = MOrdersAlbum[position].DepartureDate.ToString();
-                    //vh.ArrivalDate.Text = MOrdersAlbum[position].ArrivalDate.ToString();
+                    vh.ArrivalDate.Text = MOrdersAlbum[position].ArrivalDate.ToString();
 
             }
 
