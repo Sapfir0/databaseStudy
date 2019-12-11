@@ -11,7 +11,7 @@ using Android.Views;
 using Android.Widget;
 
 namespace testForAndroid {
-    [Activity(Label = "Заказ оставлен")]
+    [Activity(Label = "Заказ оставлен", Theme = "@style/AppTheme.NoActionBar")]
     public class SuccessLayoutActivity : AbstractActivity {
         protected override void OnCreate(Bundle savedInstanceState) {
             base.OnCreate(savedInstanceState);

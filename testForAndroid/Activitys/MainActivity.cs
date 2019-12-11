@@ -14,13 +14,15 @@ using Newtonsoft.Json;
 
 
 namespace testForAndroid {
-    [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.NoActionBar", MainLauncher = true)]
+    [Activity(Label = "Бронирование билетов", 
+        Theme = "@style/AppTheme.NoActionBar", MainLauncher = true)]
     public class MainActivity : AbstractActivity {
         string allCitiesInfo;
 
         protected override void OnCreate(Bundle savedInstanceState) {
-            base.OnCreate(savedInstanceState);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
+
+            base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.activity_main);
 
             Android.Support.V7.Widget.Toolbar toolbar = FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.toolbar);

@@ -22,7 +22,6 @@ namespace testForAndroid {
 
             Android.Support.V7.Widget.Toolbar toolbar = FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.toolbar);
             SetSupportActionBar(toolbar);
-            //InitDB();
 
             string sourceCity = Intent.GetStringExtra("sourceCity");
             string destinationCity = Intent.GetStringExtra("destinationCity");
