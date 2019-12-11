@@ -16,7 +16,7 @@ namespace testForAndroid {
     public class AllOrdersActivity : Activity {
         RecyclerView mRecyclerView;
         RecyclerView.LayoutManager mLayoutManager;
-        PhotoAlbumAdapter mAdapter;
+        AllOrdersAdapter mAdapter;
         PhotoAlbum mPhotoAlbum;
 
         protected override void OnCreate(Bundle savedInstanceState) {
@@ -31,7 +31,7 @@ namespace testForAndroid {
 
             mRecyclerView.SetLayoutManager(mLayoutManager);
 
-            mAdapter = new PhotoAlbumAdapter(mPhotoAlbum);
+            mAdapter = new AllOrdersAdapter(mPhotoAlbum);
             mRecyclerView.SetAdapter(mAdapter);
 
 
@@ -55,14 +55,14 @@ namespace testForAndroid {
 
         }
 
-        public class PhotoViewHolder : RecyclerView.ViewHolder {
+        public class OrderViewHolder : RecyclerView.ViewHolder {
             public TextView DestinationCity { get; private set; }
             public TextView SourceCity { get; private set; }
             public TextView DepartureDate { get; private set; }
             public TextView ArrivalDate { get; private set; }
 
             // Get references to the views defined in the CardView layout.
-            public PhotoViewHolder(View itemView, Action<int> listener)
+            public OrderViewHolder(View itemView, Action<int> listener)
                 : base(itemView) {
                 // Locate and cache view references:
                 DestinationCity = itemView.FindViewById<TextView>(Resource.Id.destinationCity);
@@ -76,28 +76,25 @@ namespace testForAndroid {
         }
 
 
-        public class PhotoAlbumAdapter : RecyclerView.Adapter {
+        public class AllOrdersAdapter : RecyclerView.Adapter {
             public event EventHandler<int> ItemClick;
             public PhotoAlbum mPhotoAlbum;
 
-            public PhotoAlbumAdapter(PhotoAlbum photoAlbum) {
+            public AllOrdersAdapter(PhotoAlbum photoAlbum) {
                 mPhotoAlbum = photoAlbum;
             }
 
-            public override RecyclerView.ViewHolder
-                OnCreateViewHolder(ViewGroup parent, int viewType) {
-                
+            public override RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
                 View itemView = LayoutInflater.From(parent.Context).
                             Inflate(Resource.Layout.PhotoCardView, parent, false);
 
-                PhotoViewHolder vh = new PhotoViewHolder(itemView, OnClick);
+                OrderViewHolder vh = new OrderViewHolder(itemView, OnClick);
                 return vh;
             }
 
             // Fill in the contents of the photo card (invoked by the layout manager):
-            public override void
-                OnBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-                    PhotoViewHolder vh = holder as PhotoViewHolder;
+            public override void OnBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+                    OrderViewHolder vh = holder as OrderViewHolder;
 
                     vh.DestinationCity.Text = mPhotoAlbum[position].DestinationCity;
                     vh.SourceCity.Text = mPhotoAlbum[position].SourceCity;
@@ -114,66 +111,7 @@ namespace testForAndroid {
                 ItemClick?.Invoke(this, position);
             }
         }
-
-
-        //public void CreateRow(TableLayout tableLayout, string id, string sourceCity, string destCity, string departureDate, string arrivalDate) {
-        //    var textList = new string[] { id, $"{sourceCity} {departureDate}", $"{destCity} {arrivalDate}" };
-        //    var textViewList = new List<TextView>(textList.Length);
-        //    foreach (var text in textList) {
-        //        var tempView = new TextView(this);
-        //        tempView.SetHeight(100);
-        //        tempView.Text = text;
-        //        textViewList.Add(tempView);
-        //    }
-
-        //    var idRow = new TableRow(this);
-        //    idRow.AddView(textViewList[0]);
-
-        //    var sourceRow = new TableRow(this);
-        //    var destRow = new TableRow(this);
-
-        //    sourceRow.AddView(textViewList[1]);
-        //    destRow.AddView(textViewList[2]);
-
-
-        //    var orderLayout = new LinearLayout(this) {
-        //        Orientation = Orientation.Vertical,
-        //    };
-        //    orderLayout.LongClick += DeleteRow;
-        //    orderLayout.AddView(idRow);
-        //    orderLayout.AddView(sourceRow);
-        //    orderLayout.AddView(destRow);
-
-        //    tableLayout.AddView(orderLayout);
-        //}
-
-        //private void DeleteRow(object sender, EventArgs e) {
-        //    Alert alert = new Alert();
-        //    var orderLayout = (LinearLayout)sender;
-        //    alert.OnConfirm += () => {
-        //        TableLayout tableLayout = FindViewById<TableLayout>(Resource.Id.tableLayout);
-
-        //        var textView = (TableRow)orderLayout.GetChildAt(0);
-        //        if (textView is null) return;
-
-        //        var id = ((TextView)textView.GetChildAt(0)).Text;
-
-        //        tableLayout.RemoveView(orderLayout);
-
-        //        var cruise = new AbstractTable<Cruises>();
-        //        cruise.Delete(Convert.ToInt32(id));
-        //    };
-
-        //    var sourceRow = ((TableRow)orderLayout.GetChildAt(1));
-        //    var source = ((TextView)sourceRow.GetChildAt(0)).Text;
-
-        //    var destRow = ((TableRow)orderLayout.GetChildAt(2));
-        //    var dest = ((TextView)destRow.GetChildAt(0)).Text;
-
-        //    alert.DisplayConfirm(this, "Удалить запись?", $"Будет удален заказанный билет \nиз {source} в {dest}");
-
-        //}
-
+        
 
     }
 }
