@@ -44,7 +44,7 @@ namespace testForAndroid {
         
 
         // Array of photos that make up the album:
-        private Order[] mPhotos;
+        public Order[] mPhotos;
 
         // Random number generator for shuffling the photos:
         Random mRandom;

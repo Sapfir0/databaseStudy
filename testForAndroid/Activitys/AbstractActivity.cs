@@ -16,9 +16,10 @@ namespace testForAndroid {
     [Activity(Label = "AbstractActivity", Theme = "@style/AppTheme.NoActionBar")]
     public class AbstractActivity : AppCompatActivity {
         protected override void OnCreate(Bundle savedInstanceState) {
+
             base.OnCreate(savedInstanceState);
 
-            
+
         }
 
         public override bool OnCreateOptionsMenu(IMenu menu) {

@@ -33,14 +33,23 @@ namespace testForAndroid {
 
             mAdapter = new AllOrdersAdapter(_mOrdersAlbum);
             mAdapter.ItemClick += OnItemClick;
-
             mRecyclerView.SetAdapter(mAdapter);
         }
-        void OnItemClick (object sender, int position)
+        void OnItemClick (object sender, Order ticket)
         {
-            // Display a toast that briefly shows the enumeration of the selected photo:
-            int photoNum = position + 1;
-            Toast.MakeText(this, "This is photo number " + photoNum, ToastLength.Short).Show();
+            Alert alert = new Alert();
+            alert.OnConfirm += () => {
+                //tableLayout.RemoveView(orderLayout);
+                var cruise = new AbstractTable<Cruises>();
+                cruise.Delete(Convert.ToInt32(ticket.Id));
+
+                mAdapter.NotifyDataSetChanged();
+
+
+            };
+
+            alert.DisplayConfirm(this, "Удалить запись?", $"Будет удален заказанный билет \nиз {ticket.SourceCity} в {ticket.DestinationCity}");
+
         }
 
         public class OrderViewHolder : RecyclerView.ViewHolder {
@@ -50,13 +59,12 @@ namespace testForAndroid {
             public TextView ArrivalDate { get; private set; }
 
             // Get references to the views defined in the CardView layout.
-            public OrderViewHolder(View itemView, Action<int> listener)
-                : base(itemView) {
+            public OrderViewHolder(View itemView, Action<int> listener) : base(itemView) {
                 // Locate and cache view references:
                 DestinationCity = itemView.FindViewById<TextView>(Resource.Id.destinationCity);
                 SourceCity = itemView.FindViewById<TextView>(Resource.Id.sourceCity);
                 DepartureDate = itemView.FindViewById<TextView>(Resource.Id.departureDate);
-                ArrivalDate = itemView.FindViewById<TextView>(Resource.Id.arrivalDate); //TODO СРОЧНО ТУТ ОШИБКА
+                ArrivalDate = itemView.FindViewById<TextView>(Resource.Id.arrivalDate); 
 
 
                 itemView.Click += (sender, e) => listener(base.LayoutPosition);
@@ -65,7 +73,7 @@ namespace testForAndroid {
 
 
         public class AllOrdersAdapter : RecyclerView.Adapter {
-            public event EventHandler<int> ItemClick;
+            public event EventHandler<Order> ItemClick;
             public OrdersAlbum MOrdersAlbum;
 
             public AllOrdersAdapter(OrdersAlbum ordersAlbum) {
@@ -82,6 +90,7 @@ namespace testForAndroid {
             // Fill in the contents of the photo card (invoked by the layout manager):
             public override void OnBindViewHolder(RecyclerView.ViewHolder holder, int position) {
                     OrderViewHolder vh = holder as OrderViewHolder;
+                
 
                     vh.DestinationCity.Text = MOrdersAlbum[position].DestinationCity;
                     vh.SourceCity.Text = MOrdersAlbum[position].SourceCity;
@@ -95,7 +104,7 @@ namespace testForAndroid {
             }
 
             void OnClick(int position) {
-                ItemClick?.Invoke(this, position);
+                ItemClick?.Invoke(this, MOrdersAlbum[position]);
             }
         }
         
