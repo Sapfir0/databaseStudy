@@ -57,30 +57,25 @@ namespace testForAndroid {
             var _dateDisplay = FindViewById<EditText>(Resource.Id.departureDate);
             var _timeDisplay = FindViewById<EditText>(Resource.Id.departureTime);
 
-            var cityTable = new AbstractTable<Cities>();
-            cityTable.NewRow.Name = GetSourceCity();
-            int sourceCityId = cityTable.InsertElement();
-
-            var cityTable2 = new AbstractTable<Cities>();
-            cityTable2.NewRow.Name = GetDestinationCity();
-            int destCityId = cityTable2.InsertElement();
-
 
             var rand = new Random();
             var cruises = new AbstractTable<Cruises>();
 
             for(int i = 0; i < rand.Next(3, 6); i++) {
-                var arrivalDate = GenerateRandomCruises(sourceCityId, destCityId, _dateDisplay.Text, _timeDisplay.Text);
+                var arrivalDate = GenerateRandomCruises(GetSourceCity(), GetDestinationCity(), _dateDisplay.Text, _timeDisplay.Text);
                 var tableLayout = FindViewById<TableLayout>(Resource.Id.tableLayout);
                 var tableRow = new TableRow(this);
-                var availableCruise =new TextView(this);
-                availableCruise.Text = $" прибытие в {arrivalDate}";
+                var availableCruise = new TextView(this) {
+                    Text = $" прибытие в {arrivalDate}"
+                };
 
-                var cruiseId = new TextView(this);
-                cruiseId.Text = cruises.CountOfElements().ToString();
+                var cruiseId = new TextView(this) {
+                    Text = cruises.CountOfElements().ToString()
+                };
 
-                var applyOrder = new Button(this);
-                applyOrder.Text = "Удобно";
+                var applyOrder = new Button(this) {
+                    Text = "Удобно"
+                };
                 applyOrder.Click += ApplyOrderListener;
 
                 tableRow.AddView(cruiseId);
@@ -101,7 +96,7 @@ namespace testForAndroid {
             GetDatePicker(_dateDisplay);
         }
 
-        public DateTime GenerateRandomCruises(int sourceCityId, int destCityId, string departureDate, string departureTime) {
+        public DateTime GenerateRandomCruises(string sourceCity, string destCity, string departureDate, string departureTime) {
             var time = Convert.ToDateTime(departureTime);
             var date = Convert.ToDateTime(departureDate);
 
@@ -110,10 +105,9 @@ namespace testForAndroid {
             var combineDate = date.AddHours(time.Hour).AddMinutes(time.Minute);
             cruiseTable.NewRow.DepartureTime = combineDate;
             cruiseTable.NewRow.ArrivingTime = GenerateDateInRandomNumberOfDays(cruiseTable.NewRow.DepartureTime);
-            cruiseTable.NewRow.TrainstationDestinationId = destCityId;
-            cruiseTable.NewRow.TrainstationSourceId = sourceCityId;
-            cruiseTable.NewRow.TrainId = 0;
-            cruiseTable.NewRow.CrewId = 0;
+            cruiseTable.NewRow.DestinationCity = destCity;
+            cruiseTable.NewRow.SourceCity = sourceCity;
+
 
             cruiseTable.InsertElement();
             return cruiseTable.NewRow.ArrivingTime;
@@ -166,7 +160,6 @@ namespace testForAndroid {
             string[] words = date.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
 
-            var cruiseTable = new AbstractTable<Cruises>();
             var cruiseId = ((TextView)tableRow.GetChildAt(0)).Text;
             var user = new AbstractTable<User>();
             user.NewRow.CruiseId = Convert.ToInt32(cruiseId) ;
@@ -197,11 +190,9 @@ namespace testForAndroid {
             var cruiseRow = new AbstractTable<Cruises>();
             cruiseRow.NewRow.ArrivingTime = arrivalDateTime;
             cruiseRow.NewRow.DepartureTime = departureDateTime;
-            cruiseRow.NewRow.CrewId = 0;
-            cruiseRow.NewRow.TrainId = 0; // ахах вот это лулз
 
-            cruiseRow.NewRow.TrainstationDestinationId = cruiseRow.GetCityId(destinationCity);
-            cruiseRow.NewRow.TrainstationSourceId = cruiseRow.GetCityId(sourceCity);
+            cruiseRow.NewRow.DestinationCity = destinationCity;
+            cruiseRow.NewRow.SourceCity = sourceCity;
             cruiseRow.InsertElement();
 
         }

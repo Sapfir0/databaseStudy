@@ -24,8 +24,8 @@ namespace testForAndroid {
         public DateTime ArrivingTime { get; set; }
         public int TrainId { get; set; }
         public int CrewId { get; set; }
-        public int TrainstationSourceId { get; set; }
-        public int TrainstationDestinationId { get; set; }
+        public string SourceCity { get; set; }
+        public string DestinationCity { get; set; }
 
     }
     public class Trains

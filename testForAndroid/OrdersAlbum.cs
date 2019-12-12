@@ -73,16 +73,12 @@ namespace testForAndroid {
             var tempOrdersArray = new List<Order>();
             
             foreach (var item in cruises) {
-                var cityTable = new AbstractTable<Cities>();
-                var testing = cityTable.GetAllElements();
-                var destCity = cityTable.GetElement(item.TrainstationDestinationId);
-                var sourceCity = cityTable.GetElement(item.TrainstationSourceId);
 
                 var Order = new Order();
                 Order.arrivalDate = item.ArrivingTime;
                 Order.departureDate = item.DepartureTime;
-                Order.destinationCity = destCity.Name;
-                Order.sourceCity = sourceCity.Name;
+                Order.destinationCity = item.DestinationCity;
+                Order.sourceCity = item.SourceCity;
                 Order.id = item.Id;
                 tempOrdersArray.Add(Order);
             }

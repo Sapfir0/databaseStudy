@@ -17,8 +17,9 @@ namespace testForAndroid {
         Action<DateTime> timeSelectedHandler = delegate { };
 
         public static TimePickerFragment NewInstance(Action<DateTime> onTimeSelected) {
-            TimePickerFragment frag = new TimePickerFragment();
-            frag.timeSelectedHandler = onTimeSelected;
+            TimePickerFragment frag = new TimePickerFragment {
+                timeSelectedHandler = onTimeSelected
+            };
             return frag;
         }
 
