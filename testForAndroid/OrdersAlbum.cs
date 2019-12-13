@@ -39,24 +39,12 @@ namespace testForAndroid {
 
     // Photo album: holds image resource IDs and caption:
     public class OrdersAlbum {
-        // Built-in photo collection - this could be replaced with
-        // a photo database:
-        
-
-        // Array of photos that make up the album:
         public Order[] mPhotos;
 
-        // Random number generator for shuffling the photos:
-        Random mRandom;
-
-        // Create an instance copy of the built-in photo list and
-        // create the random number generator:
         public OrdersAlbum() {
             mPhotos = GenerateOrders().ToArray();
-            mRandom = new Random();
         }
 
-        // Return the number of photos in the photo album:
         public int NumPhotos {
             get { return mPhotos.Length; }
         }
@@ -69,11 +57,10 @@ namespace testForAndroid {
         public List<Order> GenerateOrders() {
             
             var cruiseTable = new AbstractTable<Cruises>();
-            var cruises = cruiseTable.GetAllCruisesWithId();
+            var cruises = cruiseTable.GetAllElements();
             var tempOrdersArray = new List<Order>();
             
             foreach (var item in cruises) {
-
                 var Order = new Order();
                 Order.arrivalDate = item.ArrivingTime;
                 Order.departureDate = item.DepartureTime;

@@ -62,7 +62,6 @@ namespace testForAndroid {
 
 
             var rand = new Random();
-            var cruises = new AbstractTable<Cruises>();
 
             for(int i = 0; i < rand.Next(3, 6); i++) {
                 var arrivalDate = GenerateDateInRandomNumberOfDays(Convert.ToDateTime(GetDepartureTime()));
@@ -95,12 +94,12 @@ namespace testForAndroid {
         }
 
 
-        public DateTime CombineDatePlusTime(DateTime date, DateTime time) {
+        private DateTime CombineDatePlusTime(DateTime date, DateTime time) {
             var combineDate = date.AddHours(time.Hour).AddMinutes(time.Minute);
             return combineDate;
         }
 
-        public DateTime GenerateDateInRandomNumberOfDays(DateTime date) {
+        private DateTime GenerateDateInRandomNumberOfDays(DateTime date) {
             Random rand = new Random();
             DateTime newDate = date;
             newDate = newDate.AddHours(rand.Next(0, 100));
@@ -129,7 +128,7 @@ namespace testForAndroid {
             DateTime departureTime;
             try {
                 departureDate = Convert.ToDateTime(GetDepartureDate());
-                departureTime = Convert.ToDateTime(GetDepartureDate());
+                departureTime = Convert.ToDateTime(GetDepartureTime());
 
             } catch (FormatException) {
                 Alert.DisplayAlert(this, "Error", "Дата/время не выбрано");
