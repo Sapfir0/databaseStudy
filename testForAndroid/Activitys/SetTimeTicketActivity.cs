@@ -53,24 +53,23 @@ namespace testForAndroid {
             } catch (FormatException) {
                 return;
             }
-            
-            var _dateDisplay = FindViewById<EditText>(Resource.Id.departureDate);
-            var _timeDisplay = FindViewById<EditText>(Resource.Id.departureTime);
+
+            var datetime = CombineDatePlusTime(departureDate, departureTime);
+            if (datetime <= DateTime.Now) {
+               Alert.DisplayAlert(this, "Ошибка", "Эта дата уже прошла");
+                return;
+            }
 
 
             var rand = new Random();
             var cruises = new AbstractTable<Cruises>();
 
             for(int i = 0; i < rand.Next(3, 6); i++) {
-                var arrivalDate = GenerateRandomCruises(GetSourceCity(), GetDestinationCity(), _dateDisplay.Text, _timeDisplay.Text);
+                var arrivalDate = GenerateDateInRandomNumberOfDays(Convert.ToDateTime(GetDepartureTime()));
                 var tableLayout = FindViewById<TableLayout>(Resource.Id.tableLayout);
                 var tableRow = new TableRow(this);
                 var availableCruise = new TextView(this) {
                     Text = $" прибытие в {arrivalDate}"
-                };
-
-                var cruiseId = new TextView(this) {
-                    Text = cruises.CountOfElements().ToString()
                 };
 
                 var applyOrder = new Button(this) {
@@ -78,7 +77,6 @@ namespace testForAndroid {
                 };
                 applyOrder.Click += ApplyOrderListener;
 
-                tableRow.AddView(cruiseId);
                 tableRow.AddView(availableCruise);
                 tableRow.AddView(applyOrder);
                 tableLayout.AddView(tableRow);
@@ -96,21 +94,10 @@ namespace testForAndroid {
             GetDatePicker(_dateDisplay);
         }
 
-        public DateTime GenerateRandomCruises(string sourceCity, string destCity, string departureDate, string departureTime) {
-            var time = Convert.ToDateTime(departureTime);
-            var date = Convert.ToDateTime(departureDate);
 
-            var cruiseTable = new AbstractTable<Cruises>();
-
+        public DateTime CombineDatePlusTime(DateTime date, DateTime time) {
             var combineDate = date.AddHours(time.Hour).AddMinutes(time.Minute);
-            cruiseTable.NewRow.DepartureTime = combineDate;
-            cruiseTable.NewRow.ArrivingTime = GenerateDateInRandomNumberOfDays(cruiseTable.NewRow.DepartureTime);
-            cruiseTable.NewRow.DestinationCity = destCity;
-            cruiseTable.NewRow.SourceCity = sourceCity;
-
-
-            cruiseTable.InsertElement();
-            return cruiseTable.NewRow.ArrivingTime;
+            return combineDate;
         }
 
         public DateTime GenerateDateInRandomNumberOfDays(DateTime date) {
@@ -155,22 +142,18 @@ namespace testForAndroid {
 
             var button = (Button)sender;
             var tableRow = (TableRow)button.Parent;
-            var dateView = (TextView)tableRow.GetChildAt(1);
-            var date = dateView.Text;
+            var date = ((TextView)tableRow.GetChildAt(0)).Text;
             string[] words = date.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
-
-            var cruiseId = ((TextView)tableRow.GetChildAt(0)).Text;
-            var user = new AbstractTable<User>();
-            user.NewRow.CruiseId = Convert.ToInt32(cruiseId) ;
-            user.InsertElement();
+            var arrivalDateTime = Convert.ToDateTime(words[2] + " " + words[3]);
+            var departureDateTime = CombineDatePlusTime(departureDate, departureTime);
+            WriteInDB(sourceCity, destinationCity, departureDateTime, arrivalDateTime);
 
             var intent = new Intent(this, typeof(SuccessLayoutActivity));
             intent.PutExtra("destinationCity", destinationCity);
             intent.PutExtra("sourceCity", sourceCity);
             intent.PutExtra("arrivalDateTime", words[2] + " " + words[3]);
-            intent.PutExtra("departureDate", departureDate.Date.ToString());
-            intent.PutExtra("departureTime", departureTime.TimeOfDay.ToString());
+            intent.PutExtra("departureDateTime", departureDateTime.ToString());
 
             StartActivity(intent);
 
@@ -205,16 +188,9 @@ namespace testForAndroid {
         }
 
         public void GetTimePicker(TextView textView) {
-            // Instantiate a TimePickerFragment (defined below) 
-            TimePickerFragment frag = TimePickerFragment.NewInstance(
-
-                // Create and pass in a delegate that updates the Activity time display 
-                // with the passed-in time value:
-                delegate (DateTime time) {
+            TimePickerFragment frag = TimePickerFragment.NewInstance(delegate (DateTime time) {
                     textView.Text = time.ToShortTimeString();
                 });
-
-            // Launch the TimePicker dialog fragment (defined below):
             frag.Show(FragmentManager, TimePickerFragment.TAG);
         }
 

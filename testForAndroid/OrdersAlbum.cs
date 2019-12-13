@@ -85,40 +85,6 @@ namespace testForAndroid {
 
             return tempOrdersArray;
         }
-
-        // Pick a random photo and swap it with the top:
-        public int RandomSwap() {
-            // Save the photo at the top:
-            Order tmpOrder = mPhotos[0];
-
-            // Generate a next random index between 1 and 
-            // Length (noninclusive):
-            int rnd = mRandom.Next(1, mPhotos.Length);
-
-            // Exchange top photo with randomly-chosen photo:
-            mPhotos[0] = mPhotos[rnd];
-            mPhotos[rnd] = tmpOrder;
-
-            // Return the index of which photo was swapped with the top:
-            return rnd;
-        }
-
-        // Shuffle the order of the photos:
-        public void Shuffle() {
-            // Use the Fisher-Yates shuffle algorithm:
-            for (int idx = 0; idx < mPhotos.Length; ++idx) {
-                // Save the photo at idx:
-                Order tmpOrder = mPhotos[idx];
-
-                // Generate a next random index between idx (inclusive) and 
-                // Length (noninclusive):
-                int rnd = mRandom.Next(idx, mPhotos.Length);
-
-                // Exchange photo at idx with randomly-chosen (later) photo:
-                mPhotos[idx] = mPhotos[rnd];
-                mPhotos[rnd] = tmpOrder;
-            }
-        }
         
     }
 }

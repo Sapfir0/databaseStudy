@@ -40,6 +40,7 @@ namespace testForAndroid {
             for (int i = 0; i < cities.Count; i++) {
                 AllRussianCities.Add(cities[i].Name);
             }
+
             //AbstractTable<Cities>.DeleteAll();
             //InitDB(AllRussianCities);
 

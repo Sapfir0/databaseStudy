@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+﻿
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
@@ -158,5 +158,13 @@
         android:text="На главную"
         android:id="@+id/toMainBtn"
     android:gravity="center_horizontal"/>
+
+        <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Посмотреть заказы"
+        android:id="@+id/toAllOrdersBtn"
+    android:gravity="center_horizontal"/>
+
 
 </LinearLayout>
