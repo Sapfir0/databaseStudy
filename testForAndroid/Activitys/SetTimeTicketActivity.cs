@@ -89,10 +89,9 @@ namespace testForAndroid {
         }
 
         public void SetDepartureDateButtonListener(object sender, EventArgs e) {
-            var _dateDisplay = FindViewById<EditText>(Resource.Id.departureDate);
-            GetDatePicker(_dateDisplay);
+            var dateDisplay = FindViewById<EditText>(Resource.Id.departureDate);
+            GetDatePicker(dateDisplay);
         }
-
 
         private DateTime CombineDatePlusTime(DateTime date, DateTime time) {
             var combineDate = date.AddHours(time.Hour).AddMinutes(time.Minute);
@@ -129,7 +128,6 @@ namespace testForAndroid {
             try {
                 departureDate = Convert.ToDateTime(GetDepartureDate());
                 departureTime = Convert.ToDateTime(GetDepartureTime());
-
             } catch (FormatException) {
                 Alert.DisplayAlert(this, "Error", "Дата/время не выбрано");
                 return;
@@ -137,8 +135,7 @@ namespace testForAndroid {
 
             var sourceCity = GetSourceCity();
             var destinationCity = GetDestinationCity();
-
-
+            
             var button = (Button)sender;
             var tableRow = (TableRow)button.Parent;
             var date = ((TextView)tableRow.GetChildAt(0)).Text;

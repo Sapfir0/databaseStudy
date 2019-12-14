@@ -3,13 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-
-using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
 using SQLite;
 using Environment = System.Environment;
 
@@ -78,24 +71,10 @@ namespace testForAndroid {
         public int CountOfElements() {
             return db.Table<T>().Count();
         }
-
-        public bool isCurrentCityExists(string existedParam) { // TODO переписать метод на более абстрактный
-            int foundVlues = db.Table<Cities>().Where(item => item.Name == existedParam).Count();
-            return foundVlues > 0;
-        }
-
-        public Cities ReturnCityByHisName(string name) {
-            var city = db.Table<Cities>().Where(item => item.Name == name).First();
-            return city;
-        }
         
         public int InsertElement() {
             db.Insert(_tableConcrete);
             return CountOfElements();
-        }
-
-        public int GetCityId(string city) {
-            return db.Table<Cities>().Where(item => item.Name == city).FirstOrDefault().Id;
         }
 
     }

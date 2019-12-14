@@ -7,7 +7,7 @@ namespace testForAndroid {
 
         public delegate void MethodContainer();
         public event MethodContainer OnConfirm;
-
+        
 
         public static void DisplayAlert(Context putThis, string title, string message, string buttonText = "OK") {
             AlertDialog.Builder dialog = new AlertDialog.Builder(putThis);
