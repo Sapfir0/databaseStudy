@@ -11,18 +11,18 @@ using System.Collections.Generic;
 namespace testForAndroid {
 
     public class OrdersList {
-        public Cruises[] mOrders;
+        private readonly Cruises[] _mOrders;
 
         public OrdersList() {
-            mOrders = GenerateOrders().ToArray();
+            _mOrders = GenerateOrders().ToArray();
         }
 
-        public int NumPhotos => mOrders.Length; 
+        public int NumPhotos => _mOrders.Length; 
         
 
-        public Cruises this[int i] => mOrders[i];
+        public Cruises this[int i] => _mOrders[i];
 
-        public List<Cruises> GenerateOrders() {
+        private List<Cruises> GenerateOrders() {
             var cruiseTable = new AbstractTable<Cruises>();
             return cruiseTable.GetAllElements();
         }

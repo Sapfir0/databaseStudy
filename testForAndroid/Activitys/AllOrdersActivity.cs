@@ -36,12 +36,20 @@ namespace testForAndroid {
             mAdapter.ItemClick += OnItemClick;
             mRecyclerView.SetAdapter(mAdapter);
         }
+
+        void CreateNewAdapter() {
+            _mOrdersList = new OrdersList();
+            mAdapter = new AllOrdersAdapter(_mOrdersList);
+            mRecyclerView.SetAdapter(mAdapter);
+        }
+        
         void OnItemClick (object sender, Cruises ticket) {
             Alert alert = new Alert();
             alert.OnConfirm += () => {
-                //tableLayout.RemoveView(orderLayout);
                 var cruise = new AbstractTable<Cruises>();
                 cruise.Delete(Convert.ToInt32(ticket.Id));
+
+                CreateNewAdapter();
 
                 mAdapter.NotifyDataSetChanged();
             };
