@@ -15,7 +15,7 @@ namespace testForAndroid {
         public int CruiseId { get; set; }
     }
 
-    class Cruises {
+    public class Cruises {
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
         [NotNull]

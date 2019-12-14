@@ -64,12 +64,13 @@
     <Compile Include="Activitys\AbstractActivity.cs" />
     <Compile Include="Activitys\AllOrdersActivity.cs" />
     <Compile Include="Activitys\SuccessLayoutActivity.cs" />
+    <Compile Include="Adapters\AllOrdersAdapter.cs" />
     <Compile Include="Alert.cs" />
     <Compile Include="Adapters\CitiesListAdapter.cs" />
     <Compile Include="DatabaseModels.cs" />
     <Compile Include="Activitys\MainActivity.cs" />
     <Compile Include="DatePickerFragment.cs" />
-    <Compile Include="OrdersAlbum.cs" />
+    <Compile Include="OrdersList.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Activitys\SetTimeTicketActivity.cs" />
