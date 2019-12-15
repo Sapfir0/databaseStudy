@@ -72,7 +72,11 @@ namespace testForAndroid {
             }
             else if(!AllRussianCities.Contains(destinationCity)) {
                 Alert.DisplayAlert(this, "Error", "Некорректное название города прибытия" + $"\"{destinationCity}\"", "Я понял");
-            } else {
+            } 
+            else if (sourceCity == destinationCity) {
+                Alert.DisplayAlert(this, "Error", "Города одинаковые", "Я понял");
+            }
+            else {
                 var intent = new Intent(this, typeof(SetTimeTicketActivity));
                 intent.PutExtra("destinationCity", destinationCity);
                 intent.PutExtra("sourceCity", sourceCity);

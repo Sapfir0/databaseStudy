@@ -45,7 +45,6 @@
                     android:textColor="@android:color/black"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/textView1" 
             />
                 <TextView
                     android:layout_width="wrap_content"
@@ -53,6 +52,7 @@
                     android:id="@+id/sourceCity"
                     android:textSize="18sp"
                     android:textColor="@android:color/black"
+                    android:layout_gravity="center_vertical" 
 />
             </LinearLayout>
         </RelativeLayout>
@@ -83,6 +83,8 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/destinationCity"
                     android:textColor="@android:color/black"
+                    android:layout_gravity="center_vertical" 
+
                     android:textSize="18sp"/>
             </LinearLayout>
         </RelativeLayout>
@@ -116,30 +118,7 @@
                     android:text="Изменить" />
             </LinearLayout>
 
-
-                    <LinearLayout
-                android:orientation="horizontal"
-                android:minWidth="25px"
-                android:minHeight="25px"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                >
-                <EditText
-                    android:id="@+id/departureTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Время отправления"
-                    android:textSize="18sp"
-                    android:textColor="@android:color/black"
-                    android:enabled="false"/>
-                <Button
-                    android:id="@+id/setDepartureTimeButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Изменить" />
-            </LinearLayout>
-
-
+        
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"

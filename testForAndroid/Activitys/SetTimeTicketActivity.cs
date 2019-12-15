@@ -32,43 +32,49 @@ namespace testForAndroid {
 
             Button setDepartureDateBtn = FindViewById<Button>(Resource.Id.setDepartureDateButton);
             setDepartureDateBtn.Click += SetDepartureDateButtonListener;
-
-            Button setDepartureTimeBtn = FindViewById<Button>(Resource.Id.setDepartureTimeButton);
-            setDepartureTimeBtn.Click += SetDepartureTimeButtonListener;
-
+            
             var departureDate = FindViewById<EditText>(Resource.Id.departureDate);
             departureDate.AfterTextChanged += DepartureDateTime_AfterTextChanged;
-            var departureTime = FindViewById<EditText>(Resource.Id.departureTime);
-            departureTime.AfterTextChanged += DepartureDateTime_AfterTextChanged;
-
         }
 
         private void DepartureDateTime_AfterTextChanged(object sender, Android.Text.AfterTextChangedEventArgs e) {
             DateTime departureDate;
-            DateTime departureTime;
             try {
                 departureDate = Convert.ToDateTime(GetDepartureDate());
-                departureTime = Convert.ToDateTime(GetDepartureTime());
 
             } catch (FormatException) {
                 return;
             }
 
-            var datetime = CombineDatePlusTime(departureDate, departureTime);
-            if (datetime <= DateTime.Now) {
-               Alert.DisplayAlert(this, "Ошибка", "Эта дата уже прошла");
-                return;
+            var rand = new Random();
+            var hours = departureDate.Hour;
+            var minuts = departureDate.Minute;
+
+            var hoursBalance = 24 - (hours);
+            var minuteBalance = 60 - minuts; //граничная ситуация после 23, будет выдавать не то
+
+            int availableOrders = 1;
+            if (hoursBalance > 15) {
+                availableOrders++;
+            }
+            if (hoursBalance > 10) {
+                availableOrders++;
+            }
+            if (hoursBalance > 5) {
+                availableOrders++;
+            }
+            if (hoursBalance > 2) {
+                availableOrders++;
             }
 
-
-            var rand = new Random();
-
-            for(int i = 0; i < rand.Next(3, 6); i++) {
-                var arrivalDate = GenerateDateInRandomNumberOfDays(Convert.ToDateTime(GetDepartureTime()));
+            for (int i = 0; i < availableOrders; i++) {
                 var tableLayout = FindViewById<TableLayout>(Resource.Id.tableLayout);
-                var tableRow = new TableRow(this);
+                var sourceCruise = new TextView(this) {
+                    Text = $"Отбытие {GenerateDateInCurrentDay(departureDate).TimeOfDay}"
+                };
+
                 var availableCruise = new TextView(this) {
-                    Text = $" прибытие в {arrivalDate}"
+                    Text = $"Прибытие в {GenerateDateInRandomNumberOfDays(departureDate)}"
                 };
 
                 var applyOrder = new Button(this) {
@@ -76,18 +82,21 @@ namespace testForAndroid {
                 };
                 applyOrder.Click += ApplyOrderListener;
 
-                tableRow.AddView(availableCruise);
-                tableRow.AddView(applyOrder);
-                tableLayout.AddView(tableRow);
+
+                var cruisesLayout = new LinearLayout(this);
+                cruisesLayout.Orientation = Orientation.Vertical;
+
+                cruisesLayout.AddView(sourceCruise);
+
+                cruisesLayout.AddView(availableCruise);
+                cruisesLayout.AddView(applyOrder);
+                
+                
+                tableLayout.AddView(cruisesLayout);
             }
 
         }
-
-        private void SetDepartureTimeButtonListener(object sender, EventArgs e) {
-            var timeDisplay = FindViewById<EditText>(Resource.Id.departureTime);
-            GetTimePicker(timeDisplay);
-        }
-
+        
         public void SetDepartureDateButtonListener(object sender, EventArgs e) {
             var dateDisplay = FindViewById<EditText>(Resource.Id.departureDate);
             GetDatePicker(dateDisplay);
@@ -106,14 +115,25 @@ namespace testForAndroid {
             return newDate;
         }
 
+        private DateTime GenerateDateInCurrentDay(DateTime datetime) {
+            Random rand = new Random();
+            var hours = datetime.Hour;
+            var minuts = datetime.Minute;
+
+            var hoursBalance = 24 - (hours);
+            var minuteBalance = 60 - minuts;
+
+            DateTime newDate = datetime;
+
+            newDate = newDate.AddHours(rand.Next(0, hoursBalance));
+            newDate = newDate.AddMinutes(rand.Next(0, minuteBalance));
+            return newDate;
+        }
+
         private string GetDepartureDate() {
             return FindViewById<TextView>(Resource.Id.departureDate).Text;
         }
-
-        private string GetDepartureTime() {
-            return FindViewById<TextView>(Resource.Id.departureTime).Text;
-        }
-
+        
         private string GetSourceCity() {
             return FindViewById<TextView>(Resource.Id.sourceCity).Text;
         }
@@ -123,38 +143,34 @@ namespace testForAndroid {
         }
 
         public void ApplyOrderListener(object sender, EventArgs e) {
-            DateTime departureDate;
-            DateTime departureTime;
-            try {
-                departureDate = Convert.ToDateTime(GetDepartureDate());
-                departureTime = Convert.ToDateTime(GetDepartureTime());
-            } catch (FormatException) {
-                Alert.DisplayAlert(this, "Error", "Дата/время не выбрано");
-                return;
-            }
 
             var sourceCity = GetSourceCity();
             var destinationCity = GetDestinationCity();
             
             var button = (Button)sender;
-            var tableRow = (TableRow)button.Parent;
-            var date = ((TextView)tableRow.GetChildAt(0)).Text;
-            string[] words = date.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            var cruiseLayout = (LinearLayout)button.Parent;
+            var departureTimeView = ((TextView)cruiseLayout.GetChildAt(0)).Text;
+            var arrivalTimeView = ((TextView)cruiseLayout.GetChildAt(1)).Text;
 
-            var arrivalDateTime = Convert.ToDateTime(words[2] + " " + words[3]);
+            string[] departureTimeWords = departureTimeView.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+            string[] arrivalTimeWords = arrivalTimeView.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            var arrivalDateTime = Convert.ToDateTime(arrivalTimeWords[2] + " " + arrivalTimeWords[3]);
+
+            var departureTime = Convert.ToDateTime(departureTimeWords[1]);
+            var departureDate = Convert.ToDateTime(GetDepartureDate());
             var departureDateTime = CombineDatePlusTime(departureDate, departureTime);
+            
             WriteInDB(sourceCity, destinationCity, departureDateTime, arrivalDateTime);
-
-            var intent = new Intent(this, typeof(SuccessLayoutActivity));
-            intent.PutExtra("destinationCity", destinationCity);
-            intent.PutExtra("sourceCity", sourceCity);
-            intent.PutExtra("arrivalDateTime", words[2] + " " + words[3]);
-            intent.PutExtra("departureDateTime", departureDateTime.ToString());
-
-            StartActivity(intent);
-
+            
+             var intent = new Intent(this, typeof(SuccessLayoutActivity));
+             intent.PutExtra("destinationCity", destinationCity);
+             intent.PutExtra("sourceCity", sourceCity);
+             intent.PutExtra("arrivalDateTime", arrivalTimeWords[2] + " " + arrivalTimeWords[3]);
+             intent.PutExtra("departureDateTime", departureDateTime.ToString());
+            
+             StartActivity(intent);
         }
-
 
         // ахах
         public void WriteInDB(string sourceCity, string destinationCity, DateTime departureDateTime, DateTime arrivalDateTime) { //TODO поработать над функцией
