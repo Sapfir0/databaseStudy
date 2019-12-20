@@ -47,28 +47,12 @@ namespace testForAndroid {
             }
 
             var rand = new Random();
-            var hours = departureDate.Hour;
-            var minuts = departureDate.Minute;
+ 
 
-            var hoursBalance = 24 - (hours);
-            var minuteBalance = 60 - minuts; //граничная ситуация после 23, будет выдавать не то
-
-            int availableOrders = 1;
-            if (hoursBalance > 15) {
-                availableOrders++;
-            }
-            if (hoursBalance > 10) {
-                availableOrders++;
-            }
-            if (hoursBalance > 5) {
-                availableOrders++;
-            }
-            if (hoursBalance > 2) {
-                availableOrders++;
-            }
-
-            for (int i = 0; i < availableOrders; i++) {
-                var tableLayout = FindViewById<TableLayout>(Resource.Id.tableLayout);
+            var tableLayout = FindViewById<TableLayout>(Resource.Id.tableLayout);
+            tableLayout.RemoveAllViewsInLayout();
+            
+            for (int i = 0; i < rand.Next(1,4); i++) {
                 var sourceCruise = new TextView(this) {
                     Text = $"Отбытие {GenerateDateInCurrentDay(departureDate).TimeOfDay}"
                 };
@@ -80,6 +64,7 @@ namespace testForAndroid {
                 var applyOrder = new Button(this) {
                     Text = "Удобно"
                 };
+                applyOrder.SetWidth(150);
                 applyOrder.Click += ApplyOrderListener;
 
 
@@ -197,13 +182,6 @@ namespace testForAndroid {
                 textView.Text = time.ToLongDateString();
             });
             frag.Show(FragmentManager, DatePickerFragment.TAG);
-        }
-
-        public void GetTimePicker(TextView textView) {
-            TimePickerFragment frag = TimePickerFragment.NewInstance(delegate (DateTime time) {
-                    textView.Text = time.ToShortTimeString();
-                });
-            frag.Show(FragmentManager, TimePickerFragment.TAG);
         }
 
     }

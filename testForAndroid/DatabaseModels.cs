@@ -8,12 +8,7 @@ namespace testForAndroid {
         public string Name { get; set; }
         public string Country { get; set; } = "Russia";
     }
-
-    class User { //аххах это будет работать только в моем контексте, т.к. у меня один юзер
-        [PrimaryKey, AutoIncrement]
-        public int Id { get; set; }
-        public int CruiseId { get; set; }
-    }
+    
 
     public class Cruises {
         [PrimaryKey, AutoIncrement]
